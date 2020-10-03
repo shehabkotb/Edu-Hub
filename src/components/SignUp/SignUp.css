@@ -52,3 +52,7 @@ span{
     background: linear-gradient(to right, #e73827, #f85032); 
     color:white
 }
+
+.err{
+    color:#FF4B2B;  
+}
