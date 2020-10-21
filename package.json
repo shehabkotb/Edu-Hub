@@ -9,6 +9,8 @@
     "@testing-library/user-event": "^7.1.2",
     "@types/react": "^16.9.50",
     "@types/react-dom": "^16.9.8",
+    "ant-design-pro": "^2.3.2",
+    "antd": "^4.7.0",
     "bootstrap": "^4.5.2",
     "evergreen-ui": "^5.1.2",
     "grommet": "^2.15.0",
