@@ -1,13 +1,12 @@
 import React from 'react'
-import { Card, Col, Row, Typography, Layout } from 'antd'
+import { Card, Col, Row, Typography } from 'antd'
 
 const Courses = () => {
   const { Title } = Typography
   const { Meta } = Card
-  const { Content } = Layout
 
   return (
-    <Content style={{ margin: '0 16px' }}>
+    <React.Fragment>
       {/* <Breadcrumb style={{ margin: "16px 0" }}>
           <Breadcrumb.Item>User</Breadcrumb.Item>
           <Breadcrumb.Item>Bill</Breadcrumb.Item>
@@ -147,7 +146,7 @@ const Courses = () => {
           </Row>
         </div>
       </div>
-    </Content>
+    </React.Fragment>
   )
 }
 

@@ -1,28 +1,33 @@
 import React, { useState } from 'react'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, Redirect } from 'react-router-dom'
 import { Layout } from 'antd'
 
 import DropDownNotification from '../DropDownNotification'
 import ProfileIcon from '../ProfileIcon'
 import SideNav from '../SideNav'
-import NotFoundPage from '../../views/publicPages/NotFoundPage'
 
+import NotFoundPage from '../../views/publicPages/NotFoundPage'
 import SignUp from '../../views/publicPages/SignUp'
 import Login from '../../views/publicPages/Login'
 import Courses from '../../views/courses'
+import Browse from '../../views/browse'
+import Profile from '../../views/profile'
 import NotFoundView from '../../views/NotFoundView'
 
-import './App.css'
 import 'antd/dist/antd.css'
 import 'ant-design-pro/dist/ant-design-pro.css'
-import { AppHeader } from './style'
+import { AppHeader, AppFooter } from './style'
 
 const App = () => {
   return (
     <Switch>
       <Route path="/Register" component={SignUp} />
       <Route path="/Login" component={Login} />
-      {/* private app implememt private route in future */}
+      {/* private app, implememt private route in future */}
+      {/* redirect to app for now */}
+      <Route exact path="/">
+        <Redirect to="/app" />
+      </Route>
       <Route path="/app" component={AuthnticatedApp} />
       <Route path="*" component={NotFoundPage} />
     </Switch>
@@ -31,7 +36,7 @@ const App = () => {
 
 const AuthnticatedApp = () => {
   const [collapsed, setCollapsed] = useState(false)
-  const { Footer } = Layout
+  const { Content } = Layout
 
   const onCollapse = (collapsed) => {
     setCollapsed(collapsed)
@@ -42,7 +47,6 @@ const AuthnticatedApp = () => {
       <SideNav collapsed={collapsed} onCollapse={onCollapse} />
 
       <Layout
-        className="site-layout"
         style={{
           marginLeft: collapsed === true ? 80 : 200,
           transition: 'margin-left .2s'
@@ -53,14 +57,21 @@ const AuthnticatedApp = () => {
           <ProfileIcon />
         </AppHeader>
 
-        <Switch>
-          <Route exact path="/app/" component={Courses} />
-          <Route path="/app/*" component={NotFoundView} />
-        </Switch>
+        <Content style={{ padding: '8px 16px' }}>
+          <Switch>
+            {/* redirect to courses page for now */}
+            <Route exact path="/app/">
+              <Redirect to="/app/courses" />
+            </Route>
 
-        <Footer style={{ textAlign: 'center' }}>
-          Ant Design ©2018 Created by Ant UED
-        </Footer>
+            <Route path="/app/courses" component={Courses} />
+            <Route path="/app/browse" component={Browse} />
+            <Route path="/app/profile" component={Profile} />
+            <Route path="/app/*" component={NotFoundView} />
+          </Switch>
+        </Content>
+
+        <AppFooter>Ant Design ©2018 Created by Ant UED</AppFooter>
       </Layout>
     </Layout>
   )

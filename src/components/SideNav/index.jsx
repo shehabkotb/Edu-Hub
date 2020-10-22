@@ -1,19 +1,21 @@
 import React from 'react'
-import { Layout, Menu} from 'antd'
+import { Layout, Menu } from 'antd'
+import { Link } from 'react-router-dom'
+import { LogoPlaceHolder } from './style'
 
 import {
   DesktopOutlined,
   PieChartOutlined,
-  // FileOutlined,
   TeamOutlined,
   UserOutlined,
-  CommentOutlined
+  CommentOutlined,
+  SettingOutlined
 } from '@ant-design/icons'
 
-const SideNav = ({collapsed, onCollapse}) => {
+const SideNav = ({ collapsed, onCollapse }) => {
   const { Sider } = Layout
-  const {SubMenu} = Menu
-  
+  const { SubMenu } = Menu
+
   return (
     <Sider
       collapsible
@@ -27,24 +29,27 @@ const SideNav = ({collapsed, onCollapse}) => {
         left: 0
       }}
     >
-      <div className="logo" />
+      <LogoPlaceHolder />
       <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
         <Menu.Item key="1" icon={<PieChartOutlined />}>
-          My Courses
+          <Link to="/app/courses">My Courses</Link>
         </Menu.Item>
         <Menu.Item key="2" icon={<DesktopOutlined />}>
-          Browse
+          <Link to="/app/browse">Browse</Link>
         </Menu.Item>
         <Menu.Item key="3" icon={<UserOutlined />}>
-          Dashboard
+          <Link to="/app/Dashboard">Browse</Link>
         </Menu.Item>
         <Menu.Item key="4" icon={<CommentOutlined />}>
-          Community
+          <Link to="/app/Community">Community</Link>
         </Menu.Item>
         <SubMenu key="sub1" icon={<TeamOutlined />} title="Groups">
-          <Menu.Item key="6">Place Holder 1</Menu.Item>
-          <Menu.Item key="8">Place Holder 2</Menu.Item>
+          <Menu.Item key="5">Place Holder 1</Menu.Item>
+          <Menu.Item key="6">Place Holder 2</Menu.Item>
         </SubMenu>
+        <Menu.Item key="7" icon={<SettingOutlined />}>
+          <Link to="/app/profile">Profile</Link>
+        </Menu.Item>
       </Menu>
     </Sider>
   )
