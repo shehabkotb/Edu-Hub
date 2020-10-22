@@ -1,5 +1,5 @@
 import React from 'react'
-import { Layout, Menu, SubMenu } from 'antd'
+import { Layout, Menu} from 'antd'
 
 import {
   DesktopOutlined,
@@ -12,6 +12,8 @@ import {
 
 const SideNav = ({collapsed, onCollapse}) => {
   const { Sider } = Layout
+  const {SubMenu} = Menu
+  
   return (
     <Sider
       collapsible
