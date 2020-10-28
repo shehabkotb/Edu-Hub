@@ -1,0 +1,15 @@
+.ant-tabs > .ant-tabs-nav .ant-tabs-nav-wrap {
+  padding-left: 24px;
+}
+
+.dropdown-div {
+  text-align: right;
+  height: 64px;
+  line-height: 64px;
+  padding: 0 16px;
+  margin-right: 3px;
+}
+
+.dropdown-div:hover {
+  background-color: #f0f0f0;
+}

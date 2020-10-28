@@ -1,0 +1,78 @@
+.login-background {
+  background: #ff416c; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #ff4b2b,
+    #ff416c
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #ff4b2b,
+    #ff416c
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  height: 100vh;
+}
+
+.label {
+  text-align: center;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 40px;
+}
+
+.div-form {
+  width: 50%;
+  background-color: white;
+  margin-left: 25%;
+  margin-top: 2%;
+  padding-top: 2%;
+  border-radius: 15px;
+}
+
+.div-form label {
+  font-family: Arial, Helvetica, sans-serif;
+  color: rgb(8, 8, 36);
+  display: block;
+  margin-left: 10%;
+  margin-bottom: 1%;
+}
+
+.div-form label span {
+  color: red;
+}
+.div-form > input {
+  width: 80%;
+  margin-left: 8%;
+  margin-bottom: 2%;
+  background-color: #eee;
+  border: 1px solid #eee;
+  /* height: 50%; */
+  /* height: 10%; */
+  padding-top: 1%;
+  padding-bottom: 1%;
+  padding-left: 1%;
+  border-radius: 15px;
+}
+
+.submit {
+  background: #ff416c; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #ff4b2b,
+    #ff416c
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #ff4b2b,
+    #ff416c
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  color: white;
+}
+/* 
+.Checkbox{
+    float: ;
+} */
+
+.err {
+  color: #ff4b2b;
+}
