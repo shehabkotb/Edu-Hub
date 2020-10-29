@@ -3,7 +3,7 @@ import { Form, Input, Button, Card } from 'antd';
 import { formItemLayout, tailFormItemLayout } from './style'
 import { Link } from 'react-router-dom'
 
-const Login = () => {
+const ForgetPassword = () => {
     const [form] = Form.useForm();
 
     const onFinish = (values) => {
@@ -23,7 +23,7 @@ const Login = () => {
                 }}
                 scrollToFirstError
             >
-
+                
                 <Form.Item
                     name="email"
                     label="E-mail"
@@ -41,32 +41,11 @@ const Login = () => {
                     <Input />
                 </Form.Item>
 
-                <Form.Item
-                    name="password"
-                    label="Password"
-                    rules={[
-                        {
-                            required: true,
-                            message: 'Please input your password! ',
-                        },
-                        {
-                            min: 6,
-                            message: 'Min Password is 6 Charachters! ',
-                        },
-
-                    ]}
-                    hasFeedback
-                >
-                    <Input.Password />
-                </Form.Item>
-                <Form.Item>
-                    <Link to='ForgetPassword'>
-                        Forget Password :
-                    </Link>
-                </Form.Item>
+               
+                
                 <Form.Item {...tailFormItemLayout}>
                     <Button type="primary" htmlType="submit" onClick={onFinish()}>
-                        Login
+                        Send Mail 
                     </Button>
                 </Form.Item>
             </Form>
@@ -74,4 +53,4 @@ const Login = () => {
         </Card>
     );
 };
-export default Login;
+export default ForgetPassword;

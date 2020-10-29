@@ -1,6 +1,5 @@
 import React from 'react'
 import { Layout, Menu, Card ,Row,Col} from 'antd';
-import Registeration from '../../components/Shared/Forms/Registeration/Registeration'
 const { Sider } = Layout;
 const Profile = () => {
   return (

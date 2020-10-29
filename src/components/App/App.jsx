@@ -7,8 +7,9 @@ import ProfileIcon from '../ProfileIcon'
 import SideNav from '../SideNav'
 
 import NotFoundPage from '../../views/publicPages/NotFoundPage'
-import SignUp from '../../views/publicPages/SignUp'
-import Login from '../../views/publicPages/Login'
+import Login from '../Shared/Forms/Login/Login'
+import Registeration from '../Shared/Forms/Registeration/Registeration'
+import ForgetPassword from '../Shared/Forms/ForgetPassword/ForgetPassword'
 import Courses from '../../views/courses'
 import Browse from '../../views/browse'
 import Profile from '../../views/Profile'
@@ -21,8 +22,9 @@ import { AppHeader } from './style'
 const App = () => {
   return (
     <Switch>
-      <Route path="/Register" component={SignUp} />
+      <Route path="/Register" component={Registeration} />
       <Route path="/Login" component={Login} />
+      <Route path='/ForgetPassword' component={ForgetPassword} />
       {/* private app, implememt private route in future */}
       {/* redirect to app for now */}
       <Route exact path="/">
