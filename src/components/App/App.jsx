@@ -7,22 +7,24 @@ import ProfileIcon from '../ProfileIcon'
 import SideNav from '../SideNav'
 
 import NotFoundPage from '../../views/publicPages/NotFoundPage'
-import SignUp from '../../views/publicPages/SignUp'
-import Login from '../../views/publicPages/Login'
+import Login from '../Shared/Forms/Login/Login'
+import Registeration from '../Shared/Forms/Registeration/Registeration'
+import ForgetPassword from '../Shared/Forms/ForgetPassword/ForgetPassword'
 import Courses from '../../views/courses'
 import Browse from '../../views/browse'
-import Profile from '../../views/profile'
+import Profile from '../../views/Profile'
 import NotFoundView from '../../views/NotFoundView'
 
 import 'antd/dist/antd.css'
 import 'ant-design-pro/dist/ant-design-pro.css'
-import { AppHeader, AppFooter } from './style'
+import { AppHeader } from './style'
 
 const App = () => {
   return (
     <Switch>
-      <Route path="/Register" component={SignUp} />
+      <Route path="/Register" component={Registeration} />
       <Route path="/Login" component={Login} />
+      <Route path='/ForgetPassword' component={ForgetPassword} />
       {/* private app, implememt private route in future */}
       {/* redirect to app for now */}
       <Route exact path="/">
@@ -71,7 +73,6 @@ const AuthnticatedApp = () => {
           </Switch>
         </Content>
 
-        <AppFooter>Ant Design ©2018 Created by Ant UED</AppFooter>
       </Layout>
     </Layout>
   )
