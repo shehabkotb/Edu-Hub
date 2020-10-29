@@ -12,11 +12,12 @@ import Login from '../../views/publicPages/Login'
 import Courses from '../../views/courses'
 import Browse from '../../views/browse'
 import Profile from '../../views/profile'
+import CourseView from '../../views/courseView'
 import NotFoundView from '../../views/NotFoundView'
 
 import 'antd/dist/antd.css'
 import 'ant-design-pro/dist/ant-design-pro.css'
-import { AppHeader, AppFooter } from './style'
+import S from './style'
 
 const App = () => {
   return (
@@ -52,26 +53,27 @@ const AuthnticatedApp = () => {
           transition: 'margin-left .2s'
         }}
       >
-        <AppHeader>
+        <S.Header>
           <DropDownNotification />
           <ProfileIcon />
-        </AppHeader>
+        </S.Header>
 
         <Content style={{ padding: '8px 16px' }}>
           <Switch>
             {/* redirect to courses page for now */}
             <Route exact path="/app/">
-              <Redirect to="/app/courses" />
+              <Redirect to="/app/courseview" />
             </Route>
 
             <Route path="/app/courses" component={Courses} />
+            <Route path="/app/courseview" component={CourseView} />
             <Route path="/app/browse" component={Browse} />
             <Route path="/app/profile" component={Profile} />
             <Route path="/app/*" component={NotFoundView} />
           </Switch>
         </Content>
 
-        <AppFooter>Ant Design ©2018 Created by Ant UED</AppFooter>
+        <S.Footer>Ant Design ©2018 Created by Ant UED</S.Footer>
       </Layout>
     </Layout>
   )
