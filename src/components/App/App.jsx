@@ -11,12 +11,12 @@ import SignUp from '../../views/publicPages/SignUp'
 import Login from '../../views/publicPages/Login'
 import Courses from '../../views/courses'
 import Browse from '../../views/browse'
-import Profile from '../../views/profile'
+import Profile from '../../views/Profile'
 import NotFoundView from '../../views/NotFoundView'
 
 import 'antd/dist/antd.css'
 import 'ant-design-pro/dist/ant-design-pro.css'
-import { AppHeader, AppFooter } from './style'
+import { AppHeader } from './style'
 
 const App = () => {
   return (
@@ -71,7 +71,6 @@ const AuthnticatedApp = () => {
           </Switch>
         </Content>
 
-        <AppFooter>Ant Design ©2018 Created by Ant UED</AppFooter>
       </Layout>
     </Layout>
   )
