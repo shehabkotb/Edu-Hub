@@ -62,7 +62,7 @@ const AuthnticatedApp = () => {
           <Switch>
             {/* redirect to courses page for now */}
             <Route exact path="/app/">
-              <Redirect to="/app/courseview" />
+              <Redirect to="/app/courses" />
             </Route>
 
             <Route path="/app/courses" component={Courses} />

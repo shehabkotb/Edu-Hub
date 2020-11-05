@@ -1,0 +1,17 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+}
+
+.info-title {
+  margin: 0;
+  font-size: 18px;
+}
+
+.info-date {
+  color: #bfbfbf;
+  font-size: 12px;
+  font-weight: 600;
+}
