@@ -12,7 +12,7 @@ import Registeration from '../Shared/Forms/Registeration/Registeration'
 import ForgetPassword from '../Shared/Forms/ForgetPassword/ForgetPassword'
 import Courses from '../../views/courses'
 import Browse from '../../views/browse'
-import Profile from '../../views/Profile'
+import Profile from '../../views/Profile/index'
 import NotFoundView from '../../views/NotFoundView'
 
 import 'antd/dist/antd.css'
