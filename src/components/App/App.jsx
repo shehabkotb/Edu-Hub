@@ -12,6 +12,7 @@ import Registeration from '../Shared/Forms/Registeration/Registeration'
 import ForgetPassword from '../Shared/Forms/ForgetPassword/ForgetPassword'
 import Courses from '../../views/courses'
 import Browse from '../../views/browse'
+import Articles from '../../views/articles'
 import Profile from '../../views/Profile/index'
 import NotFoundView from '../../views/NotFoundView'
 
@@ -24,7 +25,7 @@ const App = () => {
     <Switch>
       <Route path="/Register" component={Registeration} />
       <Route path="/Login" component={Login} />
-      <Route path='/ForgetPassword' component={ForgetPassword} />
+      <Route path="/ForgetPassword" component={ForgetPassword} />
       {/* private app, implememt private route in future */}
       {/* redirect to app for now */}
       <Route exact path="/">
@@ -68,11 +69,11 @@ const AuthnticatedApp = () => {
 
             <Route path="/app/courses" component={Courses} />
             <Route path="/app/browse" component={Browse} />
+            <Route path="/app/articles" component={Articles} />
             <Route path="/app/profile" component={Profile} />
             <Route path="/app/*" component={NotFoundView} />
           </Switch>
         </Content>
-
       </Layout>
     </Layout>
   )
