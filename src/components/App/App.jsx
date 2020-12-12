@@ -15,6 +15,8 @@ import Browse from '../../views/browse'
 import Profile from '../../views/Profile/index'
 import NotFoundView from '../../views/NotFoundView'
 
+import Upload from '../../views/upload'
+
 import 'antd/dist/antd.css'
 import 'ant-design-pro/dist/ant-design-pro.css'
 import { AppHeader } from './style'
@@ -22,9 +24,10 @@ import { AppHeader } from './style'
 const App = () => {
   return (
     <Switch>
+      <Route path="/upload" component={Upload} />
       <Route path="/Register" component={Registeration} />
       <Route path="/Login" component={Login} />
-      <Route path='/ForgetPassword' component={ForgetPassword} />
+      <Route path="/ForgetPassword" component={ForgetPassword} />
       {/* private app, implememt private route in future */}
       {/* redirect to app for now */}
       <Route exact path="/">
@@ -72,7 +75,6 @@ const AuthnticatedApp = () => {
             <Route path="/app/*" component={NotFoundView} />
           </Switch>
         </Content>
-
       </Layout>
     </Layout>
   )
