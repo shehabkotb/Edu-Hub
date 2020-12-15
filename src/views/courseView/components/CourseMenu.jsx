@@ -1,20 +1,18 @@
-import { useEffect, useRef, useState } from 'react'
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core'
+import { jsx } from '@emotion/core'
+
+import { useEffect, useRef, useState } from 'react'
 
 import CircleIcon from './CircleIcon.jsx'
-import { CheckCircleTwoTone, DownOutlined } from '@ant-design/icons'
 
+import { CheckCircleTwoTone, DownOutlined } from '@ant-design/icons'
 import { subSectionItem, sectionWrapper, menuSection } from './style.js'
+import { rotate180 } from '../style.js'
 
 export const SectionItem = ({ checked, children }) => {
   return (
     <li css={subSectionItem}>
-      <span
-        css={css`
-          margin-right: 0.25rem;
-        `}
-      >
+      <span style={{ marginRight: '0.25rem' }}>
         {checked ? (
           <CheckCircleTwoTone twoToneColor="#52C41A" />
         ) : (
@@ -44,30 +42,26 @@ export const MenuSection = ({ checked, title, header, children, to }) => {
 
   return (
     <ul
-      css={css`
-        padding: 0;
-        margin-top: 10px;
-        margin-bottom: 0;
-      `}
+      style={{
+        padding: 0,
+        marginTop: '10px',
+        marginBottom: 0
+      }}
     >
       <li css={menuSection}>
         <div onClick={handleClick} css={sectionWrapper}>
-          <div
-            css={css`
-              display: 'inline-block';
-            `}
-          >
+          <div style={{ display: 'inline-block' }}>
             {checked ? (
               <CheckCircleTwoTone twoToneColor="#52C41A" />
             ) : (
               <CircleIcon />
             )}
             <span
-              css={css`
-                display: inline-block;
-                margin-left: 10px;
-                font-size: 15px;
-              `}
+              style={{
+                display: 'inlineBlock',
+                marginLeft: '10px',
+                fontSize: '15px'
+              }}
             >
               {title}
             </span>
@@ -75,21 +69,13 @@ export const MenuSection = ({ checked, title, header, children, to }) => {
 
           {!header && (
             <DownOutlined
-              className={active ? 'rotate180' : ''}
-              css={css`
-                font-size: 11px;
-                transition: all, 0.3s;
-              `}
+              css={active ? rotate180 : ''}
+              style={{ fontSize: '11px', transition: 'all, 0.3s' }}
             />
           )}
         </div>
         {!header && (
-          <ul
-            css={css`
-              transition: all, 0.3s;
-            `}
-            ref={contentRef}
-          >
+          <ul style={{ transition: 'all, 0.3s' }} ref={contentRef}>
             {children}
           </ul>
         )}

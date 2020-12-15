@@ -1,5 +1,9 @@
 import { css } from '@emotion/core'
 
+/*
+ * menu
+ */
+
 export const subSectionItem = css`
   list-style: none;
   padding: 7px 0 7px 32px;
@@ -47,4 +51,26 @@ export const menuSection = css`
   margin: 0 auto;
   overflow: hidden;
   list-style-type: none;
+`
+
+/*
+ * info
+ */
+
+export const container = css`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+`
+
+export const infoTitle = css`
+  margin: 0;
+  font-size: 18px;
+`
+
+export const infoDate = css`
+  color: #bfbfbf;
+  font-size: 12px;
+  font-weight: 600;
 `

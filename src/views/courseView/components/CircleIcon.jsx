@@ -1,7 +1,5 @@
+import React from 'react'
 import Icon from '@ant-design/icons'
-
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core'
 
 const circleSvg = () => (
   <svg viewBox="64 64 896 896" width="1em" height="1em" fill="currentcolor">
@@ -11,12 +9,12 @@ const circleSvg = () => (
 
 const CircleIcon = (props) => (
   <Icon
-    css={css`
-      color: #bfbfbf;
-      background-color: #fff;
-      overflow: hidden;
-      border-radius: 10px;
-    `}
+    style={{
+      color: '#bfbfbf',
+      backgroundColor: '#fff',
+      overflow: 'hidden',
+      borderRadius: '10px'
+    }}
     component={circleSvg}
     {...props}
   />

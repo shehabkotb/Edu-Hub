@@ -1,18 +1,18 @@
-import React from 'react'
+/** @jsx jsx */
+import { jsx } from '@emotion/core'
+
 import { Button } from 'antd'
-
 import { ArrowRightOutlined } from '@ant-design/icons'
-
-import styles from './Info.module.css'
+import { container, infoTitle, infoDate } from './style'
 
 const Info = () => {
   return (
-    <div className={styles.container}>
+    <div css={container}>
       <div>
-        <h3 className={styles['info-title']}>
+        <h3 css={infoTitle}>
           Lorem ipsum dolor sit amet, consectetur adipiscing
         </h3>
-        <div className={styles['info-date']}>11/12/2020</div>
+        <div css={infoDate}>11/12/2020</div>
       </div>
 
       <Button

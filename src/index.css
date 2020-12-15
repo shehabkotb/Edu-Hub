@@ -11,6 +11,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.ant-tabs > .ant-tabs-content-holder > .ant-tabs-content {
+  background: #fff;
+  padding: 16px;
+}
+
 /*
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
