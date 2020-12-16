@@ -12,23 +12,15 @@ import Registeration from '../Shared/Forms/Registeration/Registeration'
 import ForgetPassword from '../Shared/Forms/ForgetPassword/ForgetPassword'
 import Courses from '../../views/courses'
 import Browse from '../../views/browse'
-<<<<<<< HEAD
 import Profile from '../../views/profile'
 import CourseView from '../../views/courseView'
-=======
-import Profile from '../../views/Profile/index'
->>>>>>> master
 import NotFoundView from '../../views/NotFoundView'
 
 import Upload from '../../views/upload'
 
 import 'antd/dist/antd.css'
 import 'ant-design-pro/dist/ant-design-pro.css'
-<<<<<<< HEAD
 import S from './style'
-=======
-import { AppHeader } from './style'
->>>>>>> master
 
 const App = () => {
   return (
@@ -85,11 +77,7 @@ const AuthnticatedApp = () => {
             <Route path="/app/*" component={NotFoundView} />
           </Switch>
         </Content>
-<<<<<<< HEAD
-
         <S.Footer>Ant Design ©2018 Created by Ant UED</S.Footer>
-=======
->>>>>>> master
       </Layout>
     </Layout>
   )

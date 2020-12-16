@@ -1,5 +1,4 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/core'
+/** @jsxImportSource @emotion/core */
 
 import { useEffect, useRef, useState } from 'react'
 
