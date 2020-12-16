@@ -3,7 +3,8 @@ import Styled from 'styled-components'
 
 const { Header, Footer } = Layout
 
-export const AppHeader = Styled(Header)`
+const S = {}
+S.Header = Styled(Header)`
     padding: 0;
     display: flex;
     justify-content: flex-end;
@@ -11,8 +12,10 @@ export const AppHeader = Styled(Header)`
     background: #fff;
 `
 
-export const AppFooter = Styled(Footer)`
+S.Footer = Styled(Footer)`
     text-align: center;
     box-shadow: 0px -5px 20px #c9d6dc;
     background: rgb(232 232 233);
 `
+
+export default S

@@ -12,14 +12,15 @@ import Registeration from '../Shared/Forms/Registeration/Registeration'
 import ForgetPassword from '../Shared/Forms/ForgetPassword/ForgetPassword'
 import Courses from '../../views/courses'
 import Browse from '../../views/browse'
-import Profile from '../../views/Profile/index'
+import Profile from '../../views/profile'
+import CourseView from '../../views/courseView'
 import NotFoundView from '../../views/NotFoundView'
 
 import Upload from '../../views/upload'
 
 import 'antd/dist/antd.css'
 import 'ant-design-pro/dist/ant-design-pro.css'
-import { AppHeader } from './style'
+import S from './style'
 
 const App = () => {
   return (
@@ -57,12 +58,12 @@ const AuthnticatedApp = () => {
           transition: 'margin-left .2s'
         }}
       >
-        <AppHeader>
+        <S.Header>
           <DropDownNotification />
           <ProfileIcon />
-        </AppHeader>
+        </S.Header>
 
-        <Content style={{ padding: '8px 16px' }}>
+        <Content style={{ padding: '8px 16px', height: '100%' }}>
           <Switch>
             {/* redirect to courses page for now */}
             <Route exact path="/app/">
@@ -70,11 +71,13 @@ const AuthnticatedApp = () => {
             </Route>
 
             <Route path="/app/courses" component={Courses} />
+            <Route path="/app/courseview" component={CourseView} />
             <Route path="/app/browse" component={Browse} />
             <Route path="/app/profile" component={Profile} />
             <Route path="/app/*" component={NotFoundView} />
           </Switch>
         </Content>
+        <S.Footer>Ant Design ©2018 Created by Ant UED</S.Footer>
       </Layout>
     </Layout>
   )
