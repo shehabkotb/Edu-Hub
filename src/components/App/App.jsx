@@ -12,6 +12,7 @@ import Registeration from '../Shared/Forms/Registeration/Registeration'
 import ForgetPassword from '../Shared/Forms/ForgetPassword/ForgetPassword'
 import Courses from '../../views/courses'
 import Browse from '../../views/browse'
+import Articles from '../../views/articles'
 import Profile from '../../views/profile'
 import CourseView from '../../views/courseView'
 import NotFoundView from '../../views/NotFoundView'
@@ -73,6 +74,7 @@ const AuthnticatedApp = () => {
             <Route path="/app/courses" component={Courses} />
             <Route path="/app/courseview" component={CourseView} />
             <Route path="/app/browse" component={Browse} />
+            <Route path="/app/articles" component={Articles} />
             <Route path="/app/profile" component={Profile} />
             <Route path="/app/*" component={NotFoundView} />
           </Switch>
