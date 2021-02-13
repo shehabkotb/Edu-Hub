@@ -4,13 +4,14 @@ import { Link } from 'react-router-dom'
 import { LogoPlaceHolder } from './style'
 
 import {
-  DesktopOutlined,
-  PieChartOutlined,
-  TeamOutlined,
   UserOutlined,
-  CommentOutlined,
-  SettingOutlined
+  CalendarOutlined,
+  DashboardOutlined,
+  CrownOutlined
 } from '@ant-design/icons'
+
+import { RiArticleLine } from 'react-icons/ri'
+import { ImBooks } from 'react-icons/im'
 
 const SideNav = ({ collapsed, onCollapse }) => {
   const { Sider } = Layout
@@ -31,23 +32,26 @@ const SideNav = ({ collapsed, onCollapse }) => {
     >
       <LogoPlaceHolder />
       <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-        <Menu.Item key="1" icon={<PieChartOutlined />}>
-          <Link to="/app/courses">My Courses</Link>
+        <Menu.Item key="1" icon={<DashboardOutlined />}>
+          <Link to="/app/dashboard">Dashboard</Link>
         </Menu.Item>
-        <Menu.Item key="2" icon={<DesktopOutlined />}>
-          <Link to="/app/browse">Browse</Link>
+        <Menu.Item key="2" icon={<ImBooks />}>
+          <Link to="/app/courses">Courses</Link>
         </Menu.Item>
-        <Menu.Item key="3" icon={<UserOutlined />}>
-          <Link to="/app/Dashboard">Browse</Link>
+        <Menu.Item key="3" icon={<CalendarOutlined />}>
+          <Link to="/app/calendar">Calendar</Link>
         </Menu.Item>
-        <Menu.Item key="4" icon={<CommentOutlined />}>
-          <Link to="/app/Community">Community</Link>
+        <Menu.Item key="4" icon={<RiArticleLine />}>
+          <Link to="/app/articles">Articles</Link>
         </Menu.Item>
-        <SubMenu key="sub1" icon={<TeamOutlined />} title="Groups">
+        {/* <SubMenu key="sub1" icon={<TeamOutlined />} title="Groups">
           <Menu.Item key="5">Place Holder 1</Menu.Item>
           <Menu.Item key="6">Place Holder 2</Menu.Item>
-        </SubMenu>
-        <Menu.Item key="7" icon={<SettingOutlined />}>
+        </SubMenu> */}
+        <Menu.Item key="7" icon={<CrownOutlined />}>
+          <Link to="/app/acheivements">Acheivements</Link>
+        </Menu.Item>
+        <Menu.Item key="8" icon={<UserOutlined />}>
           <Link to="/app/profile">Profile</Link>
         </Menu.Item>
       </Menu>
