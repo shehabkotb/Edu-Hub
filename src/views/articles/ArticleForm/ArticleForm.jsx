@@ -3,8 +3,12 @@ import { Form, Input, Button , Card } from 'antd';
 
 const { TextArea } = Input;
 const ArticleForm = () => {
-    const onFinish = (values) => {
-        console.log(values)
+    const onFinish = async (values) => {
+        const Article = {
+            "articleBody":values.articleBody,
+            "articleTitle":values.articleTitle
+        }
+        
       };
     return (
 

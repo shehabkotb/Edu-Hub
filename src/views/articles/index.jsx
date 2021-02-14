@@ -9,7 +9,8 @@ import {
   StarOutlined,
   StarFilled,
   PlusSquareOutlined,
-  MinusSquareOutlined
+  MinusSquareOutlined,
+  CommentOutlined
 } from '@ant-design/icons'
 
 import Styles from './index.module.css'
@@ -89,6 +90,7 @@ const ArticleCard = ({ article }) => {
   const [follow, setFollow] = useState(article.followingAuthor)
   const [likeCount, setLikeCount] = useState(article.likesCount)
 
+
   // like mock function
   const likeArticle = (liked) => {
     liked ? setLikeCount(likeCount + 1) : setLikeCount(likeCount - 1)
@@ -103,7 +105,8 @@ const ArticleCard = ({ article }) => {
         actions={[
           <Like likesCount={likeCount} liked={liked} setLiked={likeArticle} />,
           <Bookmark bookMarked={bookMark} setBookMark={setBookMark} />,
-          <Follow followed={follow} setFollow={setFollow} />
+          <Follow followed={follow} setFollow={setFollow} />,
+          <Comment />
         ]}
       >
         <Meta
@@ -125,6 +128,15 @@ const Like = ({ likesCount, liked, setLiked }) => {
   )
 }
 
+
+const Comment = () => {
+  return (
+    <div className={Styles['like-container']}>
+      <CommentOutlined style={{ color: '#1890ff' }} />
+    </div>
+  )
+}
+
 const Bookmark = ({ bookMarked, setBookMark }) => {
   return (
     <div
@@ -134,8 +146,8 @@ const Bookmark = ({ bookMarked, setBookMark }) => {
       {bookMarked ? (
         <StarFilled style={{ color: '#1890ff' }} />
       ) : (
-        <StarOutlined />
-      )}
+          <StarOutlined />
+        )}
     </div>
   )
 }
@@ -152,11 +164,11 @@ const Follow = ({ followed, setFollow }) => {
           <span>UnFollow</span>
         </>
       ) : (
-        <>
-          <PlusSquareOutlined style={{ marginRight: '8px' }} />
-          <span>Follow</span>
-        </>
-      )}
+          <>
+            <PlusSquareOutlined style={{ marginRight: '8px' }} />
+            <span>Follow</span>
+          </>
+        )}
     </div>
   )
 }
