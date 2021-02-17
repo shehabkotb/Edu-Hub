@@ -16,6 +16,10 @@ body {
   padding: 16px;
 }
 
+.ant-input-prefix {
+  margin-right: 8px !important;
+}
+
 /*
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
