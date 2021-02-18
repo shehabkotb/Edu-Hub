@@ -1,7 +1,10 @@
 import React from 'react'
-import { Form, Input, Button, Checkbox, Divider } from 'antd'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 
+import { login } from '../../../../reducers/authReducer'
+
+import { Form, Input, Button, Checkbox, Divider } from 'antd'
 import { MailOutlined, LockOutlined, GoogleOutlined } from '@ant-design/icons'
 
 import {
@@ -13,15 +16,28 @@ import {
 } from './style'
 
 const Login = () => {
+  const dispatch = useDispatch()
+  const { isAuth } = useSelector((state) => state.auth)
+
+  if (isAuth) {
+    return <Redirect to="/app" />
+  }
+
   const onFinish = (values) => {
     console.log('Received values of form: ', values)
+    dispatch(login(values))
   }
 
   return (
     <PageContainer>
       <FormContainer>
         <FormWrapper>
-          <Form name="login" onFinish={onFinish} scrollToFirstError>
+          <Form
+            name="login"
+            onFinish={onFinish}
+            initialValues={{ remember: false }}
+            scrollToFirstError
+          >
             <FormTitle>Sign in</FormTitle>
 
             <p>
@@ -68,12 +84,7 @@ const Login = () => {
             </FormItemFlex>
 
             <Form.Item>
-              <Button
-                block
-                type="primary"
-                htmlType="submit"
-                onClick={onFinish()}
-              >
+              <Button block type="primary" htmlType="submit">
                 Login
               </Button>
             </Form.Item>
