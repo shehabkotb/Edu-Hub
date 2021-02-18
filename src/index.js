@@ -5,7 +5,7 @@ import { createBrowserHistory } from 'history'
 import { Provider } from 'react-redux'
 
 import './index.css'
-import App from './components/App/App'
+import App from './App'
 import store from './store.js'
 
 const history = createBrowserHistory()

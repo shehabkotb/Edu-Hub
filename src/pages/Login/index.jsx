@@ -2,7 +2,7 @@ import React from 'react'
 import { Link, Redirect } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { login } from '../../../../reducers/authReducer'
+import { login } from '../../reducers/authReducer'
 
 import { Form, Input, Button, Checkbox, Divider } from 'antd'
 import { MailOutlined, LockOutlined, GoogleOutlined } from '@ant-design/icons'
