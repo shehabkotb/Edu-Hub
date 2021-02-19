@@ -1,9 +1,20 @@
 import React from 'react'
 import { Dropdown, Avatar, Menu } from 'antd'
+import { useDispatch } from 'react-redux'
+
+import { logout } from '../../reducers/authReducer'
 
 const ProfileIcon = () => {
+  const dispatch = useDispatch()
+
+  const clickHandler = ({ key }) => {
+    if (key === 'SIGN_OUT') {
+      dispatch(logout())
+    }
+  }
+
   const menu = (
-    <Menu>
+    <Menu onClick={clickHandler}>
       <Menu.Item>
         <a
           target="_blank"
@@ -22,15 +33,7 @@ const ProfileIcon = () => {
           2nd menu item
         </a>
       </Menu.Item>
-      <Menu.Item>
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="http://www.tmall.com/"
-        >
-          3rd menu item
-        </a>
-      </Menu.Item>
+      <Menu.Item key="SIGN_OUT">Sign out</Menu.Item>
     </Menu>
   )
 

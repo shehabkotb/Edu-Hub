@@ -2,41 +2,44 @@ import React, { useState } from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom'
 import { Layout } from 'antd'
 
-import DropDownNotification from '../DropDownNotification'
-import ProfileIcon from '../ProfileIcon'
-import SideNav from '../SideNav'
+import SideNav from '../components/SideNav'
+import PublicRoute from '../components/PublicRoute'
+import PrivateRoute from '../components/PrivateRoute'
+import ProfileIcon from '../components/ProfileIcon'
+import DropDownNotification from '../components/DropDownNotification'
 
-import NotFoundPage from '../../views/publicPages/NotFoundPage'
-import Login from '../Shared/Forms/Login/Login'
-import Registeration from '../Shared/Forms/Registeration/Registeration'
-import ForgetPassword from '../Shared/Forms/ForgetPassword/ForgetPassword'
-import Courses from '../../views/courses'
-import Browse from '../../views/browse'
-import Articles from '../../views/articles'
-import ArticleForm from '../../views/articles/ArticleForm/ArticleForm'
-// import Profile from '../../views/profile'
-import CourseView from '../../views/courseView'
-import NotFoundView from '../../views/NotFoundView'
+import Login from '../pages/Login'
+import NotFoundPage from '../pages/NotFoundPage'
+import Registeration from '../pages/Registeration'
+import ForgetPassword from '../pages/ForgetPassword'
+import Courses from '../views/courses'
+import Browse from '../views/browse'
+import Articles from '../views/articles'
+import ArticleForm from '../views/articles/ArticleForm/ArticleForm'
+import Profile from '../views/profile'
+import CourseView from '../views/courseView'
+import NotFoundView from '../views/NotFoundView'
 
-import Upload from '../../views/upload'
+import Upload from '../views/upload'
 
 import 'antd/dist/antd.css'
 import 'ant-design-pro/dist/ant-design-pro.css'
 import S from './style'
 
+// public routes redirects to /app if authenticated
+// private routes redirects to login if not authenticated
 const App = () => {
   return (
     <Switch>
       <Route path="/upload" component={Upload} />
       <Route path="/Register" component={Registeration} />
-      <Route path="/Login" component={Login} />
-      <Route path="/ForgetPassword" component={ForgetPassword} />
-      {/* private app, implememt private route in future */}
-      {/* redirect to app for now */}
+      <PublicRoute path="/ForgetPassword" component={ForgetPassword} />
+      <PublicRoute path="/Login" component={Login} />
+      <PrivateRoute path="/app" component={AuthnticatedApp} />
+      {/* future landing page redirect to app for now */}
       <Route exact path="/">
         <Redirect to="/app" />
       </Route>
-      <Route path="/app" component={AuthnticatedApp} />
       <Route path="*" component={NotFoundPage} />
     </Switch>
   )
@@ -76,8 +79,8 @@ const AuthnticatedApp = () => {
             <Route path="/app/courseview" component={CourseView} />
             <Route path="/app/browse" component={Browse} />
             <Route path="/app/articles" component={Articles} />
-            <Route path= "/app/newArticle" component={ArticleForm} />
-            {/* <Route path="/app/profile" component={Profile} /> */}
+            <Route path="/app/newArticle" component={ArticleForm} />
+            <Route path="/app/profile" component={Profile} />
             <Route path="/app/*" component={NotFoundView} />
           </Switch>
         </Content>

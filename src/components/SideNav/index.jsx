@@ -15,7 +15,6 @@ import { ImBooks } from 'react-icons/im'
 
 const SideNav = ({ collapsed, onCollapse }) => {
   const { Sider } = Layout
-  const { SubMenu } = Menu
 
   return (
     <Sider
