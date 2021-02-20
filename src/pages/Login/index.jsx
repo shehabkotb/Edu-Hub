@@ -1,6 +1,6 @@
 import React from 'react'
-import { Link, Redirect } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 
 import { login } from '../../reducers/authReducer'
 
@@ -17,11 +17,6 @@ import {
 
 const Login = () => {
   const dispatch = useDispatch()
-  const { isAuth } = useSelector((state) => state.auth)
-
-  if (isAuth) {
-    return <Redirect to="/app" />
-  }
 
   const onFinish = (values) => {
     console.log('Received values of form: ', values)
@@ -77,7 +72,7 @@ const Login = () => {
             </Form.Item>
 
             <FormItemFlex>
-              <Form.Item name="remember" noStyle>
+              <Form.Item name="remember" valuePropName="checked" noStyle>
                 <Checkbox>Remember me</Checkbox>
               </Form.Item>
               <Link to="/ForgetPassword">Forget Password</Link>
