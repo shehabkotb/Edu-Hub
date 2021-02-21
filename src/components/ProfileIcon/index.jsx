@@ -47,7 +47,7 @@ const ProfileIcon = () => {
     >
       <Avatar
         src="https://www.w3schools.com/howto/img_avatar.png"
-        style={{ marginRight: 20, cursor: 'pointer' }}
+        style={{ cursor: 'pointer' }}
       ></Avatar>
     </Dropdown>
   )

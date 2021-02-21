@@ -1,0 +1,2 @@
+export const CREATE_COURSE = 'CREATE_COURSE'
+export const GET_ALL_COURSES = 'GET_ALL_COURSES'

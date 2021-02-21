@@ -1,16 +1,9 @@
 import { Layout } from 'antd'
 import Styled from 'styled-components'
 
-const { Header, Footer } = Layout
+const { Footer } = Layout
 
 const S = {}
-S.Header = Styled(Header)`
-    padding: 0;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    background: #fff;
-`
 
 S.Footer = Styled(Footer)`
     text-align: center;
