@@ -109,7 +109,7 @@ const Courses = () => {
             <List.Item>
               <CourseCard
                 course={course}
-                onClick={() => history.push(`/app/course/${course.id}`)}
+                onClick={() => history.push(`/app/course/${course.id}/modules`)}
               />
             </List.Item>
           )}
