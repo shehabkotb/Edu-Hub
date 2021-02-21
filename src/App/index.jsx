@@ -68,7 +68,7 @@ const AuthnticatedApp = () => {
           <ProfileIcon />
         </S.Header>
 
-        <Content style={{ padding: '8px 16px', height: '100%' }}>
+        <Content style={{ padding: '20px 32px', height: '100%' }}>
           <Switch>
             {/* redirect to courses page for now */}
             <Route exact path="/app/">

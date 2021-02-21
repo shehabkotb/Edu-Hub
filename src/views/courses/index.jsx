@@ -1,150 +1,119 @@
-import React from 'react'
-import { Card, Col, Row, Typography } from 'antd'
+import React, { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+
+import { Typography, Button, Modal, Form, Input, List } from 'antd'
+import { PlusOutlined } from '@ant-design/icons'
+import { FlexSectionHeader } from './style'
+import CourseCard from './components/CourseCard'
+
+import { createCourse, getAllCourses } from '../../reducers/courseReducer'
+
+import { STUDENT } from '../../constants/userRoles'
+import { useHistory } from 'react-router-dom'
 
 const Courses = () => {
   const { Title } = Typography
-  const { Meta } = Card
+
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(getAllCourses())
+  }, [dispatch])
+
+  const user = useSelector((state) => state.auth.user)
+  const courses = useSelector((state) => state.courses)
+  const history = useHistory()
+
+  const [modalVisible, setModalVisible] = useState(false)
+  const [form] = Form.useForm()
+
+  const handleCancel = () => {
+    setModalVisible(false)
+  }
+
+  const addCourse = (course) => {
+    dispatch(createCourse(course))
+  }
 
   return (
     <React.Fragment>
-      {/* <Breadcrumb style={{ margin: "16px 0" }}>
-          <Breadcrumb.Item>User</Breadcrumb.Item>
-          <Breadcrumb.Item>Bill</Breadcrumb.Item>
-        </Breadcrumb> */}
-      <Title
-        style={{ marginLeft: 24, marginTop: 30, marginBottom: 6 }}
-        level={2}
+      <FlexSectionHeader>
+        <Title level={3}>All Courses</Title>
+        {user && user.role !== STUDENT && (
+          <Button
+            onClick={() => setModalVisible(true)}
+            type="dashed"
+            shape="round"
+            icon={<PlusOutlined />}
+          >
+            Add Course
+          </Button>
+        )}
+      </FlexSectionHeader>
+
+      <Modal
+        title="Add New Course"
+        visible={modalVisible}
+        onOk={form.submit}
+        onCancel={handleCancel}
+        footer={[
+          <Button key="cancel" onClick={handleCancel}>
+            Cancel
+          </Button>,
+          <Button key="submit" type="primary" onClick={form.submit}>
+            Submit
+          </Button>
+        ]}
       >
-        My Courses
-      </Title>
-      <div style={{ minHeight: 572 }}>
-        <div style={{ padding: 24 }}>
-          <Row gutter={[24, 24]}>
-            <Col xs={24} sm={12} md={8}>
-              <Card
-                hoverable
-                bordered={false}
-                cover={
-                  <img
-                    style={{
-                      maxHeight: 256,
-                      objectFit: 'cover',
-                      objectPosition: 'top'
-                    }}
-                    alt="example"
-                    src="https://images.unsplash.com/photo-1532622785990-d2c36a76f5a6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80"
-                  />
-                }
-              >
-                <Meta
-                  title="Europe Street beat"
-                  description="www.instagram.com"
-                />
-              </Card>
-            </Col>
-            <Col xs={24} sm={12} md={8}>
-              <Card
-                hoverable
-                bordered={false}
-                cover={
-                  <img
-                    style={{
-                      maxHeight: 256,
-                      objectFit: 'cover',
-                      objectPosition: 'top'
-                    }}
-                    alt="example"
-                    src="https://images.unsplash.com/photo-1542744094-24638eff58bb?ixlib=rb-1.2.1&auto=format&fit=crop&w=1051&q=80"
-                  />
-                }
-              >
-                <Meta
-                  title="Course title"
-                  description="a really long description test to see if it still looks ok my dude"
-                />
-              </Card>
-            </Col>
-            <Col xs={24} sm={12} md={8}>
-              <Card
-                hoverable
-                bordered={false}
-                cover={
-                  <img
-                    style={{
-                      maxHeight: 256,
-                      objectFit: 'cover',
-                      objectPosition: 'top'
-                    }}
-                    alt="example"
-                    src="https://images.unsplash.com/photo-1556761175-b413da4baf72?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
-                  />
-                }
-              >
-                <Meta title="Course title" description="description" />
-              </Card>
-            </Col>
-            <Col xs={24} sm={12} md={8}>
-              <Card
-                hoverable
-                bordered={false}
-                cover={
-                  <img
-                    style={{
-                      maxHeight: 256,
-                      objectFit: 'cover',
-                      objectPosition: 'top'
-                    }}
-                    alt="example"
-                    src="https://images.unsplash.com/photo-1541516160071-4bb0c5af65ba?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
-                  />
-                }
-              >
-                <Meta title="Course title" description="description" />
-              </Card>
-            </Col>
-            <Col xs={24} sm={12} md={8}>
-              <Card
-                hoverable
-                bordered={false}
-                cover={
-                  <img
-                    style={{
-                      maxHeight: 256,
-                      objectFit: 'cover',
-                      objectPosition: 'top'
-                    }}
-                    alt="example"
-                    src="https://images.unsplash.com/photo-1518186233392-c232efbf2373?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
-                  />
-                }
-              >
-                <Meta title="Course title" description="description" />
-              </Card>
-            </Col>
-            <Col xs={24} sm={12} md={8}>
-              <Card
-                hoverable
-                bordered={false}
-                cover={
-                  <img
-                    style={{
-                      maxHeight: 256,
-                      objectFit: 'cover',
-                      objectPosition: 'top'
-                    }}
-                    alt="example"
-                    src="https://images.unsplash.com/photo-1501504905252-473c47e087f8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
-                  />
-                }
-              >
-                <Meta
-                  title="Course title"
-                  description="a really long description test to see if it still looks ok my dude"
-                />
-              </Card>
-            </Col>
-          </Row>
-        </div>
+        <Form
+          name="add Course"
+          form={form}
+          onFinish={addCourse}
+          requiredMark={false}
+          labelCol={{ span: 6 }}
+          wrapperCol={{ span: 18 }}
+        >
+          <Form.Item
+            name="courseName"
+            label="Course Name"
+            rules={[
+              {
+                required: true,
+                message: 'Please enter the course name'
+              }
+            ]}
+          >
+            <Input placeholder="Course Name" />
+          </Form.Item>
+
+          <Form.Item name="description" label="Description">
+            <Input.TextArea placeholder="(Optional)" allowClear />
+          </Form.Item>
+
+          <Form.Item name="image" label="Cover Image">
+            <Input placeholder="(Optional) Image Url, defaults to random colour" />
+          </Form.Item>
+        </Form>
+      </Modal>
+
+      <div style={{ marginTop: '16px' }}>
+        <List
+          grid={{
+            gutter: 24,
+            column: 3,
+            xs: 1,
+            sm: 2,
+            xxl: 5
+          }}
+          dataSource={courses}
+          renderItem={(course) => (
+            <List.Item>
+              <CourseCard
+                course={course}
+                onClick={() => history.push(`/app/course/${course.id}`)}
+              />
+            </List.Item>
+          )}
+        />
       </div>
     </React.Fragment>
   )
