@@ -1,6 +1,8 @@
 import usersService from '../services/users'
 import { SET_USER, CLEAR_USER } from '../actions/auth'
 
+import { message } from 'antd'
+
 // manpulates the data coming from backend
 const adapterFunc = (user) => {
   return { ...user.user, token: user.token }
@@ -32,6 +34,9 @@ export const login = (credentials) => {
       window.localStorage.setItem('eduhub-user', JSON.stringify(response))
     } catch (error) {
       console.log(error)
+      // the backend should send the error message to show
+      // message.error(error.response.data.message)
+      message.error('invalid credentials')
     }
   }
 }
