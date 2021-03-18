@@ -1,5 +1,5 @@
 import usersService from '../services/users'
-import { SET_USER, CLEAR_USER } from '../actions/auth'
+import { SET_USER, CLEAR_USER  } from '../actions/auth'
 
 import { message } from 'antd'
 
@@ -21,6 +21,23 @@ const authReducer = (state = intialState, action) => {
       return { user: null, isAuth: false }
     default:
       return state
+  }
+}
+
+export const register = (credentials)=>{
+  return async( )=>{
+    try{
+      const response = await usersService.register(credentials) ; 
+      if(!response)
+      {
+        throw new Error('invalid error with response') ; 
+      }
+    }
+    catch(error)
+    {
+      message.error('invalid credentials') ;
+      console.log(error)
+    }
   }
 }
 

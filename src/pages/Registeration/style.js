@@ -1,32 +1,51 @@
-// import styled from 'styled-components'
+import styled from 'styled-components'
 
-export const formItemLayout = {
-    labelCol: {
-      xs: {
-        span: 24,
-      },
-      sm: {
-        span: 8,
-      },
-    },
-    wrapperCol: {
-      xs: {
-        span: 24,
-      },
-      sm: {
-        span: 16,
-      },
-    },
-  };
- export const tailFormItemLayout = {
-    wrapperCol: {
-      xs: {
-        span: 24,
-        offset: 0,
-      },
-      sm: {
-        span: 16,
-        offset: 8,
-      },
-    },
-  };
+import { Form } from 'antd'
+
+export const FormItemFlex = styled(Form.Item)`
+  .ant-form-item-control-input-content {
+    display: flex;
+    justify-content: space-between;
+  }
+`
+
+export const FormContainer = styled.div`
+  margin: 0 auto;
+  width: 26rem;
+  height: 45rem;
+  position: relative;
+  z-index: 2;
+  background-color: white;
+  border-radius: 10px;
+`
+
+export const FormWrapper = styled.div`
+  padding: 40px 32px;
+`
+
+export const FormTitle = styled.h2`
+  margin: 0px;
+`
+
+export const PageContainer = styled.div`
+  &::before {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    pointer-events: none; /* make the pseudo class click-through */
+  }
+
+  background: #251b43; /* fallback */
+  background-image: url('https://w.wallhaven.cc/full/13/wallhaven-133ep3.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  width: 100vw;
+  height: 120vh;
+`
