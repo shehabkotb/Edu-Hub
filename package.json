@@ -11,7 +11,7 @@
     "@types/react-dom": "^16.9.8",
     "ant-design-pro": "^2.3.2",
     "antd": "^4.9.2",
-    "axios": "^0.21.0",
+    "axios": "^0.21.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-dropzone-uploader": "^2.11.0",
