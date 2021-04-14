@@ -21,6 +21,7 @@
     "react-scripts": "^4.0.1",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
+    "serve": "^11.3.2",
     "styled-components": "^5.2.0"
   },
   "scripts": {
