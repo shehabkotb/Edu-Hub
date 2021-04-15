@@ -16,7 +16,7 @@ const publicVapidKey=urlBase64ToUint8Array("***REMOVED***");
 
 function sendSubscription(subscription) {
     console.log(subscription);
-  return fetch(`localhost:4000/notification/subscribe`, {
+  return fetch(`http://localhost:4000/notification/subscribe`, {
     method: 'POST',
     body: JSON.stringify(subscription),
     headers: {
