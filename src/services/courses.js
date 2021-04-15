@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { getAuthHeader } from './config'
 
-const baseURL = '/courses'
+export const baseURL = '/courses'
 
 const getAllCourses = async () => {
   const response = await axios.get(`${baseURL}`)

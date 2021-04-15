@@ -1,5 +1,5 @@
 import usersService from '../services/users'
-import { SET_USER, CLEAR_USER  } from '../actions/auth'
+import { SET_USER, CLEAR_USER } from '../actions/auth'
 
 import { message } from 'antd'
 
@@ -24,18 +24,15 @@ const authReducer = (state = intialState, action) => {
   }
 }
 
-export const register = (credentials)=>{
-  return async( )=>{
-    try{
-      const response = await usersService.register(credentials) ; 
-      if(!response)
-      {
-        throw new Error('invalid error with response') ; 
+export const register = (credentials) => {
+  return async () => {
+    try {
+      const response = await usersService.register(credentials)
+      if (!response) {
+        throw new Error('invalid error with response')
       }
-    }
-    catch(error)
-    {
-      message.error('invalid credentials') ;
+    } catch (error) {
+      message.error('invalid credentials')
       console.log(error)
     }
   }
@@ -61,7 +58,7 @@ export const login = (credentials) => {
 export const logout = () => {
   return async (dispatch) => {
     try {
-      await usersService.logout()
+      // await usersService.logout()
       dispatch({ type: CLEAR_USER })
       window.localStorage.removeItem('eduhub-user')
     } catch (error) {

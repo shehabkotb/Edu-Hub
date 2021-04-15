@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import 'react-dropzone-uploader/dist/styles.css'
 import Dropzone from 'react-dropzone-uploader'
+
+import { Typography, Button, Modal, Form, Input, List } from 'antd'
 
 const Upload = () => {
   // const handleSubmit = async (event) => {
@@ -36,10 +38,21 @@ const Upload = () => {
   //   </div>
   // )
 
-  const courseID = 90751
+  const courseId = '6071bc6237d90440749b0d0c'
+  const moduleId = '607290a4835a88203427158d'
 
-  const getUploadParams = () => {
-    return { url: `http://localhost:4000/course/${courseID}/upload-material` }
+  const [form] = Form.useForm()
+
+  const getUploadParams = ({ file, meta }) => {
+    // debugger
+    const body = new FormData()
+    body.append('file', file)
+    body.append('title', form.getFieldValue('title'))
+    body.append('type', form.getFieldValue('type'))
+    return {
+      url: `http://localhost:4000/courses/${courseId}/modules/${moduleId}/module-item`,
+      body
+    }
   }
 
   const handleChangeStatus = ({ meta }, status) => {
@@ -51,19 +64,67 @@ const Upload = () => {
     allFiles.forEach((f) => f.remove())
   }
 
+  // return (
+  //   <Dropzone
+  //     styles={{
+  //       dropzone: {
+  //         height: 'fit-content',
+  //         overflow: 'hidden'
+  //       },
+  //       inputLabel: { borderStyle: 'dotted' }
+  //     }}
+  //     getUploadParams={getUploadParams}
+  //     onChangeStatus={handleChangeStatus}
+  //     onSubmit={handleSubmit}
+  //   />
+  // )
+
   return (
-    <Dropzone
-      styles={{
-        dropzone: {
-          height: 'fit-content',
-          overflow: 'hidden'
-        },
-        inputLabel: { borderStyle: 'dotted' }
-      }}
-      getUploadParams={getUploadParams}
-      onChangeStatus={handleChangeStatus}
-      onSubmit={handleSubmit}
-    />
+    <>
+      <Form
+        name="add Course"
+        form={form}
+        // onFinish={addCourse}
+        requiredMark={false}
+        labelCol={{ span: 6 }}
+        wrapperCol={{ span: 18 }}
+      >
+        <Form.Item
+          name="title"
+          label="Title"
+          rules={[
+            {
+              required: true,
+              message: 'Please enter the name'
+            }
+          ]}
+        >
+          <Input placeholder="file name" />
+        </Form.Item>
+
+        <Form.Item name="type" label="type">
+          <Input.TextArea placeholder="(Optional)" allowClear />
+        </Form.Item>
+
+        <Dropzone
+          styles={{
+            dropzone: {
+              height: 'fit-content',
+              overflow: 'hidden'
+            },
+            inputLabel: { borderStyle: 'dotted' }
+          }}
+          getUploadParams={getUploadParams}
+          onChangeStatus={handleChangeStatus}
+        />
+
+        {/* <Form.Item>
+          <Button type="primary" htmlType="submit">
+            Submit
+          </Button>
+        </Form.Item> */}
+      </Form>
+    </>
   )
 }
 
