@@ -14,19 +14,19 @@ function urlBase64ToUint8Array(base64String) {
 
 const publicVapidKey=urlBase64ToUint8Array("***REMOVED***");
 
-function sendSubscription(subscription) {
+function sendSubscription(subscription,endpoint,auth) {
     console.log(subscription);
-  return fetch(`http://localhost:4000/notification/subscribe`, {
+  return fetch(endpoint, {
     method: 'POST',
     body: JSON.stringify(subscription),
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDczMDcwMjExMTI1ZjI0Mjg3OGVkYjEiLCJpYXQiOjE2MTg0NDA4NzAsImV4cCI6MTYxODUyNzI3MH0.EoCCazvYJPsHMbCFf5rVChv8vEkysL-O3mU6dpGq25Q'
+      'Authorization': auth
     }
   })
 }
 
-export function subscribeUser() {
+export function subscribeUser(endpoint,auth) {
     try{
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.ready.then(function(registration) {
@@ -43,7 +43,7 @@ export function subscribeUser() {
                     userVisibleOnly: true,
                   }).then(function(newSubscription) {
                     console.log('New subscription added.')
-                    sendSubscription(newSubscription)
+                    sendSubscription(newSubscription,endpoint,auth)
                   }).catch(function(e) {
                     if (Notification.permission !== 'granted') {
                       console.log('Permission was not granted.')
@@ -53,7 +53,7 @@ export function subscribeUser() {
                   })
                 } else {
                   console.log('Existed subscription detected.')
-                  sendSubscription(existedSubscription)
+                  sendSubscription(existedSubscription,endpoint,auth)
                 }
               })
             })
