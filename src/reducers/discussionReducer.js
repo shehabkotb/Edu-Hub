@@ -5,7 +5,7 @@ import {
   REMOVE_DISCUSSION,
   ADD_DCOMMENT,
   REMOVE_DCOMMENT
-} from '../actions/course'
+} from '../actions/discussion'
 import { notification } from 'antd'
 
 const discussionReducer = (state = [], action) => {
