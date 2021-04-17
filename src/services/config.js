@@ -6,3 +6,13 @@ export const getAuthHeader = () => {
     }
   }
 }
+
+export const getMultiPartAuthHeader = () => {
+  const token = JSON.parse(localStorage.getItem('eduhub-user')).token
+  return {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      Authorization: `Bearer ${token}`
+    }
+  }
+}

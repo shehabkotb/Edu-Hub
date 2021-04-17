@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { List, Space, Typography, Button } from 'antd'
+import { List, Space, Button } from 'antd'
 import styled from 'styled-components'
 
 import {

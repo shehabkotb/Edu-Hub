@@ -29,8 +29,6 @@ import Modules from '../views/modules'
 
 import NotFoundView from '../views/NotFoundView'
 
-import Upload from '../views/upload'
-
 import 'antd/dist/antd.css'
 import 'ant-design-pro/dist/ant-design-pro.css'
 import S from './style'
@@ -42,7 +40,6 @@ import AppHeader from '../components/AppHeader'
 const App = () => {
   return (
     <Switch>
-      <Route path="/upload" component={Upload} />
       <Route path="/Register" component={Registeration} />
       <PublicRoute path="/ForgetPassword" component={ForgetPassword} />
       <PublicRoute path="/Login" component={Login} />

@@ -1,52 +1,30 @@
-import { Button, Input, List, Radio, Space, Form, notification } from 'antd'
+import { Button, Input, Radio, Space, Form, Upload } from 'antd'
 import React, { useState } from 'react'
 
-import { PlusOutlined } from '@ant-design/icons'
-import Dropzone from 'react-dropzone-uploader'
-import { useDispatch } from 'react-redux'
-import { useParams } from 'react-router'
+import { PlusOutlined, InboxOutlined } from '@ant-design/icons'
 
-const FileForm = ({ moduleId, handleCancel, ...rest }) => {
+const { Dragger } = Upload
+
+const FileForm = ({ handleCancel, addModuleItem }) => {
   const [form] = Form.useForm()
 
-  const { courseId } = useParams()
-
-  const [uploadDisabled, setUploadDisabled] = useState(true)
-  const test = { disabled: uploadDisabled }
-
-  const getUploadParams = ({ file, meta }) => {
+  const handleSubmit = (values) => {
     const body = new FormData()
-    body.append('file', file)
-    body.append('title', form.getFieldValue('title'))
+    body.append('file', values.file[0].originFileObj)
     body.append('type', 'file')
-    return {
-      url: `http://localhost:4000/courses/${courseId}/modules/${moduleId}/module-item`,
-      body
-    }
+    body.append('title', values.title)
+    addModuleItem(body)
   }
 
-  const handleValueChange = (e) => {
-    if (e.target.value === '') setUploadDisabled(true)
-    else setUploadDisabled(false)
-  }
-
-  const handleChangeStatus = ({ meta, remove }, status) => {
-    if (status === 'headers_received') {
-      notification.success({
-        message: 'file uploaded'
-      })
-      remove()
-    } else if (status === 'aborted') {
-      notification.error({
-        message: 'file failed to upload'
-      })
-    }
+  const getFileList = (files) => {
+    return files.fileList
   }
 
   return (
     <>
       <Form
         form={form}
+        onFinish={handleSubmit}
         style={{ marginTop: '8px', width: '100%' }}
         requiredMark="optional"
       >
@@ -54,7 +32,6 @@ const FileForm = ({ moduleId, handleCancel, ...rest }) => {
           <Form.Item
             name="title"
             label="File Name"
-            onChange={handleValueChange}
             rules={[{ required: true }]}
           >
             <Input />
@@ -62,38 +39,52 @@ const FileForm = ({ moduleId, handleCancel, ...rest }) => {
           <Form.Item>
             <Button onClick={handleCancel}>Cancel</Button>
           </Form.Item>
+          <Form.Item>
+            <Button type="primary" onClick={() => form.submit()}>
+              submit
+            </Button>
+          </Form.Item>
         </Space>
-        <Dropzone
-          getUploadParams={getUploadParams}
-          maxFiles={1}
-          multiple={false}
-          canCancel={false}
-          onChangeStatus={handleChangeStatus}
-          {...test}
-          styles={{
-            dropzone: {
-              height: 'fit-content',
-              overflow: 'hidden'
-            },
-            inputLabel: { borderStyle: 'groove' },
-            input: { display: 'none' }
-          }}
-        />
+        <Form.Item
+          name="file"
+          valuePropName="fileList"
+          getValueFromEvent={getFileList}
+          rules={[
+            { type: 'array', max: 1, required: true, message: 'only one file' }
+          ]}
+        >
+          <Dragger
+            beforeUpload={() => {
+              return false
+            }}
+          >
+            <p className="ant-upload-drag-icon">
+              <InboxOutlined />
+            </p>
+            <p className="ant-upload-text">
+              Click or drag file to this area to upload
+            </p>
+            <p className="ant-upload-hint">
+              Support for a single file upload only.
+            </p>
+          </Dragger>
+        </Form.Item>
       </Form>
     </>
   )
 }
 
 const VideoForm = ({ handleCancel, addModuleItem }) => {
-  const dispatch = useDispatch()
+  const [form] = Form.useForm()
 
   const handleSubmit = (moduleItem) => {
     moduleItem.type = 'video'
-    dispatch(addModuleItem(moduleItem))
+    addModuleItem(moduleItem)
   }
 
   return (
     <Form
+      form={form}
       onFinish={handleSubmit}
       style={{ marginTop: '8px' }}
       requiredMark="optional"
@@ -106,14 +97,24 @@ const VideoForm = ({ handleCancel, addModuleItem }) => {
         >
           <Input />
         </Form.Item>
-        <Form.Item name="url" label="Video url" rules={[{ required: true }]}>
+        <Form.Item
+          rules={[
+            {
+              required: true,
+              message: 'Please valid url',
+              type: 'url'
+            }
+          ]}
+          name="url"
+          label="Video url"
+        >
           <Input />
         </Form.Item>
         <Form.Item>
           <Button onClick={handleCancel}>Cancel</Button>
         </Form.Item>
         <Form.Item>
-          <Button htmlType="submit" type="primary">
+          <Button onClick={form.submit} type="primary">
             Submit
           </Button>
         </Form.Item>
@@ -122,7 +123,7 @@ const VideoForm = ({ handleCancel, addModuleItem }) => {
   )
 }
 
-const ModuleItemForm = ({ instructorAccess, addModuleItem, moduleId }) => {
+const ModuleItemForm = ({ instructorAccess, addModuleItem }) => {
   const [formActive, setFormActive] = useState(false)
   const [moduleItemType, setModuleItemType] = useState('video')
 
@@ -130,7 +131,6 @@ const ModuleItemForm = ({ instructorAccess, addModuleItem, moduleId }) => {
 
   if (!instructorAccess) return null
 
-  debugger
   return (
     <>
       {!formActive && (
@@ -165,7 +165,10 @@ const ModuleItemForm = ({ instructorAccess, addModuleItem, moduleId }) => {
             />
           )}
           {moduleItemType === 'file' && (
-            <FileForm moduleId={moduleId} handleCancel={handleCancel} />
+            <FileForm
+              addModuleItem={addModuleItem}
+              handleCancel={handleCancel}
+            />
           )}
         </>
       )}

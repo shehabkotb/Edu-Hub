@@ -35,6 +35,11 @@ const Modules = (props) => {
     dispatch(createModule(courseId, module))
   }
 
+  const editModule = (moduleId, module) => {
+    debugger
+    dispatch(updateModule(courseId, moduleId, module))
+  }
+
   const removeModule = (moduleId) => {
     dispatch(deleteModule(courseId, moduleId))
   }
@@ -47,11 +52,11 @@ const Modules = (props) => {
     dispatch(deleteModuleItem(courseId, moduleId, moduleItemId))
   }
 
-  const [modalVisible, setModalVisible] = useState(false)
+  const [addModalActive, setAddModalActive] = useState(false)
   const [form] = Form.useForm()
 
   const handleCancel = () => {
-    setModalVisible(false)
+    setAddModalActive(false)
   }
 
   return (
@@ -60,7 +65,7 @@ const Modules = (props) => {
         <Title level={3}>Modules</Title>
         {user && user.role !== STUDENT && (
           <Button
-            onClick={() => setModalVisible(true)}
+            onClick={() => setAddModalActive(true)}
             type="dashed"
             shape="round"
             icon={<PlusOutlined />}
@@ -72,7 +77,7 @@ const Modules = (props) => {
 
       <Modal
         title="Add New Module"
-        visible={modalVisible}
+        visible={addModalActive}
         onOk={form.submit}
         onCancel={handleCancel}
         footer={[
@@ -115,6 +120,9 @@ const Modules = (props) => {
               <ModuleList
                 module={module}
                 instructorAccess={user.role !== STUDENT}
+                editModule={(updatedModule) =>
+                  editModule(module.id, updatedModule)
+                }
                 removeModule={removeModule}
                 addModuleItem={(moduleItem) =>
                   addModuleItem(module.id, moduleItem)

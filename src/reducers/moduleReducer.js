@@ -109,11 +109,24 @@ export const deleteModule = (courseId, moduleId) => {
 export const createModuleItem = (courseId, moduleId, moduleItem) => {
   return async (dispatch) => {
     try {
-      const response = await moduleService.createModuleItem(
-        courseId,
-        moduleId,
-        moduleItem
-      )
+      debugger
+      let response
+      if (moduleItem instanceof FormData) {
+        // file
+        response = await moduleService.uploadModuleItem(
+          courseId,
+          moduleId,
+          moduleItem
+        )
+      } else {
+        // video
+        response = await moduleService.createModuleItem(
+          courseId,
+          moduleId,
+          moduleItem
+        )
+      }
+
       dispatch({ type: CREATE_MODULE_ITEM, data: response })
       notification.success({
         message: 'Added module Item successfully'
