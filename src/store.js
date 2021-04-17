@@ -5,11 +5,13 @@ import logger from 'redux-logger'
 import authReducer from './reducers/authReducer'
 import courseReducer from './reducers/courseReducer'
 import moduleReducer from './reducers/moduleReducer'
+import discussionReducer from './reducers/discussionReducer'
 
 const reducer = combineReducers({
   auth: authReducer,
   courses: courseReducer,
-  modules: moduleReducer
+  modules: moduleReducer,
+  discussions: discussionReducer
 })
 
 // debugging with devtools
