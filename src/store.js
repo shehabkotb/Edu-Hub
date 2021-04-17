@@ -2,9 +2,17 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import { combineReducers, createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 
+import { persistStore, persistReducer } from 'redux-persist'
+import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
+
 import authReducer from './reducers/authReducer'
 import courseReducer from './reducers/courseReducer'
 import moduleReducer from './reducers/moduleReducer'
+
+const persistConfig = {
+  key: 'root',
+  storage
+}
 
 const reducer = combineReducers({
   auth: authReducer,
@@ -12,7 +20,13 @@ const reducer = combineReducers({
   modules: moduleReducer
 })
 
-// debugging with devtools
-const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)))
+const persistedReducer = persistReducer(persistConfig, reducer)
 
-export default store
+// debugging with devtools
+let store = createStore(
+  persistedReducer,
+  composeWithDevTools(applyMiddleware(thunk))
+)
+let persistor = persistStore(store)
+
+export { store, persistor }
