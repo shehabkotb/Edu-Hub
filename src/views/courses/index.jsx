@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import { Typography, Button, Modal, Form, Input, List } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
-import { FlexSectionHeader } from './style'
+import { FlexSectionHeader } from '../style'
 import CourseCard from './components/CourseCard'
 
 import { createCourse, getAllCourses } from '../../reducers/courseReducer'

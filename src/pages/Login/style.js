@@ -40,7 +40,7 @@ export const PageContainer = styled.div`
   }
 
   background: #251b43; /* fallback */
-  background-image: url('https://w.wallhaven.cc/full/13/wallhaven-133ep3.jpg');
+  background-image: url('/login-background.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;

@@ -29,8 +29,6 @@ import Modules from '../views/modules'
 
 import NotFoundView from '../views/NotFoundView'
 
-import Upload from '../views/upload'
-
 import 'antd/dist/antd.css'
 import 'ant-design-pro/dist/ant-design-pro.css'
 import S from './style'
@@ -42,7 +40,6 @@ import AppHeader from '../components/AppHeader'
 const App = () => {
   return (
     <Switch>
-      <Route path="/upload" component={Upload} />
       <Route path="/Register" component={Registeration} />
       <PublicRoute path="/ForgetPassword" component={ForgetPassword} />
       <PublicRoute path="/Login" component={Login} />
@@ -96,11 +93,14 @@ const AuthnticatedApp = () => {
             </Route>
 
             <Route path="/app/courses" component={Courses} />
-            <Route path="/app/course/:id/modules" component={Modules} />
-            <Route path="/app/course/:id/assignments" component={Assignments} />
-            <Route path="/app/course/:id/quizes" component={Quizes} />
-            <Route path="/app/course/:id/exams" component={Exams} />
-            <Route path="/app/course/:id/videos" component={Videos} />
+            <Route path="/app/course/:courseId/modules" component={Modules} />
+            <Route
+              path="/app/course/:courseId/assignments"
+              component={Assignments}
+            />
+            <Route path="/app/course/:courseId/quizes" component={Quizes} />
+            <Route path="/app/course/:courseId/exams" component={Exams} />
+            <Route path="/app/course/:courseId/videos" component={Videos} />
             <Route path="/app/browse" component={Browse} />
             <Route path="/app/articles" component={Articles} />
             <Route path="/app/newArticle" component={ArticleForm} />

@@ -4,10 +4,12 @@ import thunk from 'redux-thunk'
 
 import authReducer from './reducers/authReducer'
 import courseReducer from './reducers/courseReducer'
+import moduleReducer from './reducers/moduleReducer'
 
 const reducer = combineReducers({
   auth: authReducer,
-  courses: courseReducer
+  courses: courseReducer,
+  modules: moduleReducer
 })
 
 // debugging with devtools
