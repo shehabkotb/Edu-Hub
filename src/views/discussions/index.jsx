@@ -1,5 +1,11 @@
 import DiscussionCard from "./components/discussionCard"
 import styles from "./styles.css"
+import { useSelector, useDispatch } from 'react-redux'
+import React, { useState, useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
+import { Button } from "antd"
+import TextArea from 'antd/lib/input/TextArea'
+
 
 const sample = {
   _id: {
@@ -68,11 +74,23 @@ const sample = {
 
 
 const DiscussionFeed = ({ courseId }) => {
+  /*const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(getAllDiscussions())
+  }, [dispatch])*/
+  const user = useSelector((state) => state.auth.user)
+  //const discussions = useSelector((state) => state.discussions)
+  //const history = useHistory()
+
   return (
     <div>
-      <DiscussionCard discussion={sample} styles={styles} />
-      <DiscussionCard discussion={sample} styles={styles} />
-      <DiscussionCard discussion={sample} styles={styles} />
+      <span>
+        <TextArea className="text"></TextArea>
+        <Button>post</Button>
+      </span>
+      <DiscussionCard discussion={sample} user={user} styles={styles} />
+      <DiscussionCard discussion={sample} user={user} styles={styles} />
+      <DiscussionCard discussion={sample} user={user} styles={styles} />
     </div>
   )
 }

@@ -1,18 +1,26 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Card, Button } from 'antd'
 import Meta from 'antd/lib/card/Meta'
 import Avatar from 'antd/lib/avatar/avatar'
 import TextArea from 'antd/lib/input/TextArea'
 import AllComments from './commentCard'
 
-const DiscussionCard = ({discussion}) => {
+const DiscussionCard = ({discussion, user}) => {
     return (
       <div className="container">
-        <Card hoverable className="custom-card">
-          <Meta
-            avatar={<Avatar src={discussion.user.photo} />}
-            title={discussion.user.name}
-          />
+        <Card
+          hoverable
+          className="custom-card"
+          title={
+            <div>
+              <Meta
+                avatar={<Avatar src={discussion.user.photo} />}
+                title={discussion.user.name}
+              />
+              <Button className="deleteButton">delete</Button>
+            </div>
+          }
+        >
           <p>{discussion.data}</p>
           <Card
             size="small"
