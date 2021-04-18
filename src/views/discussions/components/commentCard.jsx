@@ -11,10 +11,10 @@ const Comment = ({ user, data, Luser }) => {
       size="small"
       title={
         <span>
-          {/*<Avatar src={user.photo} />
-          <span>{' ' + user.name}</span>*/}
+          <Avatar src={user.photo} />
+          <span>{' ' + user.name}</span>
           <Button
-                disabled={!(user === Luser._id)}
+                disabled={!(user === Luser._id)}// elmafrod user._id
                 className="deleteButton"
               >delete</Button>
         </span>

@@ -30,14 +30,14 @@ const DiscussionCard = ({discussion, user}) => {
           className="custom-card"
           title={
             <div>
-              {/*<Meta
+              <Meta
                 avatar={<Avatar src={discussion.user.photo} />}
                 title={discussion.user.name}
-              />*/}
+              />
               <Button
-                disabled={!(discussion.user === user._id)}
+                disabled={!(discussion.user === user._id)} // elmafrod discussion.user._id
                 className="deleteButton"
-                onClick={()=>{
+                onClick={() => {
                   dispatch(removeDiscussion(discussion._id))
                 }}
               >
