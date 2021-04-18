@@ -3,31 +3,7 @@ import { Card, Button } from 'antd'
 import Meta from 'antd/lib/card/Meta'
 import Avatar from 'antd/lib/avatar/avatar'
 import TextArea from 'antd/lib/input/TextArea'
-
-
-const Comment = ({user,data}) =>{
-    return (
-      <Card
-        size="small"
-        title={
-          <span>
-            <Avatar src={user.photo} />
-            <span>{" "+user.name}</span>
-          </span>
-        }
-      >
-        <p>{data}</p>
-      </Card>
-    )
-}
-
-const AllComments = ({comments}) =>{
-    return(comments.map(
-        cmnt =>{
-            return <Comment key={cmnt._id} user={cmnt.user} data={cmnt.data} />
-        }
-    ))
-}
+import AllComments from './commentCard'
 
 const DiscussionCard = ({discussion}) => {
     return (
