@@ -42,12 +42,15 @@ const removeComment = async (Id, comment) => {
   return response.data
 }
 
-const addComment = async (Id, comment) => {
+const addComment = async (Id, comment, user) => {
   const response = await axios.post(
     `${baseURL}/addComment`,
     {
       discussionId: Id,
-      comment: comment
+      comment: {
+        data:comment,
+        user:user
+      }
     },
     getAuthHeader()
   )

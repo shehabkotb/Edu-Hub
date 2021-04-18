@@ -6,9 +6,6 @@ import { useHistory } from 'react-router-dom'
 import { Button, Input } from "antd"
 import TextArea from 'antd/lib/input/TextArea'
 import {
-  removeComment,
-  addComment,
-  removeDiscussion,
   addDiscussion,
   getAllDiscussions
 } from '../../reducers/discussionReducer'
@@ -105,7 +102,7 @@ const DiscussionFeed = ({ courseId }) => {
   const [disText, setDisText] = useState('');
 
   const onPost = () => {
-    if (disText!=='') console.log(disText)
+    if (disText!=='') dispatch(addDiscussion(courseId, disText))
     else console.log("cant post empty post")
   }
 

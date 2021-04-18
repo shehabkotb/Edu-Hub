@@ -1,6 +1,9 @@
 import React from 'react'
 import { Card, Button } from 'antd'
 import Avatar from 'antd/lib/avatar/avatar'
+import {
+  removeComment
+} from '../../../reducers/discussionReducer'
 
 const Comment = ({ user, data, Luser }) => {
   return (
@@ -8,10 +11,10 @@ const Comment = ({ user, data, Luser }) => {
       size="small"
       title={
         <span>
-          <Avatar src={user.photo} />
-          <span>{' ' + user.name}</span>
+          {/*<Avatar src={user.photo} />
+          <span>{' ' + user.name}</span>*/}
           <Button
-                disabled={!(user._id === Luser._id)}
+                disabled={!(user === Luser._id)}
                 className="deleteButton"
               >delete</Button>
         </span>
