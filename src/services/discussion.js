@@ -5,7 +5,7 @@ export const baseURL = '/discussions'
 
 const getAllDiscussions = async (courseId) => {
   const response = await axios.get(
-    `${baseURL}/getAll/:` + courseId,
+    `${baseURL}/getAll/` + courseId,
     getAuthHeader()
   )
   return response.data
@@ -24,7 +24,7 @@ const addDiscussion = async (courseId, data) => {
 
 const removeDiscussion = async (id) => {
   const response = await axios.delete(
-    `${baseURL}/remove/:`+id,
+    `${baseURL}/remove/`+id,
     getAuthHeader()
   )
   return response.data

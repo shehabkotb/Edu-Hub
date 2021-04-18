@@ -5,9 +5,16 @@ import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { Button } from "antd"
 import TextArea from 'antd/lib/input/TextArea'
+import {
+  removeComment,
+  addComment,
+  removeDiscussion,
+  addDiscussion,
+  getAllDiscussions
+} from '../../reducers/discussionReducer'
 
 
-const sample = {
+const sample = [{
   _id: {
     $oid: '607a412d28b0923318917ee8'
   },
@@ -70,27 +77,44 @@ const sample = {
       }
     }
   ]
+}]
+
+const Feed = ({discussions,user})=>{
+  return(discussions.map(
+        dis =>{
+            return (
+              <DiscussionCard
+                key={dis._id}
+                discussion={dis}
+                user={user}
+                styles={styles}
+              />
+            )
+        }
+    ))
 }
 
 
 const DiscussionFeed = ({ courseId }) => {
-  /*const dispatch = useDispatch()
+  const dispatch = useDispatch()
   useEffect(() => {
-    dispatch(getAllDiscussions())
-  }, [dispatch])*/
+    dispatch(getAllDiscussions(courseId))
+  }, [dispatch])
   const user = useSelector((state) => state.auth.user)
-  //const discussions = useSelector((state) => state.discussions)
+  const discussions = useSelector((state) => state.discussions)
   //const history = useHistory()
 
   return (
     <div>
+      <span>{courseId}</span>
       <span>
         <TextArea className="text"></TextArea>
         <Button>post</Button>
       </span>
+      <Feed discussions={discussions} user={user} />
+      {/*<DiscussionCard discussion={sample} user={user} styles={styles} />
       <DiscussionCard discussion={sample} user={user} styles={styles} />
-      <DiscussionCard discussion={sample} user={user} styles={styles} />
-      <DiscussionCard discussion={sample} user={user} styles={styles} />
+  <DiscussionCard discussion={sample} user={user} styles={styles} />*/}
     </div>
   )
 }

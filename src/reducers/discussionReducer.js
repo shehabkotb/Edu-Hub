@@ -33,7 +33,7 @@ export const getAllDiscussions = (courseId) => {
     } catch (error) {
       console.log(error)
       notification.error({
-        message: "Couldn't load discussions check your connection"
+        message: "Couldn't load discussions check your connection"+error
       })
     }
   }
