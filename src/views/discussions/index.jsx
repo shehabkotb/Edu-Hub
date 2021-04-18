@@ -67,14 +67,14 @@ const sample = {
 }
 
 
-const DiscussionFeed= ()=>{
-    return (
-      <div>
-        <DiscussionCard discussion={sample} styles={styles} />
-        <DiscussionCard discussion={sample} styles={styles} />
-        <DiscussionCard discussion={sample} styles={styles} />
-      </div>
-    )
+const DiscussionFeed = ({ courseId }) => {
+  return (
+    <div>
+      <DiscussionCard discussion={sample} styles={styles} />
+      <DiscussionCard discussion={sample} styles={styles} />
+      <DiscussionCard discussion={sample} styles={styles} />
+    </div>
+  )
 }
 
 export default DiscussionFeed

@@ -102,7 +102,12 @@ const AuthnticatedApp = () => {
             <Route path="/app/course/:courseId/quizes" component={Quizes} />
             <Route path="/app/course/:courseId/exams" component={Exams} />
             <Route path="/app/course/:courseId/videos" component={Videos} />
-            <Route path="/app/course/:courseId/discussions" component={DiscussionFeed} />
+            <Route
+              path="/app/course/:courseId/discussions"
+              render={(props) => (
+                <DiscussionFeed courseId={props.match.params.courseId} />
+              )}
+            />
             <Route path="/app/browse" component={Browse} />
             <Route path="/app/articles" component={Articles} />
             <Route path="/app/newArticle" component={ArticleForm} />
