@@ -3,7 +3,7 @@ import styles from "./styles.css"
 import { useSelector, useDispatch } from 'react-redux'
 import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
-import { Button } from "antd"
+import { Button, Input } from "antd"
 import TextArea from 'antd/lib/input/TextArea'
 import {
   removeComment,
@@ -96,25 +96,37 @@ const Feed = ({discussions,user})=>{
 
 
 const DiscussionFeed = ({ courseId }) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAllDiscussions(courseId))
-  }, [dispatch])
-  const user = useSelector((state) => state.auth.user)
-  const discussions = useSelector((state) => state.discussions)
-  //const history = useHistory()
+  }, [dispatch]);
+  const user = useSelector((state) => state.auth.user);
+  const discussions = useSelector((state) => state.discussions);
+  const [disText, setDisText] = useState('');
+
+  const onPost = () => {
+    if (disText!=='') console.log(disText)
+    else console.log("cant post empty post")
+  }
+
+  const onTxtChange = (txt) => {
+    setDisText(txt.target.value)
+  }
 
   return (
     <div>
-      <span>{courseId}</span>
       <span>
-        <TextArea className="text"></TextArea>
-        <Button>post</Button>
+        <Input
+          size="large"
+          allowClear={true}
+          bordered={true}
+          placeholder="what you think"
+          onChange={onTxtChange}
+          className="txt"
+        ></Input>
+        <Button onClick={onPost}>Post</Button>
       </span>
       <Feed discussions={discussions} user={user} />
-      {/*<DiscussionCard discussion={sample} user={user} styles={styles} />
-      <DiscussionCard discussion={sample} user={user} styles={styles} />
-  <DiscussionCard discussion={sample} user={user} styles={styles} />*/}
     </div>
   )
 }

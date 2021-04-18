@@ -14,12 +14,14 @@
 .container{
   margin: 10px;
 }
-.text{
+.txt{
   width: 80%;
   height: 80%;
   padding: 10px;
   position: relative;
+  float: left;
 }
 .deleteButton{
   position: relative;
+  float: right; 
 }

@@ -17,7 +17,12 @@ const DiscussionCard = ({discussion, user}) => {
                 avatar={<Avatar src={discussion.user.photo} />}
                 title={discussion.user.name}
               />
-              <Button className="deleteButton">delete</Button>
+              <Button
+                disabled={!(discussion._id === user._id)}
+                className="deleteButton"
+              >
+                delete
+              </Button>
             </div>
           }
         >
@@ -28,7 +33,7 @@ const DiscussionCard = ({discussion, user}) => {
             className="comment-card"
             title="comments"
           >
-            <AllComments comments={discussion.comments} />
+            <AllComments comments={discussion.comments} Luser={user} />
           </Card>
           <div className="container">
             <TextArea></TextArea>
