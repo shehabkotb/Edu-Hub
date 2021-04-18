@@ -15,10 +15,10 @@ const discussionReducer = (state = [], action) => {
     case ADD_DISCUSSION:
       return state.concat({ ...action.data })
     case REMOVE_DISCUSSION:
-      return state.filter(val=>val._id!=action.data )
+      return state.filter(val=>val._id!==action.data )
     case ADD_DCOMMENT || REMOVE_DCOMMENT:
       return state.map(val=>{
-        if(val==action.data){return action.data}else{return val}
+        if(val===action.data){return action.data}else{return val}
       })
     default:
       return state
@@ -60,7 +60,7 @@ export const removeDiscussion = (id) => {
   return async (dispatch) => {
     try {
       const response = await discussionService.removeDiscussion(id)
-      if (response.status == 201) {
+      if (response.status === 201) {
         dispatch({ type: REMOVE_DCOMMENT, data: id })
         notification.success({
           message: 'Posted successfully'

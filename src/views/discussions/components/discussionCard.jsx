@@ -1,40 +1,57 @@
 import React from 'react'
-import { Card } from 'antd'
+import { Card, Button } from 'antd'
 import Meta from 'antd/lib/card/Meta'
 import Avatar from 'antd/lib/avatar/avatar'
+import TextArea from 'antd/lib/input/TextArea'
 
 
-const comment = ({user,data}) =>{
-    return(
-        <div className="container">
-            <h3>
-                From {user.name}
-            </h3>
-            <h1>
-                {data}
-            </h1>
-        </div>
-    );
+const Comment = ({user,data}) =>{
+    return (
+      <Card
+        size="small"
+        title={
+          <span>
+            <Avatar src={user.photo} />
+            <span>{" "+user.name}</span>
+          </span>
+        }
+      >
+        <p>{data}</p>
+      </Card>
+    )
 }
 
-const allComments = ({comments}) =>{
+const AllComments = ({comments}) =>{
     return(comments.map(
         cmnt =>{
-            return <comment user={cmnt.user} data={cmnt.data} />
+            return <Comment key={cmnt._id} user={cmnt.user} data={cmnt.data} />
         }
     ))
 }
 
 const DiscussionCard = ({discussion}) => {
     return (
-      <Card hoverable>
-        <Meta
-          avatar={<Avatar src={discussion.user.photo} />}
-          title={discussion.user.name}
-          description={discussion.data}
-        />
-        <allComments comments={discussion.comments}/>
-      </Card>
+      <div className="container">
+        <Card hoverable className="custom-card">
+          <Meta
+            avatar={<Avatar src={discussion.user.photo} />}
+            title={discussion.user.name}
+          />
+          <p>{discussion.data}</p>
+          <Card
+            size="small"
+            type="inner"
+            className="comment-card"
+            title="comments"
+          >
+            <AllComments comments={discussion.comments} />
+          </Card>
+          <div className="container">
+            <TextArea></TextArea>
+            <Button color="secondary">add comment</Button>
+          </div>
+        </Card>
+      </div>
     )
 
 }
