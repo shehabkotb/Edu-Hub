@@ -60,12 +60,10 @@ export const removeDiscussion = (id) => {
   return async (dispatch) => {
     try {
       const response = await discussionService.removeDiscussion(id)
-      if (response.status === 201) {
         dispatch({ type: REMOVE_DCOMMENT, data: id })
         notification.success({
-          message: 'Posted successfully'
+          message: 'removed successfully'
         })
-      }
     } catch (error) {
       console.log(error)
       notification.error({
