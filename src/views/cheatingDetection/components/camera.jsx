@@ -1,11 +1,6 @@
 import React, { Component, useRef, useCallback, useState } from 'react'
 import Webcam from 'react-webcam'
 
-const videoConstraints = {
-  width: 1080,
-  height: 1920,
-  facingMode: 'user'
-}
 
 const Camera = () => {
   const webcamRef = useRef(null)
@@ -17,17 +12,21 @@ const Camera = () => {
   }, [webcamRef])
 
   return (
-    <>
+    <div>
       <Webcam
         audio={false}
-        height={720}
+        width={240}
+        height={240}
         ref={webcamRef}
         screenshotFormat="image/jpeg"
-        width={1280}
-        videoConstraints={videoConstraints}
+        videoConstraints={{
+          width: 240,
+          height: 240,
+          facingMode: 'user'
+        }}
       />
-      <button onClick={capture}>Capture photo</button>
-    </>
+      {/*<button onClick={capture}>Capture photo</button>*/}
+    </div>
   )
 }
 
