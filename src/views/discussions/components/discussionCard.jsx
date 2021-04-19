@@ -12,15 +12,18 @@ import {
 const DiscussionCard = ({discussion, user}) => {
 
     const dispatch = useDispatch()
-    const [comText, setomText] = useState('')
+    const [commText, setcommText] = useState('')
 
     const onPost = () => {
-      if (comText !== '') dispatch(addComment(discussion._id, comText, user))
+      if (commText !== ''){
+        dispatch(addComment(discussion._id, commText, user))
+        setcommText('')
+      }
       else console.log('cant post empty comment')
     }
 
     const onTxtChange = (txt) => {
-      setomText(txt.target.value)
+      setcommText(txt.target.value)
     }
 
     return (
@@ -63,6 +66,7 @@ const DiscussionCard = ({discussion, user}) => {
             <Input
               size="large"
               allowClear={true}
+              value={commText}
               bordered={true}
               placeholder="what you think"
               onChange={onTxtChange}

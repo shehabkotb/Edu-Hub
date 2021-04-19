@@ -102,7 +102,10 @@ const DiscussionFeed = ({ courseId }) => {
   const [disText, setDisText] = useState('');
 
   const onPost = () => {
-    if (disText!=='') dispatch(addDiscussion(courseId, disText))
+    if (disText!==''){
+      dispatch(addDiscussion(courseId, disText))
+      setDisText('')
+    }
     else console.log("cant post empty post")
   }
 
@@ -117,6 +120,7 @@ const DiscussionFeed = ({ courseId }) => {
           size="large"
           allowClear={true}
           bordered={true}
+          value={disText}
           placeholder="what you think"
           onChange={onTxtChange}
           className="txt"

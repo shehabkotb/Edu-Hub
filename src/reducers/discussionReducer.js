@@ -15,10 +15,24 @@ const discussionReducer = (state = [], action) => {
     case ADD_DISCUSSION:
       return state.concat({ ...action.data })
     case REMOVE_DISCUSSION:
-      return state.filter(val=>val._id!==action.data )
-    case ADD_DCOMMENT || REMOVE_DCOMMENT:
-      return state.map(val=>{
-        if(val===action.data){return action.data}else{return val}
+      return state.filter((val) => {
+        return val._id !== action.data
+      })
+    case ADD_DCOMMENT:
+      return state.map((val) => {
+        if (val._id === action.data._id) {
+          return action.data
+        } else {
+          return val
+        }
+      })
+    case REMOVE_DCOMMENT:
+      return state.map((val) => {
+        if (val._id === action.data._id) {
+          return action.data
+        } else {
+          return val
+        }
       })
     default:
       return state
@@ -60,7 +74,7 @@ export const removeDiscussion = (id) => {
   return async (dispatch) => {
     try {
       const response = await discussionService.removeDiscussion(id)
-        dispatch({ type: REMOVE_DCOMMENT, data: id })
+        dispatch({ type: REMOVE_DISCUSSION, data: id })
         notification.success({
           message: 'removed successfully'
         })
