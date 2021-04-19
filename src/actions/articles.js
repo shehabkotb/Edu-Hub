@@ -1,0 +1,7 @@
+export const GET_ONE_ARTICLE = 'GET_ONE_ARTICLE';
+export const TIMELINE = 'TIMELINE';
+export const GET_ARTICLES_NEAR_TO = 'GET_ARTICLES_NEAR_TO';
+export const CREATE_ARTICLE = 'CREATE_ARTICLE';
+export const GET_ALL_ARTICLE = 'GET_ALL_ARTICLE';
+export const DELETE_ARTICLE = 'DELETE_ARTICLE';
+

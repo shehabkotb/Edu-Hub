@@ -1,7 +1,11 @@
-import { Card } from 'antd'
+import { Card , Button, Modal, Form, Input } from 'antd'
 import Avatar from 'antd/lib/avatar/avatar'
 import Meta from 'antd/lib/card/Meta'
-import React, { useState } from 'react'
+import React, { useState , useEffect} from 'react'
+import { useDispatch ,useSelector } from 'react-redux';
+import { useHistory } from "react-router-dom" ; 
+
+
 
 import {
   LikeOutlined,
@@ -14,6 +18,9 @@ import {
 } from '@ant-design/icons'
 
 import Styles from './index.module.css'
+
+const { TextArea } = Input;
+
 
 const articleData = [
   {
