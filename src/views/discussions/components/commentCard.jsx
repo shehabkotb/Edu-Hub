@@ -17,7 +17,7 @@ const Comment = ({ cmnt, Luser,dId }) => {
           <Avatar src={cmnt.user.photo} />
           <span>{' ' + cmnt.user.name}</span>
           <Button
-            disabled={!(cmnt.user === Luser._id)} // elmafrod user._id
+            disabled={!(cmnt.user._id === Luser._id)}
             className="deleteButton"
             onClick={() => {
               dispatch(removeComment(dId, cmnt))

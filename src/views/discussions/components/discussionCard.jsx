@@ -35,7 +35,7 @@ const DiscussionCard = ({discussion, user}) => {
                 title={discussion.user.name}
               />
               <Button
-                disabled={!(discussion.user._id === user._id)} // elmafrod discussion.user._id
+                disabled={!(discussion.user._id === user._id)}
                 className="deleteButton"
                 onClick={() => {
                   dispatch(removeDiscussion(discussion._id))
