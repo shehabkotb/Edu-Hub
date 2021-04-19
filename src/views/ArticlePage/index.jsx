@@ -4,7 +4,7 @@ import Meta from 'antd/lib/card/Meta'
 import Avatar from 'antd/lib/avatar/avatar'
 import ArticleComments from '../../components/Article/comments/'
 import { LikeOutlined, LikeFilled, StarOutlined, StarFilled, PlusSquareOutlined, DeleteFilled, MinusSquareOutlined, CommentOutlined } from '@ant-design/icons'
-import { getArticleData } from '../../reducers/articlePageReducer';
+import { getArticleData ,likeArticle ,unlikeArticle , BookMark ,unBookMark , followUser , unfollowUser} from '../../reducers/articlePageReducer';
 import { deleteArticle } from '../../reducers/articlesReducer';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -34,71 +34,98 @@ const article = {
 
 const ArticlePage = () => {
     // services placed here
-    let { id } = useParams();
+    var { id } = useParams();
 
-debugger ; 
 
     const clickDelete = () => {
         deleteArticle(id)
     }
 
-    const user = useSelector((state) => state.auth.user)
+    const user = useSelector((state) => state.auth.user) ; 
+    console.log(user)
 
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getArticleData(id));
 
     }, [dispatch]);
+    
     const Data = useSelector((state) => state.articlePage);
 
     const myarticle = Data.myarticle;
-    // console.log(myarticle)
-    console.log(Data.likedBy.length, Data.isfollow.data.myfollow, Data.isbooked.data.bk);
+    console.log(Data)
+    console.log(Data.likedBy.length , Data.isfollow.data.myfollow, Data.isbooked.data.isbook);
     const [liked, setLiked] = useState(Data.likedBy.my_like);
-    const [bookMark, setBookMark] = useState(Data.isbooked.data.bk);
-    const [follow, setFollow] = useState(Data.isfollow.data.myfollow);
+    const [bookMark, setBookMark] = useState(Data.isbooked.isbook);
+    const [follow, setFollow] = useState(Data.isfollow.myfollow);
     const [likeCount, setLikeCount] = useState(Data.likedBy.length);
-
-    // const [liked, setLiked] = useState(article.like)
-    // const [bookMark, setBookMark] = useState(article.bookMarked)
-    // const [follow, setFollow] = useState(article.followingAuthor)
-    // const [likeCount, setLikeCount] = useState(article.likesCount)
-
     const [commentState, setCommentState] = useState(false);
 
-    // like mock function
-    const likeArticle = () => {
-
+    const likeThisArticle = () => {
+        if(!liked)
+        {
+            dispatch(likeArticle(id)) ; 
+            setLiked(!liked) ; 
+            setLikeCount(likeCount+1) ; 
+        }
+        else 
+        {
+            dispatch(unlikeArticle(id)); 
+            setLiked(!liked)
+            setLikeCount(likeCount-1)
+        }
     }
 
+
+    const BookMarkThisArticle = () =>{
+        if(!bookMark)
+        {
+            dispatch(BookMark(id))
+            setBookMark(!bookMark) ; 
+
+        }
+        else
+        {
+            dispatch(unBookMark(id))
+            setBookMark(!bookMark) ; 
+            
+        }
+    }
+
+    const followAuthor = ()=>{
+        if(!follow)
+        {
+            dispatch(followUser(id))
+            setFollow(!follow)
+        }
+        else{
+            dispatch(unfollowUser(id))
+            setFollow(!follow)
+        }
+    }
     return (
-       Data === undefined? <div>Loading</div>:
 
         <div className={Styles['article-card-container']}>
             <Card
                 hoverable
                 className="article-card"
                 actions={[
-                    <Like likesCount={likeCount} liked={liked} setLiked={likeArticle} />,
-                    <Bookmark bookMarked={bookMark} setBookMark={setBookMark} />,
-                    <Follow followed={follow} setFollow={setFollow} />,
+                    <Like likesCount={likeCount} liked={liked} setLiked={likeThisArticle} />,
+                    <Bookmark bookMarked={bookMark} setBookMark={BookMarkThisArticle} />,
+                    <Follow followed={follow} setFollow={followAuthor} />,
                     <Comment commentState={commentState} setCommentState={setCommentState} />
                 ]}
                 bordered={false}
             >
                 <Meta
                     avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                // title={myarticle.authorPersonId.name}
-                // description={myarticle.title}
+                title={myarticle.authorPersonId.name}
+                description={myarticle.title}
                 />
                 <Card bordered={false}>
-                    {article.text}
+                    {myarticle.text}
                 </Card>
-                {/* {user && user._id === article.authorPersonId._id && (<Button type="icon" className={Styles['iconButton']}
-                    onClick={clickDelete}
-                >
-                    <DeleteFilled />
-                </Button>)} */}
+              
             </Card>
             <hr className={Styles['Hline']} />
 
@@ -152,8 +179,8 @@ const Follow = ({ followed, setFollow }) => {
         >
             {followed ? (
                 <>
-                    <MinusSquareOutlined style={{ marginRight: '8px' }} />
-                    <span>UnFollow</span>
+                    <MinusSquareOutlined style={{ marginRight: '8px' , color: '#1890ff' }} />
+                    <span style={{ color: '#1890ff'}}>UnFollow</span>
                 </>
             ) : (
                 <>
