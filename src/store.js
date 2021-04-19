@@ -1,6 +1,7 @@
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { combineReducers, createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
+import logger from 'redux-logger'
 
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
@@ -27,7 +28,7 @@ const persistedReducer = persistReducer(persistConfig, reducer)
 // debugging with devtools
 let store = createStore(
   persistedReducer,
-  composeWithDevTools(applyMiddleware(thunk))
+  composeWithDevTools(applyMiddleware(thunk, logger))
 )
 let persistor = persistStore(store)
 
