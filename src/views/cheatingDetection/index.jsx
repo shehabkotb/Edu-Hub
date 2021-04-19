@@ -4,9 +4,9 @@ import ReactCountdownClock from 'react-countdown-clock'
 import styles from './styles.css'
 
 const cheatingDetection = () =>{
-    
+
     document.addEventListener('visibilitychange', function () {
-      document.title = document.hidden ? "I'm away" : "I'm here"
+      document.title = document.hidden ? "I'm away" : "EduHub"
     })
 
     return (
