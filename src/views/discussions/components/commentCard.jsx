@@ -4,31 +4,39 @@ import Avatar from 'antd/lib/avatar/avatar'
 import {
   removeComment
 } from '../../../reducers/discussionReducer'
+import { useDispatch } from 'react-redux'
 
-const Comment = ({ user, data, Luser }) => {
+
+const Comment = ({ cmnt, Luser,dId }) => {
+  const dispatch = useDispatch()
   return (
     <Card
       size="small"
       title={
         <span>
-          <Avatar src={user.photo} />
-          <span>{' ' + user.name}</span>
+          <Avatar src={cmnt.user.photo} />
+          <span>{' ' + cmnt.user.name}</span>
           <Button
-                disabled={!(user === Luser._id)}// elmafrod user._id
-                className="deleteButton"
-              >delete</Button>
+            disabled={!(cmnt.user === Luser._id)} // elmafrod user._id
+            className="deleteButton"
+            onClick={() => {
+              dispatch(removeComment(dId, cmnt))
+            }}
+          >
+            delete
+          </Button>
         </span>
       }
     >
-      <p>{data}</p>
+      <p>{cmnt.data}</p>
     </Card>
   )
 }
 
-const AllComments = ({comments,Luser}) =>{
+const AllComments = ({comments,Luser,dId}) =>{
     return(comments.map(
         cmnt =>{
-            return <Comment key={cmnt._id} user={cmnt.user} data={cmnt.data} Luser={Luser}/>
+            return <Comment key={cmnt._id} cmnt={cmnt} Luser={Luser} dId={dId}/>
         }
     ))
 }

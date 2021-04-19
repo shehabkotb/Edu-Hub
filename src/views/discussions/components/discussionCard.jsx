@@ -35,7 +35,7 @@ const DiscussionCard = ({discussion, user}) => {
                 title={discussion.user.name}
               />
               <Button
-                disabled={!(discussion.user === user._id)} // elmafrod discussion.user._id
+                disabled={!(discussion.user._id === user._id)} // elmafrod discussion.user._id
                 className="deleteButton"
                 onClick={() => {
                   dispatch(removeDiscussion(discussion._id))
@@ -53,7 +53,11 @@ const DiscussionCard = ({discussion, user}) => {
             className="comment-card"
             title="comments"
           >
-            <AllComments comments={discussion.comments} Luser={user} />
+            <AllComments
+              comments={discussion.comments}
+              dId={discussion._id}
+              Luser={user}
+            />
           </Card>
           <div className="container">
             <Input

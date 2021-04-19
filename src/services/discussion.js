@@ -32,11 +32,7 @@ const removeDiscussion = async (id) => {
 
 const removeComment = async (Id, comment) => {
   const response = await axios.delete(
-    `${baseURL}/removeComment`,
-    {
-      discussionId: Id,
-      comment: comment
-    },
+    `${baseURL}/removeComment/` + Id + '/' + comment._id,
     getAuthHeader()
   )
   return response.data
