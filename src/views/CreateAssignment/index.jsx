@@ -6,7 +6,7 @@ import QuestionHead from '../../components/CreateAssignment/QuestionHead'
 import ReceivedWritten from '../../components/CreateAssignment/ReceivedQuestions/ReceivedWritten'
 import ReceivedChoice from '../../components/CreateAssignment/ReceivedQuestions/ReceivedChoice'
 
-import { createAssignmentOnline ,createAssignmentFile} from '../../reducers/assignmentReducer'
+// import { createAssignmentOnline ,createAssignmentFile} from '../../reducers/assignmentReducer'
 import { useDispatch } from 'react-redux'
 
 const CreateAssignment = () => {
@@ -34,12 +34,12 @@ const CreateAssignment = () => {
         if(upload === 'online-question')
         {
             values.questions = questions;
-            dispatch(createAssignmentOnline(values)) ; 
+            // dispatch(createAssignmentOnline(values)) ; 
         }
        
         if(upload === 'upload-file')
         {
-            dispatch(createAssignmentFile(values))  ;
+            // dispatch(createAssignmentFile(values))  ;
         }
     };
 

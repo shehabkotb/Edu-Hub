@@ -26,7 +26,7 @@ import Exams from '../views/exams'
 import Quizes from '../views/quizes'
 import Videos from '../views/videos'
 import Modules from '../views/modules'
-
+import CreateAssignment from '../views/CreateAssignment'
 import NotFoundView from '../views/NotFoundView'
 
 import 'antd/dist/antd.css'
@@ -98,6 +98,8 @@ const AuthnticatedApp = () => {
               path="/app/course/:courseId/assignments"
               component={Assignments}
             />
+
+            <Route path="/app/course/:courseId/createAssignment" component={CreateAssignment}   />
             <Route path="/app/course/:courseId/quizes" component={Quizes} />
             <Route path="/app/course/:courseId/exams" component={Exams} />
             <Route path="/app/course/:courseId/videos" component={Videos} />
