@@ -1,22 +1,27 @@
 import React, { Component, useRef, useCallback, useState } from 'react'
 import Webcam from 'react-webcam'
 import { uploadFile } from 'react-s3'
-
-const S3_BUCKET = '***REMOVED***'
-const REGION = '***REMOVED***'
-const ACCESS_KEY = ''
-const SECRET_ACCESS_KEY = ''
-
-const config = {
-  bucketName: S3_BUCKET,
-  region: REGION,
-  accessKeyId: ACCESS_KEY,
-  secretAccessKey: SECRET_ACCESS_KEY
-}
+import { useSelector, useDispatch } from 'react-redux'
 
 
 const Camera = () => {
+  const dispatch = useDispatch()
   const webcamRef = useRef(null)
+  const user = useSelector((state) => state.auth.user)
+  const [cnt,setCnt]=useState(1);
+
+  const S3_BUCKET = '***REMOVED***'
+  const REGION = '***REMOVED***'
+  const ACCESS_KEY = '***REMOVED***'
+  const SECRET_ACCESS_KEY = '***REMOVED***'
+
+  const config = {
+    bucketName: S3_BUCKET,
+    region: REGION,
+    dirName: user.name+":"+user._id,
+    accessKeyId: ACCESS_KEY,
+    secretAccessKey: SECRET_ACCESS_KEY
+  }
 
   const handleUpload = async (file) => {
     uploadFile(file, config)
@@ -26,11 +31,16 @@ const Camera = () => {
   
 
   const capture = useCallback(async () => {
+    setCnt(cnt + 1)
     const imageSrc = webcamRef.current.getScreenshot()
     const blob = await fetch(imageSrc).then((res) => res.blob())
+    blob.name = cnt.toString() + '.jpeg'
+    if (cnt === 5) {
+      setCnt(1)
+    }
     console.log(blob)
     handleUpload(blob)
-  }, [webcamRef])
+  }, [webcamRef, cnt])
 
   return (
     <div>
