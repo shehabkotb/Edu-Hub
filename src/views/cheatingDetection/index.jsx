@@ -1,4 +1,3 @@
-import CameraFeed from "./components/cameraFeed"
 import Camera from './components/camera'
 import ReactCountdownClock from 'react-countdown-clock'
 import styles from './styles.css'
@@ -13,7 +12,7 @@ const CheatingDetection = () =>{
     const history = useHistory()
 
     return (
-      <div className="container">
+      <div className="container-ch">
         <div className="camera">
           <Camera />
           <ReactCountdownClock
