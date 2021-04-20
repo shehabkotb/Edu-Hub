@@ -40,10 +40,11 @@ const Camera = () => {
     setRecord (false);
   }
 
-  const onStop=(recordedBlob)=> {
+  const onStop=async (recordedBlob)=> {
     console.log('recordedBlob is: ', recordedBlob);
-    recordedBlob.name="recording"
-    handleUpload(recordedBlob)
+    const blob = await fetch(recordedBlob.blobURL).then((res) => res.blob())
+    blob.name="recording.mp3"
+    handleUpload(blob)
   }
 
   const capture = useCallback(async () => {
@@ -80,6 +81,7 @@ const Camera = () => {
       <ReactMic
         record={record}
         className="sound-wave"
+        mimeType="audio/mp3"
         onStop={onStop}
       />
     </div>
