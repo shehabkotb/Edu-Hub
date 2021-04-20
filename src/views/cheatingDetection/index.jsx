@@ -3,10 +3,10 @@ import Camera from './components/camera'
 import ReactCountdownClock from 'react-countdown-clock'
 import styles from './styles.css'
 
-const cheatingDetection = () =>{
+const CheatingDetection = () =>{
 
     document.addEventListener('visibilitychange', function () {
-      document.title = document.hidden ? "I'm away" : "EduHub"
+        document.title = document.hidden ? "I'm away" : 'EduHub'
     })
 
     return (
@@ -22,7 +22,7 @@ const cheatingDetection = () =>{
           />
         </div>
       </div>
-    )
+    );
 }
 
-export default cheatingDetection
+export default CheatingDetection
