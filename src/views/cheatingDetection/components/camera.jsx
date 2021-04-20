@@ -1,13 +1,25 @@
-import React, { Component, useRef, useCallback, useState } from 'react'
+import React, {
+  Component,
+  useRef,
+  useCallback,
+  useState,
+  useEffect
+} from 'react'
 import Webcam from 'react-webcam'
 import { ReactMic } from 'react-mic'
 import { uploadFile } from 'react-s3'
 import { useSelector, useDispatch } from 'react-redux'
 import styles from './../styles.css'
+import cheatingService from './../../../services/cheatingService'
+
+import ReactCountdownClock from 'react-countdown-clock'
+import { useHistory } from 'react-router-dom'
+
 
 
 const Camera = () => {
   const dispatch = useDispatch()
+  const history = useHistory()
   const webcamRef = useRef(null)
   const user = useSelector((state) => state.auth.user)
   const [cnt, setCnt] = useState(1);
@@ -40,6 +52,18 @@ const Camera = () => {
     setRecord (false);
   }
 
+  useEffect(() => {
+    document.addEventListener('visibilitychange', function () {
+      document.title = document.hidden ? "I'm away" : 'EduHub'
+    })
+  return () => {
+    document.removeEventListener('visibilitychange', function () {
+      document.title = document.hidden ? "I'm away" : 'EduHub'
+    })
+    stopRecording()
+  }
+}, [])
+
   const onStop=async (recordedBlob)=> {
     console.log('recordedBlob is: ', recordedBlob);
     const blob = await fetch(recordedBlob.blobURL).then((res) => res.blob())
@@ -61,6 +85,7 @@ const Camera = () => {
     }
     console.log(blob)
     handleUpload(blob)
+    cheatingService.batchInc()
   }, [webcamRef, cnt])
 
   return (
@@ -83,6 +108,20 @@ const Camera = () => {
         className="sound-wave"
         mimeType="audio/mp3"
         onStop={onStop}
+        echoCancellation={true}
+        autoGainControl={true}
+        noiseSuppression={true}
+      />
+      <ReactCountdownClock
+        seconds={0.01 * 3600}
+        color="#000"
+        alpha={0.9}
+        size={240}
+        onComplete={() => {
+          stopRecording()
+          cheatingService.clear()
+          history.push(`/app`)
+        }}
       />
     </div>
   )
