@@ -27,6 +27,7 @@ import Quizes from '../views/quizes'
 import Videos from '../views/videos'
 import Modules from '../views/modules'
 import CheatingDetection from '../views/cheatingDetection'
+import DiscussionFeed from '../views/discussions'
 
 import NotFoundView from '../views/NotFoundView'
 
@@ -103,6 +104,12 @@ const AuthnticatedApp = () => {
             {/*<Route path="/app/course/:courseId/exams" component={Exams} />*/}
             {<Route path="/app/course/:courseId/exams" component={CheatingDetection} />}
             <Route path="/app/course/:courseId/videos" component={Videos} />
+            <Route
+              path="/app/course/:courseId/discussions"
+              render={(props) => (
+                <DiscussionFeed courseId={props.match.params.courseId} />
+              )}
+            />
             <Route path="/app/browse" component={Browse} />
             <Route path="/app/articles" component={Articles} />
             <Route path="/app/newArticle" component={ArticleForm} />
