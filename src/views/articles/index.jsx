@@ -4,8 +4,9 @@ import Meta from 'antd/lib/card/Meta'
 import React, { useEffect, useState } from 'react'
 import { useHistory } from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux';
-import { create_article, getAllArticles , deleteArticle  } from '../../reducers/articlesReducer';
-import ArticlePage from '../ArticlePage'
+import { create_article, getAllArticles, deleteArticle } from '../../reducers/articlesReducer';
+import { getArticleData, likeArticle, unlikeArticle, BookMark, unBookMark, followUser, unfollowUser } from '../../reducers/articlePageReducer';
+
 import {
   LikeOutlined,
   LikeFilled,
@@ -13,7 +14,9 @@ import {
   StarFilled,
   PlusSquareOutlined,
   MinusSquareOutlined,
-  CommentOutlined,
+  MinusCircleFilled,
+  MinusSquareFilled,
+  MinusCircleOutlined,
   DeleteFilled
 } from '@ant-design/icons'
 
@@ -55,10 +58,10 @@ const Articles = () => {
     dispatch(getAllArticles())
   }, [dispatch, onFinish]);
 
-  useEffect(()=>{
-   const deleteArticle = (id)=>{ return dispatch(deleteArticle(id))}
-   
-  },[dispatch])
+  useEffect(() => {
+    const deleteArticle = (id) => { return dispatch(deleteArticle(id)) }
+
+  }, [dispatch])
 
 
 
@@ -136,51 +139,98 @@ const Articles = () => {
         </div>
       </div>
       {articleData.map((article) => (
-        <ArticleCard 
-        key={article.id} 
-        article={article} 
-        deleteArticle={deleteArticle(article.id)} 
+        <ArticleCard
+          key={article.id}
+          article={article}
+          deleteArticle={deleteArticle(article.id)}
         />
       ))}
     </div>
   )
 }
 
-const ArticleCard = ({ article ,deleteArticle  }) => {
-  
-  const clickDelete = ()=>{
+const ArticleCard = ({ article, deleteArticle }) => {
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const clickDelete = () => {
     deleteArticle(article.id)
   }
 
-  const viewArticle = ()=>{
+
+  const viewArticle = () => {
     history.push(`/app/articlePage/${article.id}`)
   }
-  
-  const history = useHistory() ; 
-  const user = useSelector((state) => state.auth.user) 
-  const [liked, setLiked] = useState(article.like)
-  const [bookMark, setBookMark] = useState(article.bookMarked)
-  const [follow, setFollow] = useState(article.followingAuthor)
-  const [likeCount, setLikeCount] = useState(article.likesCount)
+  const user = useSelector((state) => state.auth.user) ; 
+  useEffect(() => {
+    dispatch(getArticleData(article.id));
+  }, [dispatch]);
+  const Data = useSelector((state) => state.articlePage);
+
+  const [liked, setLiked] = useState(Data.likedBy.my_like);
+  const [bookMark, setBookMark] = useState(Data.isbooked.data.isbook);
+  const [follow, setFollow] = useState(Data.isfollow.data.myfollow);
+  const [likeCount, setLikeCount] = useState(Data.likedBy.length);
 
 
   // like mock function
-  const likeArticle = (liked) => {
-    liked ? setLikeCount(likeCount + 1) : setLikeCount(likeCount - 1)
-    setLiked(liked)
-  }
+  const likeThisArticle = () => {
+
+    setTimeout(() => {
+        if (!liked) {
+            dispatch(likeArticle(article.id));
+            setLiked(!liked);
+            setLikeCount(likeCount + 1);
+        }
+        else {
+            dispatch(unlikeArticle(article.id));
+            setLiked(!liked)
+            setLikeCount(likeCount - 1)
+        }
+    }, 1000)
+}
+
+
+const BookMarkThisArticle = () => {
+    setTimeout(() => {
+        if (!bookMark) {
+            dispatch(BookMark(article.id))
+            setBookMark(!bookMark);
+
+        }
+        else {
+            dispatch(unBookMark(article.id))
+            setBookMark(!bookMark);
+
+        }
+    }, 1000)
+}
+
+const followAuthor = () => {
+    setTimeout(() => {
+
+        if (!follow) {
+            dispatch(followUser(article.id))
+            setFollow(!follow)
+        }
+        else {
+            dispatch(unfollowUser(article.id))
+            setFollow(!follow)
+        }
+
+    }, 1000)
+}
+const hidden = (user._id === article.authorPersonId._id) ? true : false;
 
   return (
     <div className={Styles['article-card-container']}>
       <Card
         hoverable
         className="article-card"
-        // actions={[
-        //   <Like likesCount={likeCount} liked={liked} setLiked={likeArticle} />,
-        //   <Bookmark bookMarked={bookMark} setBookMark={setBookMark} />,
-        //   <Follow followed={follow} setFollow={setFollow} />,
-        //   <Comment />
-        // ]}
+        actions={[
+          <Like likesCount={likeCount} liked={liked} setLiked={likeThisArticle} />,
+          <Bookmark bookMarked={bookMark} setBookMark={BookMarkThisArticle} hidden={hidden} />,
+          <Follow followed={follow} setFollow={followAuthor} hidden={hidden} />,
+        ]}
       >
         <Meta
           avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
@@ -191,8 +241,8 @@ const ArticleCard = ({ article ,deleteArticle  }) => {
         <p>
           {article.text}
         </p>
-        {user && user._id === article.authorPersonId._id && (  <Button type="icon"  className={Styles['iconButton']} 
-        onClick={clickDelete}
+        {user && user._id === article.authorPersonId._id && (<Button type="icon" className={Styles['iconButton']}
+          onClick={clickDelete}
         >
           <DeleteFilled />
         </Button>)}
@@ -203,58 +253,57 @@ const ArticleCard = ({ article ,deleteArticle  }) => {
   )
 }
 
-// const Like = ({ likesCount, liked, setLiked }) => {
-//   return (
-//     <div className={Styles['like-container']} onClick={() => setLiked(!liked)}>
-//       <span className={Styles['likes-count']}>{likesCount}</span>
-//       {liked ? <LikeFilled style={{ color: '#1890ff' }} /> : <LikeOutlined />}
-//     </div>
-//   )
-// }
+const Like = ({ likesCount, liked, setLiked }) => {
+  return (
+      <div className={Styles['like-container']} onClick={() => setLiked(!liked)}>
+          <span className={Styles['likes-count']}>{likesCount}</span>
+          {liked ? <LikeFilled style={{ color: '#1890ff' }} /> : <LikeOutlined />}
+      </div>
+  )
+}
 
+const Bookmark = ({ bookMarked, setBookMark, hidden }) => {
+  return (
+      <>
+          {hidden ? (<div> <MinusCircleFilled />  <StarOutlined /></div>) : (<div
+              className={Styles['bookmark-container']}
+              onClick={() => setBookMark(!bookMarked)}
+          >
+              {bookMarked ? (
+                  <StarFilled style={{ color: '#1890ff' }} />
+              ) : (
+                  <StarOutlined />
+              )}
+          </div>)}
+      </>
+  )
+}
 
-// const Comment = () => {
-//   return (
-//     <div className={Styles['like-container']}>
-//       <CommentOutlined style={{ color: '#1890ff' }} />
-//     </div>
-//   )
-// }
-
-// const Bookmark = ({ bookMarked, setBookMark }) => {
-//   return (
-//     <div
-//       className={Styles['bookmark-container']}
-//       onClick={() => setBookMark(!bookMarked)}
-//     >
-//       {bookMarked ? (
-//         <StarFilled style={{ color: '#1890ff' }} />
-//       ) : (
-//         <StarOutlined />
-//       )}
-//     </div>
-//   )
-// }
-
-// const Follow = ({ followed, setFollow }) => {
-//   return (
-//     <div
-//       className={Styles['follow-container']}
-//       onClick={() => setFollow(!followed)}
-//     >
-//       {followed ? (
-//         <>
-//           <MinusSquareOutlined style={{ marginRight: '8px' }} />
-//           <span>UnFollow</span>
-//         </>
-//       ) : (
-//         <>
-//           <PlusSquareOutlined style={{ marginRight: '8px' }} />
-//           <span>Follow</span>
-//         </>
-//       )}
-//     </div>
-//   )
-// }
+const Follow = ({ followed, setFollow, hidden }) => {
+  return (
+      <>
+          {hidden ? (<div>
+              <MinusSquareFilled />
+              <MinusCircleOutlined style={{ marginRight: '8px' }} />
+          </div>) :
+              (<div
+                  className={Styles['follow-container']}
+                  onClick={() => setFollow(!followed)}
+              >
+                  {followed ? (
+                      <>
+                          <MinusSquareOutlined style={{ marginRight: '8px', color: '#1890ff' }} />
+                          <span style={{ color: '#1890ff' }}>UnFollow</span>
+                      </>
+                  ) : (
+                      <>
+                          <PlusSquareOutlined style={{ marginRight: '8px' }} />
+                          <span>Follow</span>
+                      </>
+                  )}
+              </div>)}
+      </>
+  )
+}
 
 export default Articles

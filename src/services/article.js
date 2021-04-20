@@ -110,7 +110,7 @@ const getComments = async(articleId)=>{
 }
 
 const createComment = async(articleId , comment)=>{
-  const response = await axios.get(`${baseURL}/${articleId}/addcomment`, comment , getAuthHeader()) ;
+  const response = await axios.post(`${baseURL}/${articleId}/addcomment`, comment , getAuthHeader()) ;
   return response.data ;  
 }
 

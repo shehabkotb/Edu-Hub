@@ -10,4 +10,4 @@ export const GET_MY_BOOKMARKED = 'GET_MY_BOOKMARKED';
 
 export const CREATE_COMMENT  = "CREATE_COMMENT" ; 
 export const GET_COMMENTS = "GET_COMMENTS" ;
-export const REMOVE_COMMENT = "REMOVE_COMMENT" ; 
+export const DELETE_COMMENT = "DELETE_COMMENT" ; 
