@@ -1,61 +1,42 @@
 import React, { useState, useEffect } from 'react';
 import 'antd/dist/antd.css';
-import { Comment, Avatar, Form, Button, List, Input } from 'antd';
+import { Comment, Avatar, Form, Button, Input } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-
-// import {DeleteFilled} from '@ant-design/icons'
-
+import { getComments, CreateComment, deleteComment } from '../../../reducers/articleComments'
+import { DeleteFilled } from '@ant-design/icons'
+import Styles from './index.module.css'
 
 
 const { TextArea } = Input;
-
-
-
 const ArticleComments = (props) => {
+  const dispatch = useDispatch();
 
+  const articleId = props.articleId;
 
+  useEffect(() => {
+    dispatch(getComments(articleId));
+  }, [dispatch]);
 
-  const initial = [{
-    author: 'Han Solo',
-    avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-    content: 'this is as ',
-    
-    id: 1
-  },
-  {
-    author: 'Han Solo',
-    avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-    content: 'fasdfasda',
-    
-    id: 2
-  }];
+  const initalComments = useSelector((state) => state.articleComment);
+  console.log(initalComments);
   const [value, setValue] = useState('');
   const [submitting, setSubmitting] = useState(false);
-  const [comments, setComments] = useState(initial);
 
   const handleChange = (e) => {
     setValue(e.target.value);
   }
 
+  const addComment = (val) => {
+    dispatch(CreateComment(articleId, val));
+    setSubmitting(true);
+  }
   const handleSubmit = () => {
     if (!value) {
       return;
     }
-    setSubmitting(true);
-    setTimeout(() => {
-      setComments(comments.concat(
-        {
-          author: 'Han Solo',
-          avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-          content: <p>{value}</p>,
-          
-          id: comments.length + 1
-        }))
 
-      setSubmitting(false);
-      setValue('');
-    }, 1000);
-
+    addComment(value);
+    setSubmitting(false);
   }
 
 
@@ -79,34 +60,55 @@ const ArticleComments = (props) => {
         }
       />}
 
-      {comments.length > 0 && <CommentList comments={comments} />}
+      {initalComments.length > 0 && <CL comments={initalComments} articleId={articleId} />}
 
     </>
   )
 }
 
-const CommentList = ({ comments }) => {
+const CL = ({ comments, articleId }) => {
+
+  const user = useSelector((state) => state.auth.user);
+  const dispatch = useDispatch();
+  
+
   return (
-     <List
-       dataSource={comments}
-       itemLayout="horizontal"
-       renderItem={props => <> <Comment {...props} /> </>}
-     />
-   )
- };
- 
- 
- const Editor = ({ onChange, onSubmit, submitting, value }) => (
-   <>
-     <Form.Item>
-       <TextArea rows={4} onChange={onChange} value={value} />
-     </Form.Item>
-     <Form.Item>
-       <Button htmlType="submit" loading={submitting} onClick={onSubmit} type="primary">
-         Add Comment
+    <div>
+      { comments.map((comment ,index) => {
+        return (
+          <div key={index}>
+            <div className={Styles['iconCommentBody']}>
+              <Comment content={comment.body} author={comment.name} avatar={comment.photo} datetime={comment.createdAt} />
+
+            </div>
+            <div className={Styles['iconCommentRemove']}>
+              <Button type="icon" className={Styles['iconButton']}
+                onClick={()=>{
+                  return dispatch(deleteComment(articleId, comment._id))
+                }}
+              >
+                <DeleteFilled />
+              </Button>
+            </div>
+          </div>)
+      })}
+    </div>
+
+  )
+};
+
+
+const Editor = ({ onChange, onSubmit, submitting, value }) => (
+  <>
+    <Form.Item>
+      <TextArea rows={4} onChange={onChange} value={value} />
+    </Form.Item>
+    <Form.Item>
+      <Button htmlType="submit" loading={submitting} onClick={onSubmit} type="primary">
+        Add Comment
        </Button>
-     </Form.Item>
-   </>
- );
+    </Form.Item>
+  </>
+);
 
 export default ArticleComments;
