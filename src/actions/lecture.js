@@ -1,0 +1,1 @@
+export const GET_ALL_LECTURES = 'GET_ALL_LECTURES'

@@ -24,7 +24,7 @@ import ArticleForm from '../views/articles/ArticleForm/ArticleForm'
 import Assignments from '../views/assignments'
 import Exams from '../views/exams'
 import Quizes from '../views/quizes'
-import Videos from '../views/videos'
+import Lectures from '../views/lectures'
 import Modules from '../views/modules'
 
 import NotFoundView from '../views/NotFoundView'
@@ -100,7 +100,11 @@ const AuthnticatedApp = () => {
             />
             <Route path="/app/course/:courseId/quizes" component={Quizes} />
             <Route path="/app/course/:courseId/exams" component={Exams} />
-            <Route path="/app/course/:courseId/videos" component={Videos} />
+            <Route
+              path="/app/course/:courseId/lectures/:lectureId"
+              component={Lectures}
+            />
+            <Route path="/app/course/:courseId/lectures" component={Lectures} />
             <Route path="/app/browse" component={Browse} />
             <Route path="/app/articles" component={Articles} />
             <Route path="/app/newArticle" component={ArticleForm} />
@@ -108,7 +112,7 @@ const AuthnticatedApp = () => {
             <Route path="/app/*" component={NotFoundView} />
           </Switch>
         </Content>
-        <S.Footer>Ant Design ©2018 Created by Ant UED</S.Footer>
+        <S.Footer>Copyright ©2021 EduHub</S.Footer>
       </Layout>
     </Layout>
   )

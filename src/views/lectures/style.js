@@ -1,10 +1,12 @@
 import { css } from '@emotion/core'
 
+import styled from 'styled-components'
+
 export const rotate180 = css`
   transform: rotateX(180deg);
 `
 
-export const gridContainer = css`
+export const GridContainer = styled.div`
   padding-top: 16px;
   overflow: hidden;
   display: grid;
@@ -16,7 +18,7 @@ export const gridContainer = css`
     'info info info info menu'
     'tabs tabs tabs tabs none';
 
-  @media (max-width: 768px) {
+  @media (max-width: 992px) {
     grid-template-areas:
       'video-wrapper'
       'info'
@@ -25,46 +27,40 @@ export const gridContainer = css`
   }
 `
 
-export const videoWrapper = css`
+export const VideoWrapper = styled.div`
   grid-area: video-wrapper;
   position: relative;
   padding-bottom: 56.25%;
 `
 
-export const video = css`
+export const Video = styled.iframe`
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
 `
-export const menuHeader = css`
-  width: 90%;
-  margin: 10px auto 15px;
-  h1 {
-    font-size: 1.2rem;
-  }
-`
-export const menuWrapper = css``
 
-export const menu = css`
+export const Menu = styled.div`
   grid-area: menu;
-  padding-bottom: 20px;
-  background: #fafafa;
   border-radius: 10px;
-  height: 100%;
   overflow: hidden;
-  /* max-height: 100%; */
+  min-width: 100px;
+  border: 1px;
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0.1);
 `
 
-export const info = css`
+export const Info = styled.div`
   grid-area: info;
-  /* background-color: chocolate; */
   background-color: #fafafa;
   border-radius: 10px;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
 `
 
-export const tabs = css`
+export const Tabs = styled.div`
   background-color: rgb(94, 167, 145);
   grid-area: tabs;
   height: 600px;

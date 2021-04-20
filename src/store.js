@@ -8,6 +8,7 @@ import storage from 'redux-persist/lib/storage' // defaults to localStorage for 
 import authReducer from './reducers/authReducer'
 import courseReducer from './reducers/courseReducer'
 import moduleReducer from './reducers/moduleReducer'
+import lectureReducer from './reducers/lectureReducer'
 
 const persistConfig = {
   key: 'root',
@@ -17,7 +18,8 @@ const persistConfig = {
 const reducer = combineReducers({
   auth: authReducer,
   courses: courseReducer,
-  modules: moduleReducer
+  modules: moduleReducer,
+  lectures: lectureReducer
 })
 
 const persistedReducer = persistReducer(persistConfig, reducer)
