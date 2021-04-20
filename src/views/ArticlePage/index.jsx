@@ -14,11 +14,7 @@ const ArticlePage = () => {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getArticleData(id));
-    }, [dispatch]);
-
-    useEffect(() => {
-        const deleteArticle = (id) => { return dispatch(deleteArticle(id)) }
-    }, [dispatch])
+    }, [dispatch , id]);
 
     const Data = useSelector((state) => state.articlePage);
     const myarticle = Data.myarticle;

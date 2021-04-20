@@ -16,6 +16,7 @@
     "react-dom": "^16.13.1",
     "react-dropzone-uploader": "^2.11.0",
     "react-icons": "^3.11.0",
+    "react-loading": "^2.0.3",
     "react-redux": "^7.2.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.1",

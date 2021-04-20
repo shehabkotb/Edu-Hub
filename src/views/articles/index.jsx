@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux';
 import { create_article, getAllArticles, deleteArticle } from '../../reducers/articlesReducer';
 import { getArticleData, likeArticle, unlikeArticle, BookMark, unBookMark, followUser, unfollowUser } from '../../reducers/articlePageReducer';
+import ReactLoading from 'react-loading';
 
 import {
   LikeOutlined,
@@ -160,149 +161,173 @@ const ArticleCard = ({ article, deleteArticle }) => {
   const viewArticle = () => {
     history.push(`/app/articlePage/${article.id}`)
   }
-  const user = useSelector((state) => state.auth.user) ; 
+  const user = useSelector((state) => state.auth.user);
   useEffect(() => {
     dispatch(getArticleData(article.id));
   }, [dispatch]);
   const Data = useSelector((state) => state.articlePage);
 
-  const [liked, setLiked] = useState(Data.likedBy.my_like);
-  const [bookMark, setBookMark] = useState(Data.isbooked.data.isbook);
-  const [follow, setFollow] = useState(Data.isfollow.data.myfollow);
-  const [likeCount, setLikeCount] = useState(Data.likedBy.length);
+  const [bookMark, setBookMark] = useState();
+  const [follow, setFollow] = useState();
+  const [likeCount, setLikeCount] = useState();
+  const [liked, setLiked] = useState();
+
+  if (Data !== undefined) {
+
+    setBookMark(Data.isbooked.data.isbook);
+    setFollow(Data.isfollow.data.myfollow);
+    setLikeCount(Data.likedBy.length);
+    setLiked(Data.likedBy.my_like);
+
+  }
 
 
   // like mock function
   const likeThisArticle = () => {
 
     setTimeout(() => {
-        if (!liked) {
-            dispatch(likeArticle(article.id));
-            setLiked(!liked);
-            setLikeCount(likeCount + 1);
-        }
-        else {
-            dispatch(unlikeArticle(article.id));
-            setLiked(!liked)
-            setLikeCount(likeCount - 1)
-        }
+      if (!liked) {
+        dispatch(likeArticle(article.id));
+        setLiked(!liked);
+        setLikeCount(likeCount + 1);
+      }
+      else {
+        dispatch(unlikeArticle(article.id));
+        setLiked(!liked)
+        setLikeCount(likeCount - 1)
+      }
     }, 1000)
-}
+  }
 
 
-const BookMarkThisArticle = () => {
+  const BookMarkThisArticle = () => {
     setTimeout(() => {
-        if (!bookMark) {
-            dispatch(BookMark(article.id))
-            setBookMark(!bookMark);
+      if (!bookMark) {
+        dispatch(BookMark(article.id))
+        setBookMark(!bookMark);
 
-        }
-        else {
-            dispatch(unBookMark(article.id))
-            setBookMark(!bookMark);
+      }
+      else {
+        dispatch(unBookMark(article.id))
+        setBookMark(!bookMark);
 
-        }
+      }
     }, 1000)
-}
+  }
 
-const followAuthor = () => {
+  const followAuthor = () => {
     setTimeout(() => {
 
-        if (!follow) {
-            dispatch(followUser(article.id))
-            setFollow(!follow)
-        }
-        else {
-            dispatch(unfollowUser(article.id))
-            setFollow(!follow)
-        }
+      if (!follow) {
+        dispatch(followUser(article.id))
+        setFollow(!follow)
+      }
+      else {
+        dispatch(unfollowUser(article.id))
+        setFollow(!follow)
+      }
 
     }, 1000)
-}
-const hidden = (user._id === article.authorPersonId._id) ? true : false;
+  }
+  const hidden = (user._id === article.authorPersonId._id) ? true : false;
 
   return (
-    <div className={Styles['article-card-container']}>
-      <Card
-        hoverable
-        className="article-card"
-        actions={[
-          <Like likesCount={likeCount} liked={liked} setLiked={likeThisArticle} />,
-          <Bookmark bookMarked={bookMark} setBookMark={BookMarkThisArticle} hidden={hidden} />,
-          <Follow followed={follow} setFollow={followAuthor} hidden={hidden} />,
-        ]}
-      >
-        <Meta
-          avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-          title={article.authorPersonId.name}
-          description={article.title}
-        />
+    <>
+      {
+        !Data ?
+          (<ReactLoading type="balls" color="red" height={667} width={375} />)
+          : (
+            <>
+              {Data.length <= 0 ?
+                <div> there is no article</div>
+                :
+                <div className={Styles['article-card-container']}>
+                  <Card
+                    hoverable
+                    className="article-card"
+                    actions={[
+                      <Like likesCount={likeCount} liked={liked} setLiked={likeThisArticle} />,
+                      <Bookmark bookMarked={bookMark} setBookMark={BookMarkThisArticle} hidden={hidden} />,
+                      <Follow followed={follow} setFollow={followAuthor} hidden={hidden} />,
+                    ]}
+                  >
+                    <Meta
+                      avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+                      title={article.authorPersonId.name}
+                      description={article.title}
+                    />
 
-        <p>
-          {article.text}
-        </p>
-        {user && user._id === article.authorPersonId._id && (<Button type="icon" className={Styles['iconButton']}
-          onClick={clickDelete}
-        >
-          <DeleteFilled />
-        </Button>)}
-        <Button type="text" onClick={viewArticle} className={Styles['viewButton']} > view </Button>
+                    <p>
+                      {article.text}
+                    </p>
+                    {user && user._id === article.authorPersonId._id && (<Button type="icon" className={Styles['iconButton']}
+                      onClick={clickDelete}
+                    >
+                      <DeleteFilled />
+                    </Button>)}
+                    <Button type="text" onClick={viewArticle} className={Styles['viewButton']} > view </Button>
 
-      </Card>
-    </div>
+                  </Card>
+                </div>
+              }
+            </>
+          )
+      }
+    </>
+
   )
 }
 
 const Like = ({ likesCount, liked, setLiked }) => {
   return (
-      <div className={Styles['like-container']} onClick={() => setLiked(!liked)}>
-          <span className={Styles['likes-count']}>{likesCount}</span>
-          {liked ? <LikeFilled style={{ color: '#1890ff' }} /> : <LikeOutlined />}
-      </div>
+    <div className={Styles['like-container']} onClick={() => setLiked(!liked)}>
+      <span className={Styles['likes-count']}>{likesCount}</span>
+      {liked ? <LikeFilled style={{ color: '#1890ff' }} /> : <LikeOutlined />}
+    </div>
   )
 }
 
 const Bookmark = ({ bookMarked, setBookMark, hidden }) => {
   return (
-      <>
-          {hidden ? (<div> <MinusCircleFilled />  <StarOutlined /></div>) : (<div
-              className={Styles['bookmark-container']}
-              onClick={() => setBookMark(!bookMarked)}
-          >
-              {bookMarked ? (
-                  <StarFilled style={{ color: '#1890ff' }} />
-              ) : (
-                  <StarOutlined />
-              )}
-          </div>)}
-      </>
+    <>
+      {hidden ? (<div> <MinusCircleFilled />  <StarOutlined /></div>) : (<div
+        className={Styles['bookmark-container']}
+        onClick={() => setBookMark(!bookMarked)}
+      >
+        {bookMarked ? (
+          <StarFilled style={{ color: '#1890ff' }} />
+        ) : (
+          <StarOutlined />
+        )}
+      </div>)}
+    </>
   )
 }
 
 const Follow = ({ followed, setFollow, hidden }) => {
   return (
-      <>
-          {hidden ? (<div>
-              <MinusSquareFilled />
-              <MinusCircleOutlined style={{ marginRight: '8px' }} />
-          </div>) :
-              (<div
-                  className={Styles['follow-container']}
-                  onClick={() => setFollow(!followed)}
-              >
-                  {followed ? (
-                      <>
-                          <MinusSquareOutlined style={{ marginRight: '8px', color: '#1890ff' }} />
-                          <span style={{ color: '#1890ff' }}>UnFollow</span>
-                      </>
-                  ) : (
-                      <>
-                          <PlusSquareOutlined style={{ marginRight: '8px' }} />
-                          <span>Follow</span>
-                      </>
-                  )}
-              </div>)}
-      </>
+    <>
+      {hidden ? (<div>
+        <MinusSquareFilled />
+        <MinusCircleOutlined style={{ marginRight: '8px' }} />
+      </div>) :
+        (<div
+          className={Styles['follow-container']}
+          onClick={() => setFollow(!followed)}
+        >
+          {followed ? (
+            <>
+              <MinusSquareOutlined style={{ marginRight: '8px', color: '#1890ff' }} />
+              <span style={{ color: '#1890ff' }}>UnFollow</span>
+            </>
+          ) : (
+            <>
+              <PlusSquareOutlined style={{ marginRight: '8px' }} />
+              <span>Follow</span>
+            </>
+          )}
+        </div>)}
+    </>
   )
 }
 

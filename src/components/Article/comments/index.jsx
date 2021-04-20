@@ -15,7 +15,7 @@ const ArticleComments = (props) => {
 
   useEffect(() => {
     dispatch(getComments(articleId));
-  }, [dispatch]);
+  }, [dispatch , articleId]);
 
   const initalComments = useSelector((state) => state.articleComment);
   console.log(initalComments);
@@ -68,7 +68,6 @@ const ArticleComments = (props) => {
 
 const CL = ({ comments, articleId }) => {
 
-  const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
   
 
