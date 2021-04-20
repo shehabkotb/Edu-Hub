@@ -52,7 +52,7 @@ const Camera = () => {
     setRecord (false);
   }
 
-  useEffect(() => {
+useEffect(() => {
     document.addEventListener('visibilitychange', function () {
       document.title = document.hidden ? "I'm away" : 'EduHub'
     })
