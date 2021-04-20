@@ -6,7 +6,7 @@ import React, {
   useEffect
 } from 'react'
 import Webcam from 'react-webcam'
-import { ReactMic } from 'react-mic'
+import { ReactMic } from '@cleandersonlobo/react-mic'
 import { uploadFile } from 'react-s3'
 import { useSelector, useDispatch } from 'react-redux'
 import styles from './../styles.css'
@@ -56,13 +56,16 @@ const Camera = () => {
     document.addEventListener('visibilitychange', function () {
       document.title = document.hidden ? "I'm away" : 'EduHub'
     })
+}, []);
+
+useEffect(() => {
   return () => {
     document.removeEventListener('visibilitychange', function () {
       document.title = document.hidden ? "I'm away" : 'EduHub'
     })
     stopRecording()
-  }
-}, [])
+  };
+}, []);
 
   const onStop=async (recordedBlob)=> {
     console.log('recordedBlob is: ', recordedBlob);
@@ -108,9 +111,6 @@ const Camera = () => {
         className="sound-wave"
         mimeType="audio/mp3"
         onStop={onStop}
-        echoCancellation={true}
-        autoGainControl={true}
-        noiseSuppression={true}
       />
       <ReactCountdownClock
         seconds={0.01 * 3600}
