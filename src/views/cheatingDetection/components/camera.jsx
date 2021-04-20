@@ -26,6 +26,12 @@ const Camera = () => {
     secretAccessKey: SECRET_ACCESS_KEY
   }
 
+  const handleUpload = async (file) => {
+    uploadFile(file, config)
+      .then((data) => console.log(data))
+      .catch((err) => console.error(err))
+  }
+  
   const startRecording = () => {
     setRecord (true);
   }
@@ -36,22 +42,21 @@ const Camera = () => {
 
   const onStop=(recordedBlob)=> {
     console.log('recordedBlob is: ', recordedBlob);
+    recordedBlob.name="recording"
+    handleUpload(recordedBlob)
   }
-
-  const handleUpload = async (file) => {
-    uploadFile(file, config)
-      .then((data) => console.log(data))
-      .catch((err) => console.error(err))
-  }
-  
 
   const capture = useCallback(async () => {
+    if(cnt===1){
+      startRecording()
+    }
     setCnt(cnt + 1)
     const imageSrc = webcamRef.current.getScreenshot()
     const blob = await fetch(imageSrc).then((res) => res.blob())
     blob.name = cnt.toString() + '.jpeg'
     if (cnt === 5) {
       setCnt(1)
+      stopRecording()
     }
     console.log(blob)
     handleUpload(blob)
@@ -77,12 +82,6 @@ const Camera = () => {
         className="sound-wave"
         onStop={onStop}
       />
-      <button onClick={startRecording} type="button">
-        Start
-      </button>
-      <button onClick={stopRecording} type="button">
-        Stop
-      </button>
     </div>
   )
 }
