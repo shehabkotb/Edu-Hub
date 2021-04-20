@@ -1,15 +1,15 @@
 import { notification } from 'antd';
 import articleService from '../services/article';
-import {GET_ONE_ARTICLE  ,CREATE_COMMENT  } from  '../actions/articlePage'; 
+import { GET_ONE_ARTICLE } from '../actions/articlePage';
 
 
-const articlePage = (state = [] , action)=>{
+const articlePage = (state = [], action) => {
     switch (action.type) {
-        case GET_ONE_ARTICLE :
-            return action.data 
-        
-        default :
-            return state 
+        case GET_ONE_ARTICLE:
+            return action.data
+
+        default:
+            return state
     }
 }
 
@@ -19,12 +19,12 @@ export const getArticleData = (id) => {
     return async (dispatch) => {
         try {
 
-            const myarticle = await articleService.getThisArticle(id) ; 
-            const likedBy = await articleService.getlikedBy(id); 
-            const isfollow = await articleService.isfollow(id) ; 
-            const isbooked = await articleService.isBooked(id) ; 
-            const comments = await articleService.getComments(id) ; 
-            const response = { myarticle, likedBy , isfollow  , isbooked , comments } ; 
+            const myarticle = await articleService.getThisArticle(id);
+            const likedBy = await articleService.getlikedBy(id);
+            const isfollow = await articleService.isfollow(id);
+            const isbooked = await articleService.isBooked(id);
+            const comments = await articleService.getComments(id);
+            const response = { myarticle, likedBy, isfollow, isbooked, comments };
 
             dispatch({ type: GET_ONE_ARTICLE, data: response });
             notification.success({
@@ -42,7 +42,7 @@ export const getArticleData = (id) => {
 export const likeArticle = (id) => {
     return async () => {
         try {
-             await articleService.likeArticle(id);
+            await articleService.likeArticle(id);
 
             notification.success({
                 message: 'like Article successfully'
@@ -68,21 +68,20 @@ export const unlikeArticle = (id) => {
             notification.error({
                 message: 'faild to unlike Article'
             })
-            console.log(e) ; 
+            console.log(e);
         }
     }
 }
 
 
-export const BookMark =(id)=>{
-    return async()=>{
-        try{
-            await articleService.BookMark(id) ; 
+export const BookMark = (id) => {
+    return async () => {
+        try {
+            await articleService.BookMark(id);
             notification.success({
                 message: 'booked Article successfully'
             })
-        }catch(e)
-        {
+        } catch (e) {
             notification.error({
                 message: 'failed to book Article'
             })
@@ -91,15 +90,14 @@ export const BookMark =(id)=>{
 }
 
 
-export const unBookMark =(id)=>{
-    return async()=>{
-        try{
-             await articleService.unBookMark(id) ; 
+export const unBookMark = (id) => {
+    return async () => {
+        try {
+            await articleService.unBookMark(id);
             notification.success({
                 message: 'unbooked Article successfully'
             })
-        }catch(e)
-        {
+        } catch (e) {
             notification.error({
                 message: 'failed to unbook Article'
             })
@@ -108,32 +106,30 @@ export const unBookMark =(id)=>{
 }
 
 
-export const followUser =(id)=>{
-    return async()=>{
-        try{
-            await articleService.followUser(id) ;
+export const followUser = (id) => {
+    return async () => {
+        try {
+            await articleService.followUser(id);
             notification.success({
                 message: 'follow Author successfully'
             })
-        }catch(e)
-        {
+        } catch (e) {
             notification.error({
                 message: 'failed to follow Author'
             })
-            console.log("error in follow" , e) ;
+            console.log("error in follow", e);
         }
     }
 }
 
-export const unfollowUser =(id)=>{
-    return async()=>{
-        try{
-            await articleService.unfollow(id) ; 
+export const unfollowUser = (id) => {
+    return async () => {
+        try {
+            await articleService.unfollow(id);
             notification.success({
                 message: 'unfollow Author successfully'
             })
-        }catch(e)
-        {
+        } catch (e) {
             notification.error({
                 message: 'failed to unfollow Author'
             })
@@ -141,25 +137,7 @@ export const unfollowUser =(id)=>{
     }
 }
 
-export const CreateComment = (id, comment) => {
-    return async (dispatch) => {
-        try {
-            const response = await articleService.createComment(id, comment)
-
-            dispatch({ type: CREATE_COMMENT, data: response })
-            notification.success({
-                message: 'Added comment successfully'
-            })
-        } catch (error) {
-            notification.error({
-                message: 'Added article failed'
-            })
-        }
-    }
-}
 
 
-
-
-export default articlePage  ; 
+export default articlePage;
 
