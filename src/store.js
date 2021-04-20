@@ -10,6 +10,8 @@ import courseReducer from './reducers/courseReducer'
 import moduleReducer from './reducers/moduleReducer'
 import articlesReducer from './reducers/articlesReducer'
 import articlePage from './reducers/articlePageReducer'
+import ArticleCommentPage from './reducers/articleComments' 
+
 
 const persistConfig = {
   key: 'root',
@@ -21,8 +23,8 @@ const reducer = combineReducers({
   courses: courseReducer,
   modules: moduleReducer,
   articles:articlesReducer , 
-  articlePage : articlePage
-  
+  articlePage : articlePage , 
+  articleComment : ArticleCommentPage
 })
 
 const persistedReducer = persistReducer(persistConfig, reducer)
