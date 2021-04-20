@@ -48,7 +48,6 @@ const deleteModule = async (courseId, moduleId) => {
 }
 
 const createModuleItem = async (courseId, moduleId, moduleItem) => {
-  debugger
   const response = await axios.post(
     getModuleItemsURL(courseId, moduleId),
     moduleItem,
@@ -58,7 +57,6 @@ const createModuleItem = async (courseId, moduleId, moduleItem) => {
 }
 
 const uploadModuleItem = async (courseId, moduleId, moduleItem) => {
-  debugger
   const response = await axios.post(
     getModuleItemsURL(courseId, moduleId),
     moduleItem,

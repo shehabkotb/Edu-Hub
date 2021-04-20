@@ -109,7 +109,6 @@ export const deleteModule = (courseId, moduleId) => {
 export const createModuleItem = (courseId, moduleId, moduleItem) => {
   return async (dispatch) => {
     try {
-      debugger
       let response
       if (moduleItem instanceof FormData) {
         // file

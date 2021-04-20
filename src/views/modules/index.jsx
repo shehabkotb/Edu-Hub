@@ -36,7 +36,6 @@ const Modules = (props) => {
   }
 
   const editModule = (moduleId, module) => {
-    debugger
     dispatch(updateModule(courseId, moduleId, module))
   }
 

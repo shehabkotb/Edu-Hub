@@ -1,6 +1,6 @@
 import React from 'react'
 import { Layout, Menu } from 'antd'
-import { Link } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 import { LogoPlaceHolder } from './style'
 
 import {
@@ -13,8 +13,15 @@ import {
 import { RiArticleLine } from 'react-icons/ri'
 import { ImBooks } from 'react-icons/im'
 
-const SideNav = ({ collapsed, onCollapse }) => {
+const SideNav = (props) => {
+  const { collapsed, onCollapse } = props
   const { Sider } = Layout
+
+  let currentPath = useLocation().pathname
+
+  // dummy fix for side nav highlight
+  if (currentPath.includes('/app/course/'))
+    currentPath = currentPath.replace('/app/course/', '/app/courses/')
 
   return (
     <Sider
@@ -30,28 +37,33 @@ const SideNav = ({ collapsed, onCollapse }) => {
       }}
     >
       <LogoPlaceHolder />
-      <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-        <Menu.Item key="1" icon={<DashboardOutlined />}>
-          <Link to="/app/dashboard">Dashboard</Link>
+      <Menu
+        theme="dark"
+        mode="inline"
+        activeKey={currentPath}
+        selectedKeys={currentPath}
+      >
+        <Menu.Item key="/app/dashboard" icon={<DashboardOutlined />}>
+          <NavLink to="/app/dashboard">Dashboard</NavLink>
         </Menu.Item>
-        <Menu.Item key="2" icon={<ImBooks />}>
-          <Link to="/app/courses">Courses</Link>
+        <Menu.Item key="/app/courses" icon={<ImBooks />}>
+          <NavLink to="/app/courses">Courses</NavLink>
         </Menu.Item>
-        <Menu.Item key="3" icon={<CalendarOutlined />}>
-          <Link to="/app/calendar">Calendar</Link>
+        <Menu.Item key="/app/calendar" icon={<CalendarOutlined />}>
+          <NavLink to="/app/calendar">Calendar</NavLink>
         </Menu.Item>
-        <Menu.Item key="4" icon={<RiArticleLine />}>
-          <Link to="/app/articles">Articles</Link>
+        <Menu.Item key="/app/articles" icon={<RiArticleLine />}>
+          <NavLink to="/app/articles">Articles</NavLink>
         </Menu.Item>
         {/* <SubMenu key="sub1" icon={<TeamOutlined />} title="Groups">
           <Menu.Item key="5">Place Holder 1</Menu.Item>
           <Menu.Item key="6">Place Holder 2</Menu.Item>
         </SubMenu> */}
-        <Menu.Item key="7" icon={<CrownOutlined />}>
-          <Link to="/app/acheivements">Acheivements</Link>
+        <Menu.Item key="/app/acheivements" icon={<CrownOutlined />}>
+          <NavLink to="/app/acheivements">Acheivements</NavLink>
         </Menu.Item>
-        <Menu.Item key="8" icon={<UserOutlined />}>
-          <Link to="/app/profile">Profile</Link>
+        <Menu.Item key="/app/profile" icon={<UserOutlined />}>
+          <NavLink to="/app/profile">Profile</NavLink>
         </Menu.Item>
       </Menu>
     </Sider>
