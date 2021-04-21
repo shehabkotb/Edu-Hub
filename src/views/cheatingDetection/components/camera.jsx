@@ -3,7 +3,8 @@ import React, {
   useRef,
   useCallback,
   useState,
-  useEffect
+  useEffect,
+  useLayoutEffect
 } from 'react'
 import Webcam from 'react-webcam'
 import { ReactMic } from '@cleandersonlobo/react-mic'
@@ -64,6 +65,9 @@ useEffect(() => {
       document.title = document.hidden ? "I'm away" : 'EduHub'
     })
     stopRecording()
+    history.goForward()
+    history.goBack()
+    history.goBack()
   };
 }, []);
 
@@ -120,7 +124,7 @@ useEffect(() => {
         onComplete={() => {
           stopRecording()
           cheatingService.clear()
-          history.push(`/app`)
+          history.goBack()
         }}
       />
     </div>
