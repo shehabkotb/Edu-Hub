@@ -1,10 +1,8 @@
 import React, {
-  Component,
   useRef,
   useCallback,
   useState,
-  useEffect,
-  useLayoutEffect
+  useEffect
 } from 'react'
 import Webcam from 'react-webcam'
 import { ReactMic } from '@cleandersonlobo/react-mic'
@@ -12,14 +10,11 @@ import { uploadFile } from 'react-s3'
 import { useSelector, useDispatch } from 'react-redux'
 import styles from './../styles.css'
 import cheatingService from './../../../services/cheatingService'
-
 import ReactCountdownClock from 'react-countdown-clock'
 import { useHistory } from 'react-router-dom'
 
 
-
 const Camera = () => {
-  const dispatch = useDispatch()
   const history = useHistory()
   const webcamRef = useRef(null)
   const user = useSelector((state) => state.auth.user)
@@ -66,8 +61,6 @@ const Camera = () => {
     return () => {
       document.removeEventListener('visibilitychange', eventHandler)
       stopRecording()
-      history.goForward()
-      history.goBack()
       history.goBack()
     };
   }, []);
@@ -129,8 +122,6 @@ const Camera = () => {
           stopRecording()
           cheatingService.clear()
           document.removeEventListener('visibilitychange', eventHandler)
-          //history.goBack()
-          //history.push('/app', '_blank')
           window.close()
         }}
       />
