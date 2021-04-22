@@ -66,9 +66,9 @@ const Camera = () => {
     return () => {
       document.removeEventListener('visibilitychange', eventHandler)
       stopRecording()
-      history.goForward()
+      /*history.goForward()
       history.goBack()
-      history.goBack()
+      history.goBack()*/
     };
   }, []);
 
@@ -125,7 +125,10 @@ const Camera = () => {
         onComplete={() => {
           stopRecording()
           cheatingService.clear()
-          history.goBack()
+          document.removeEventListener('visibilitychange', eventHandler)
+          //history.goBack()
+          //history.push('/app', '_blank')
+          window.close()
         }}
       />
     </div>

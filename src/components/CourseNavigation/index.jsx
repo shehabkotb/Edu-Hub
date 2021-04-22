@@ -63,7 +63,7 @@ const CourseNavigation = () => {
       <NavLink to={`${url}/quizes`}>
         <Button type="text">Quizes</Button>
       </NavLink>
-      <NavLink to={`${url}/exams`}>
+      <NavLink to={`${url}/exams`} target="_blank">
         <Button type="text">Exams</Button>
       </NavLink>
     </>
