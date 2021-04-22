@@ -1,5 +1,5 @@
 import lectureService from '../services/lectures'
-import { GET_ALL_LECTURES } from '../actions/lecture'
+import { GET_ALL_LECTURES, LOAD_LECTURES } from '../actions/lecture'
 
 import { notification } from 'antd'
 
@@ -16,10 +16,12 @@ const iso8601Duration = (duration) => {
   if (!matches[5]) return `${matches[6]}:${matches[7]}:${matches[8]}`
 }
 
-const lectureReducer = (state = [], action) => {
+const lectureReducer = (state = { data: [], loading: false }, action) => {
   switch (action.type) {
     case GET_ALL_LECTURES:
-      return action.data
+      return { data: action.data, loading: false }
+    case LOAD_LECTURES:
+      return { data: [], loading: true }
     default:
       return state
   }
@@ -30,6 +32,7 @@ const lectureReducer = (state = [], action) => {
 export const getAllLectures = (courseId) => {
   return async (dispatch) => {
     try {
+      dispatch({ type: LOAD_LECTURES })
       const response = await lectureService.getAllLectures(courseId)
       const videoIds = response.reduce((accumulator, item, index) => {
         if (index === 0) return accumulator.concat(`${item.videoId}`)

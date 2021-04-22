@@ -1,11 +1,9 @@
 import styled from 'styled-components'
 
-import { Button } from 'antd'
-import { ArrowRightOutlined } from '@ant-design/icons'
-
 const Container = styled.div`
-  /* display: flex; */
-  /* justify-content: space-between; */
+  background-color: #fafafa;
+  border-radius: 10px;
+  overflow: hidden;
   align-items: center;
   padding: 8px 12px;
 `
@@ -21,22 +19,13 @@ const InfoDate = styled.div`
   font-weight: 600;
 `
 
-const VideoInfo = ({ nextLecture, lecture }) => {
+const VideoInfo = ({ lecture }) => {
   return (
     <Container>
       <div>
         <InfoTitle>{lecture.title}</InfoTitle>
         <InfoDate>{lecture.publishedAt}</InfoDate>
       </div>
-
-      {/* <Button
-        onClick={() => {
-          props.next()
-        }}
-        shape="circle"
-        type="secondary"
-        icon={<ArrowRightOutlined />}
-      ></Button> */}
     </Container>
   )
 }
