@@ -26,6 +26,7 @@ import Exams from '../views/exams'
 import Quizes from '../views/quizes'
 import Lectures from '../views/lectures'
 import Modules from '../views/modules'
+import DiscussionFeed from '../views/discussions'
 
 import NotFoundView from '../views/NotFoundView'
 
@@ -105,6 +106,13 @@ const AuthnticatedApp = () => {
               component={Lectures}
             />
             <Route path="/app/course/:courseId/lectures" component={Lectures} />
+            <Route
+              path="/app/course/:courseId/discussions"
+              render={(props) => (
+                <DiscussionFeed courseId={props.match.params.courseId} />
+              )}
+            />
+
             <Route path="/app/browse" component={Browse} />
             <Route path="/app/articles" component={Articles} />
             <Route path="/app/newArticle" component={ArticleForm} />

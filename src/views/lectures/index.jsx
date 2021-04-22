@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 import { GridContainer, VideoWrapper, Video, Info, Tabs, Menu } from './style'
 import { useDispatch, useSelector } from 'react-redux'
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { getAllLectures } from '../../reducers/lectureReducer'
 import VideoInfo from './components/VideoInfo'
@@ -41,42 +41,16 @@ const VideoItem = ({ lecture, highlight, setLecture }) => {
   )
 }
 
-const Lectures = (props) => {
-  const dispatch = useDispatch()
+const intialFunc = (lectures, lectureId) => {
+  if (!lectures) return null
+  if (!lectureId) return lectures[0]
+  const index = lectures.findIndex((lecture) => lecture.id === lectureId)
+  if (index === -1) return null
+  return lectures[index]
+}
 
-  const { courseId, lectureId } = useParams()
-  debugger
-
-  useEffect(() => {
-    dispatch(getAllLectures(courseId))
-  }, [courseId, dispatch])
-
-  const lectures = useSelector((state) => state.lectures)
-
-  const [selectedLecture, setSelectedLecture] = useState(() => {
-    if (!lectures) return null
-    if (!lectureId) return lectures[0]
-    const index = lectures.findIndex((lecture) => lecture.id === lectureId)
-    if (index === -1) return null
-    return lectures[index]
-  })
-
-  const [menuHeight, setMenuHeight] = useState(0)
-  const menuRef = useRef(null)
-
-  // useLayoutEffect(() => {
-  //   setMenuHeight(menuRef.current.clientHeight - 70)
-  // }, [])
-
-  const selectLecture = (lectureId) => {
-    const index = lectures.findIndex((lecture) => lecture.id === lectureId)
-    if (index === -1) return
-    setSelectedLecture(lectures[index])
-  }
-
-  // debugger
-  if (!lectures || !selectedLecture) return <div>no lectures found</div>
-
+const TestComponent = (props) => {
+  const { selectedLecture, lectures, selectLecture } = props
   return (
     <GridContainer>
       <VideoWrapper>
@@ -89,7 +63,7 @@ const Lectures = (props) => {
         ></Video>
       </VideoWrapper>
 
-      <Menu ref={menuRef}>
+      <Menu>
         <div
           style={{
             height: '70px',
@@ -119,6 +93,45 @@ const Lectures = (props) => {
       </Info>
       {/* <Tabs>Disscusion or tabs place holder</Tabs> */}
     </GridContainer>
+  )
+}
+
+const Lectures = (props) => {
+  const dispatch = useDispatch()
+
+  const { courseId, lectureId } = useParams()
+  debugger
+
+  useEffect(() => {
+    dispatch(getAllLectures(courseId))
+  }, [courseId, dispatch])
+
+  const lectures = useSelector((state) => state.lectures)
+
+  let selectedLecture = lectures[0]
+
+  const [menuHeight, setMenuHeight] = useState(0)
+  const menuRef = useRef(null)
+
+  // useLayoutEffect(() => {
+  //   setMenuHeight(menuRef.current.clientHeight - 70)
+  // }, [])
+
+  const selectLecture = (lectureId) => {
+    const index = lectures.findIndex((lecture) => lecture.id === lectureId)
+    if (index === -1) return
+    selectedLecture = lectures[index]
+  }
+
+  // debugger
+  if (!lectures || !selectedLecture) return <div>no lectures found</div>
+
+  return (
+    <TestComponent
+      selectedLecture={selectedLecture}
+      lectures={lectures}
+      selectLecture={selectLecture}
+    />
   )
 }
 
