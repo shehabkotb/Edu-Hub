@@ -26,6 +26,7 @@ import Exams from '../views/exams'
 import Quizes from '../views/quizes'
 import Videos from '../views/videos'
 import Modules from '../views/modules'
+import CheatingDetection from '../views/cheatingDetection'
 import DiscussionFeed from '../views/discussions'
 
 import NotFoundView from '../views/NotFoundView'
@@ -101,6 +102,7 @@ const AuthnticatedApp = () => {
             />
             <Route path="/app/course/:courseId/quizes" component={Quizes} />
             <Route path="/app/course/:courseId/exams" component={Exams} />
+            {<Route path="/app/course/:courseId/exam/:examId" component={CheatingDetection} />}
             <Route path="/app/course/:courseId/videos" component={Videos} />
             <Route
               path="/app/course/:courseId/discussions"
