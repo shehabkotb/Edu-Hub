@@ -66,6 +66,8 @@ const Camera = () => {
     return () => {
       document.removeEventListener('visibilitychange', eventHandler)
       stopRecording()
+      history.push('/exams')//7ot el id lma el exams tt3mel
+      history.goBack()
       /*history.goForward()
       history.goBack()
       history.goBack()*/
@@ -116,6 +118,9 @@ const Camera = () => {
         className="sound-wave"
         mimeType="audio/mp3"
         onStop={onStop}
+        echoCancellation={true} 
+        autoGainControl={true} 
+        noiseSuppression={true}
       />
       <ReactCountdownClock
         seconds={0.01 * 3600}
