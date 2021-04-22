@@ -53,23 +53,24 @@ const Camera = () => {
     setRecord (false);
   }
 
-useEffect(() => {
-    document.addEventListener('visibilitychange', function () {
-      document.title = document.hidden ? "I'm away" : 'EduHub'
-    })
-}, []);
+  const eventHandler = ()=>{
+    document.title = document.hidden ? "I'm away" : 'EduHub'
+  }
 
-useEffect(() => {
-  return () => {
-    document.removeEventListener('visibilitychange', function () {
-      document.title = document.hidden ? "I'm away" : 'EduHub'
-    })
-    stopRecording()
-    history.goForward()
-    history.goBack()
-    history.goBack()
-  };
-}, []);
+
+  useEffect(() => {
+      document.addEventListener('visibilitychange', eventHandler)
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      document.removeEventListener('visibilitychange', eventHandler)
+      stopRecording()
+      history.goForward()
+      history.goBack()
+      history.goBack()
+    };
+  }, []);
 
   const onStop=async (recordedBlob)=> {
     console.log('recordedBlob is: ', recordedBlob);
