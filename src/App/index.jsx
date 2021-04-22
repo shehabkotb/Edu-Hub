@@ -101,8 +101,8 @@ const AuthnticatedApp = () => {
               component={Assignments}
             />
             <Route path="/app/course/:courseId/quizes" component={Quizes} />
-            {/*<Route path="/app/course/:courseId/exams" component={Exams} />*/}
-            {<Route path="/app/course/:courseId/exams" component={CheatingDetection} />}
+            <Route path="/app/course/:courseId/exams" component={Exams} />
+            {<Route path="/app/course/:courseId/exam/:examId" component={CheatingDetection} />}
             <Route path="/app/course/:courseId/videos" component={Videos} />
             <Route
               path="/app/course/:courseId/discussions"

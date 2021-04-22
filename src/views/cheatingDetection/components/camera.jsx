@@ -66,11 +66,9 @@ const Camera = () => {
     return () => {
       document.removeEventListener('visibilitychange', eventHandler)
       stopRecording()
-      history.push('/exams')//7ot el id lma el exams tt3mel
+      history.goForward()
       history.goBack()
-      /*history.goForward()
       history.goBack()
-      history.goBack()*/
     };
   }, []);
 
