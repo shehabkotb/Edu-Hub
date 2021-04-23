@@ -10,6 +10,7 @@ import authReducer from './reducers/authReducer'
 import courseReducer from './reducers/courseReducer'
 import moduleReducer from './reducers/moduleReducer'
 import discussionReducer from './reducers/discussionReducer'
+import announcementsReducer from './reducers/announcementsReducer'
 
 const persistConfig = {
   key: 'root',
@@ -20,7 +21,8 @@ const reducer = combineReducers({
   auth: authReducer,
   courses: courseReducer,
   modules: moduleReducer,
-  discussions: discussionReducer
+  discussions: discussionReducer,
+  announcements: announcementsReducer
 })
 
 const persistedReducer = persistReducer(persistConfig, reducer)
