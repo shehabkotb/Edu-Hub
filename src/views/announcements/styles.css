@@ -6,11 +6,6 @@
   overflow-y: scroll;
 }
 
-.comment-card{
-    max-height: 200px;
-    overflow-y: scroll;
-}
-
 .container{
   margin: 10px;
 }
