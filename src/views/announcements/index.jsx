@@ -55,7 +55,7 @@ const AnnouncementsFeed = ({ courseId }) => {
         ></Input>
         <Button onClick={onPost}>Post</Button>
       </span>
-      <Feed announcements={announcements} user={user} />
+      <Feed announcements={announcements.reverse()} user={user} />
     </div>
   )
 }
