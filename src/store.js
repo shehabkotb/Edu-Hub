@@ -9,6 +9,8 @@ import storage from 'redux-persist/lib/storage' // defaults to localStorage for 
 import authReducer from './reducers/authReducer'
 import courseReducer from './reducers/courseReducer'
 import moduleReducer from './reducers/moduleReducer'
+import lectureReducer from './reducers/lectureReducer'
+import lectureCommentsReducer from './reducers/lectureCommentsReducer'
 import discussionReducer from './reducers/discussionReducer'
 import announcementsReducer from './reducers/announcementsReducer'
 
@@ -21,6 +23,9 @@ const reducer = combineReducers({
   auth: authReducer,
   courses: courseReducer,
   modules: moduleReducer,
+
+  lectures: lectureReducer,
+  lectureComments: lectureCommentsReducer,
   discussions: discussionReducer,
   announcements: announcementsReducer
 })
