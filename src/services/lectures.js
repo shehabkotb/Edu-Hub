@@ -28,8 +28,35 @@ const getLecturesData = async (videoIds) => {
   return response.data
 }
 
+const getLectureComments = async (courseId, moduleItemId) => {
+  const response = await axios.get(
+    `${coursesURL}/${courseId}${baseURL}/${moduleItemId}/comments`
+  )
+  return response.data
+}
+
+const createLectureComment = async (courseId, moduleItemId, comment) => {
+  const response = await axios.post(
+    `${coursesURL}/${courseId}${baseURL}/${moduleItemId}/comments`,
+    comment,
+    getAuthHeader()
+  )
+  return response.data
+}
+
+const deleteLectureComment = async (courseId, moduleItemId, commentId) => {
+  const response = await axios.delete(
+    `${coursesURL}/${courseId}${baseURL}/${moduleItemId}/comments/${commentId}`,
+    getAuthHeader()
+  )
+  return response.data
+}
+
 const lectureService = {
   getAllLectures,
-  getLecturesData
+  getLecturesData,
+  getLectureComments,
+  createLectureComment,
+  deleteLectureComment
 }
 export default lectureService

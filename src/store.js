@@ -10,6 +10,7 @@ import authReducer from './reducers/authReducer'
 import courseReducer from './reducers/courseReducer'
 import moduleReducer from './reducers/moduleReducer'
 import lectureReducer from './reducers/lectureReducer'
+import lectureCommentsReducer from './reducers/lectureCommentsReducer'
 import discussionReducer from './reducers/discussionReducer'
 
 const persistConfig = {
@@ -22,6 +23,7 @@ const reducer = combineReducers({
   courses: courseReducer,
   modules: moduleReducer,
   lectures: lectureReducer,
+  lectureComments: lectureCommentsReducer,
   discussions: discussionReducer
 })
 

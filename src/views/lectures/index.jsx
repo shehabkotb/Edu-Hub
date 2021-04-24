@@ -2,14 +2,15 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { Spin, Empty, Row, Col } from 'antd'
-import { Tabs } from './style'
+import { Empty, Row, Col } from 'antd'
 
 import Video from './components/Video'
 import VideoInfo from './components/VideoInfo'
 import PlaylistMenu from './components/PlaylistMenu'
+import LectureComments from './components/LectureComments'
 
 import { getAllLectures } from '../../reducers/lectureReducer'
+import Spinner from '../../components/Spinner'
 
 const selectLecture = (lectures, lectureId) => {
   if (!Array.isArray(lectures) || !lectures.length) return null
@@ -57,7 +58,7 @@ const LecturePage = (props) => {
 
       <Row>
         <Col xs={24} sm={24} md={18}>
-          <Tabs>Disscusion or tabs place holder</Tabs>
+          <LectureComments selectedLecture={selectedLecture} />
         </Col>
       </Row>
     </>
@@ -77,7 +78,7 @@ const Lectures = () => {
   const lectures = useSelector((state) => state.lectures.data)
 
   if (loading) {
-    return <Spin />
+    return <Spinner size="large" />
   }
 
   return <LecturePage lectures={lectures} />

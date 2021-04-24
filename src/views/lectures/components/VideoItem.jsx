@@ -9,7 +9,6 @@ const StyledListItem = styled(List.Item)`
   justify-content: initial;
   overflow-x: hidden;
 
-  background-color: ${(props) => props.highlight && '#d9d9d9'};
   &:hover {
     background-color: #d9d9d9;
   }
@@ -17,7 +16,10 @@ const StyledListItem = styled(List.Item)`
 
 const VideoItem = ({ lecture, highlight, chooseLecture }) => {
   return (
-    <StyledListItem onClick={() => chooseLecture()} highlight={highlight}>
+    <StyledListItem
+      onClick={() => chooseLecture()}
+      style={{ backgroundColor: highlight ? '#d9d9d9' : undefined }}
+    >
       <img
         style={{ width: '100px', height: '56px' }}
         src={lecture.thumbnail.url}

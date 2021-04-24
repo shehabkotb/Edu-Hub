@@ -1,3 +1,4 @@
+import { Typography } from 'antd'
 import styled from 'styled-components'
 
 const Container = styled.div`
@@ -6,11 +7,6 @@ const Container = styled.div`
   overflow: hidden;
   align-items: center;
   padding: 8px 12px;
-`
-
-const InfoTitle = styled.h3`
-  margin: 0;
-  font-size: 18px;
 `
 
 const InfoDate = styled.div`
@@ -23,8 +19,10 @@ const VideoInfo = ({ lecture }) => {
   return (
     <Container>
       <div>
-        <InfoTitle>{lecture.title}</InfoTitle>
-        <InfoDate>{lecture.publishedAt}</InfoDate>
+        <Typography.Title style={{ margin: '0px' }} level={4}>
+          {lecture.title}
+        </Typography.Title>
+        <InfoDate style={{ marginTop: '4px' }}>{lecture.publishedAt}</InfoDate>
       </div>
     </Container>
   )
