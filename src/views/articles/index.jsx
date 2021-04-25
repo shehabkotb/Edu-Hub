@@ -166,7 +166,7 @@ const ArticleCard = ({ article, deleteArticle }) => {
         <Meta
           avatar={<Avatar src={article?.authorPersonId?.photo} />}
           title={(article?.authorPersonId.name || user.name )}
-          description={article?git.title}
+          description={article?.title}
         />
 
         <p>
