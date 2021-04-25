@@ -164,9 +164,9 @@ const ArticleCard = ({ article, deleteArticle }) => {
         
       >
         <Meta
-          avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-          title={(article.authorPersonId.name || user.name )}
-          description={article.title}
+          avatar={<Avatar src={article?.authorPersonId?.photo} />}
+          title={(article?.authorPersonId.name || user.name )}
+          description={article?git.title}
         />
 
         <p>

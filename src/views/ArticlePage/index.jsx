@@ -81,7 +81,7 @@ const ArticlePage = () => {
                 bordered={false}
             >
                 <Meta
-                    avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+                    avatar={<Avatar src={Data?.myarticle?.authorPersonId?.photo}/>}
                     title={Data?.myarticle?.authorPersonId?.name}
                     description={Data?.myarticle?.title}
                 />
