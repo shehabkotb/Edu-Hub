@@ -4,7 +4,7 @@ import { getAuthHeader } from './config';
 const baseURL = '/article'
 
 const timeline  = async (page,limit) => {
-  const response = await axios.get(`${baseURL}/timeline${page}&${limit}` , getAuthHeader()) ; 
+  const response = await axios.get(`${baseURL}/timeline?page=${page}&limit=${limit}` , getAuthHeader()) ; 
   return response.data
 }
 const create_article = async (article) => {

@@ -1,6 +1,7 @@
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { combineReducers, createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
+import logger from 'redux-logger'
 
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
@@ -10,7 +11,6 @@ import courseReducer from './reducers/courseReducer'
 import moduleReducer from './reducers/moduleReducer'
 import articlesReducer from './reducers/articlesReducer'
 import articlePage from './reducers/articlePageReducer'
-import ArticleCommentPage from './reducers/articleComments' 
 
 
 const persistConfig = {
@@ -24,7 +24,6 @@ const reducer = combineReducers({
   modules: moduleReducer,
   articles:articlesReducer , 
   articlePage : articlePage , 
-  articleComment : ArticleCommentPage
 })
 
 const persistedReducer = persistReducer(persistConfig, reducer)
@@ -32,7 +31,7 @@ const persistedReducer = persistReducer(persistConfig, reducer)
 // debugging with devtools
 let store = createStore(
   persistedReducer,
-  composeWithDevTools(applyMiddleware(thunk))
+  composeWithDevTools(applyMiddleware(thunk ,logger))
 )
 let persistor = persistStore(store)
 

@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState ,useEffect } from 'react';
 import 'antd/dist/antd.css';
 import { Comment, Avatar, Form, Button, Input } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { getComments, CreateComment, deleteComment } from '../../../reducers/articleComments'
+import { createComment, DeleteComment ,getArticleData } from '../../../reducers/articlePageReducer'
 import { DeleteFilled } from '@ant-design/icons'
 import Styles from './index.module.css'
 
@@ -12,33 +12,38 @@ const ArticleComments = (props) => {
   const dispatch = useDispatch();
 
   const articleId = props.articleId;
-
-  useEffect(() => {
-    dispatch(getComments(articleId));
-  }, [dispatch , articleId]);
-
-  const initalComments = useSelector((state) => state.articleComment);
-  console.log(initalComments);
-  const [value, setValue] = useState('');
   const [submitting, setSubmitting] = useState(false);
+
+  const initalComments = useSelector((state) => state.articlePage.comments);
+
+  const [value, setValue] = useState('');
 
   const handleChange = (e) => {
     setValue(e.target.value);
   }
 
-  const addComment = (val) => {
-    dispatch(CreateComment(articleId, val));
+                                                                                            
+  const addComment = (comment) => {
+    dispatch(createComment(articleId, comment));
     setSubmitting(true);
   }
+
   const handleSubmit = () => {
     if (!value) {
       return;
     }
 
-    addComment(value);
+    let comment = {
+      body: value,
+    }
+    addComment(comment);
     setSubmitting(false);
+    setValue('') ; 
   }
 
+  useEffect(() => {
+    dispatch(getArticleData(articleId));
+}, [dispatch , articleId ,setSubmitting]);
 
   return (
     <>
@@ -69,30 +74,30 @@ const ArticleComments = (props) => {
 const CL = ({ comments, articleId }) => {
 
   const dispatch = useDispatch();
-  
+
+  const user = useSelector((state) => state.auth.user);
 
   return (
     <div>
-      { comments.map((comment ,index) => {
+      { comments.map((comment, index) => {
         return (
           <div key={index}>
             <div className={Styles['iconCommentBody']}>
-              <Comment content={comment.body} author={comment.name} avatar={comment.photo} datetime={comment.createdAt} />
+              <Comment content={comment?.body} author={(comment?.createdBy.name || user?.name) } avatar={comment?.createdBy.photo || user.photo} datetime={comment.createdAt} />
 
             </div>
             <div className={Styles['iconCommentRemove']}>
-              <Button type="icon" className={Styles['iconButton']}
-                onClick={()=>{
-                  return dispatch(deleteComment(articleId, comment._id))
+             {user.id === (comment.authorPersonId || comment.createdBy.id) && ( <Button type="icon" className={Styles['iconButton']}
+                onClick={() => {
+                  return dispatch(DeleteComment(articleId, comment.id))
                 }}
               >
                 <DeleteFilled />
-              </Button>
+              </Button>)}
             </div>
           </div>)
       })}
     </div>
-
   )
 };
 

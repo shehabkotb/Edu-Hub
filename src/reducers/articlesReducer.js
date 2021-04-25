@@ -2,6 +2,7 @@ import {
     CREATE_ARTICLE,
     GET_ALL_ARTICLE,
     TIMELINE,
+    DELETE_ARTICLE
 } 
 from '../actions/articles';
 import { notification } from 'antd';
@@ -13,9 +14,13 @@ const articlesReducer = (state = [], action) => {
         case GET_ALL_ARTICLE:
             return action.data
         case TIMELINE:
-            return action.data 
+            return state.concat(action.data) ;
         case CREATE_ARTICLE:
             return state.concat({ ...action.data })
+        case DELETE_ARTICLE:
+            return state.filter((article)=>{
+                return article.id !== action.data ; 
+            })
         default:
             return state
     }
@@ -41,7 +46,6 @@ export const Timeline = (page, limit) => {
         try {
             const response = await articleService.timeline(page, limit);
             dispatch({ type: TIMELINE, data: response });
-
         }
         catch (error) {
             notification.error({
@@ -73,10 +77,11 @@ export const create_article = (Article) => {
 
 
 export const deleteArticle = (id) => {
-    return async () => {
+    return async (dispatch) => {
         try {
-            await articleService.deleteArticle(id);
+            dispatch({type:DELETE_ARTICLE , data :id}) ; 
 
+           await articleService.deleteArticle(id);
             notification.success({
                 message: 'Deleted article successfully'
             })

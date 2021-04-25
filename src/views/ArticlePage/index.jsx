@@ -3,79 +3,69 @@ import { Card } from 'antd'
 import Meta from 'antd/lib/card/Meta'
 import Avatar from 'antd/lib/avatar/avatar'
 import ArticleComments from '../../components/Article/comments/'
-import { LikeOutlined, LikeFilled, MinusSquareFilled, StarOutlined, MinusCircleOutlined, MinusCircleFilled, StarFilled, PlusSquareOutlined, MinusSquareOutlined, CommentOutlined } from '@ant-design/icons'
-import { getArticleData, likeArticle, unlikeArticle, BookMark, unBookMark, followUser, unfollowUser } from '../../reducers/articlePageReducer';
+import { getArticleData, likeArticle, unlikeArticle, BookMark, unBookMark, followUser, unfollowUser } 
+from '../../reducers/articlePageReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import Styles from './index.module.css'
+import Styles from './index.module.css';
+import { CommentOutlined } from '@ant-design/icons'
+  
+import LikeIcon from '../articles/components/LikeIcon' ; 
+import BookMarkIcon from '../articles/components/BookMarkIcon' ; 
+import FollowIcon from '../articles/components/FollowIcon' ; 
 
 const ArticlePage = () => {
     var { id } = useParams();
     const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(getArticleData(id));
-    }, [dispatch , id]);
-
+   
     const Data = useSelector((state) => state.articlePage);
-    const myarticle = Data.myarticle;
-
-    const user = useSelector((state) => state.auth.user)
-
-
-    const [liked, setLiked] = useState(Data.likedBy.my_like);
-    const [bookMark, setBookMark] = useState(Data.isbooked.data.isbook);
-    const [follow, setFollow] = useState(Data.isfollow.data.myfollow);
-    const [likeCount, setLikeCount] = useState(Data.likedBy.length);
+    const user = useSelector((state)=> state.auth.user) ;  
+    var [liked ,setLiked] = useState(Data?.islike) ; 
+    var [bookMark , setBookMark] = useState(Data?.isBooked) ; 
+    var [follow , setFollow] = useState(Data?.isFollow) ; 
+    var [likeCount , setLikeCount] = useState(Data?.length) ; 
     const [commentState, setCommentState] = useState(false);
 
     const likeThisArticle = () => {
 
-        setTimeout(() => {
             if (!liked) {
-                dispatch(likeArticle(id));
-                setLiked(!liked);
-                setLikeCount(likeCount + 1);
+                setLiked(!liked) ; 
+                setLikeCount(likeCount +1 ) ; 
+                dispatch(likeArticle(id));              
             }
             else {
+                setLiked(!liked) ; 
+                setLikeCount(likeCount -1 ) ; 
                 dispatch(unlikeArticle(id));
-                setLiked(!liked)
-                setLikeCount(likeCount - 1)
             }
-        }, 1000)
     }
-
-
     const BookMarkThisArticle = () => {
-        setTimeout(() => {
+       
             if (!bookMark) {
+                setBookMark(!bookMark)
                 dispatch(BookMark(id))
-                setBookMark(!bookMark);
-
             }
             else {
+                setBookMark(!bookMark)
                 dispatch(unBookMark(id))
-                setBookMark(!bookMark);
-
             }
-        }, 1000)
     }
-
     const followAuthor = () => {
-        setTimeout(() => {
-
             if (!follow) {
-                dispatch(followUser(id))
                 setFollow(!follow)
+                dispatch(followUser(id)) 
             }
-            else {
+            else { 
+                setFollow(!follow)
                 dispatch(unfollowUser(id))
-                setFollow(!follow)
             }
-
-        }, 1000)
     }
+    useEffect(() => {
+        dispatch(getArticleData(id));
+    }, [dispatch , id]);
+    
 
-    const hidden = (user._id === myarticle.authorPersonId._id) ? true : false;
+    const hidden = (user._id === Data?.myarticle?.authorPersonId._id) ? true : false;
     return (
 
         <div className={Styles['article-card-container']}>
@@ -83,40 +73,31 @@ const ArticlePage = () => {
                 hoverable
                 className="article-card"
                 actions={[
-                    <Like likesCount={likeCount} liked={liked} setLiked={likeThisArticle} />,
-                    <Bookmark bookMarked={bookMark} setBookMark={BookMarkThisArticle} hidden={hidden} />,
-                    <Follow followed={follow} setFollow={followAuthor} hidden={hidden} />,
+                    <LikeIcon likesCount={likeCount} liked={liked} setLiked={likeThisArticle} />,
+                    <BookMarkIcon bookMarked={bookMark} setBookMark={BookMarkThisArticle} hidden={hidden} />,
+                    <FollowIcon followed={follow} setFollow={followAuthor} hidden={hidden} />,
                     <Comment commentState={commentState} setCommentState={setCommentState} />
                 ]}
                 bordered={false}
             >
                 <Meta
                     avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                    title={myarticle.authorPersonId.name}
-                    description={myarticle.title}
+                    title={Data?.myarticle?.authorPersonId?.name}
+                    description={Data?.myarticle?.title}
                 />
                 <Card bordered={false}>
-                    {myarticle.text}
+                    {Data?.myarticle?.text}
                 </Card>
 
             </Card>
             <hr className={Styles['Hline']} />
 
-            <Card bordered={false}>
+             {(Data?.comments) ?  (<Card bordered={false}>
                 <ArticleComments showEditor={commentState} articleId={id} />
-            </Card>
+            </Card>) :(<Card > there is no comment to show </Card>)}
         </div>
 
 
-    )
-}
-
-const Like = ({ likesCount, liked, setLiked }) => {
-    return (
-        <div className={Styles['like-container']} onClick={() => setLiked(!liked)}>
-            <span className={Styles['likes-count']}>{likesCount}</span>
-            {liked ? <LikeFilled style={{ color: '#1890ff' }} /> : <LikeOutlined />}
-        </div>
     )
 }
 
@@ -128,54 +109,6 @@ const Comment = ({ commentState, setCommentState }) => {
         </div>
     )
 }
-
-const Bookmark = ({ bookMarked, setBookMark, hidden }) => {
-    return (
-        <>
-            {hidden ? (<div> <MinusCircleFilled />  <StarOutlined /></div>) : (<div
-                className={Styles['bookmark-container']}
-                onClick={() => setBookMark(!bookMarked)}
-            >
-                {bookMarked ? (
-                    <StarFilled style={{ color: '#1890ff' }} />
-                ) : (
-                    <StarOutlined />
-                )}
-            </div>)}
-        </>
-    )
-}
-
-const Follow = ({ followed, setFollow, hidden }) => {
-    return (
-        <>
-            {hidden ? (<div>
-                <MinusSquareFilled />
-                <MinusCircleOutlined style={{ marginRight: '8px' }} />
-            </div>) :
-                (<div
-                    className={Styles['follow-container']}
-                    onClick={() => setFollow(!followed)}
-                >
-                    {followed ? (
-                        <>
-                            <MinusSquareOutlined style={{ marginRight: '8px', color: '#1890ff' }} />
-                            <span style={{ color: '#1890ff' }}>UnFollow</span>
-                        </>
-                    ) : (
-                        <>
-                            <PlusSquareOutlined style={{ marginRight: '8px' }} />
-                            <span>Follow</span>
-                        </>
-                    )}
-                </div>)}
-        </>
-    )
-}
-
-
-
-
 
 export default ArticlePage;
 
