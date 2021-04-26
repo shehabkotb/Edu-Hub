@@ -4,7 +4,7 @@ import Meta from 'antd/lib/card/Meta'
 import React, { useEffect, useState } from 'react'
 import { useHistory } from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux';
-import { create_article, deleteArticle, Timeline  } from '../../reducers/articlesReducer';
+import { create_article, deleteArticle, Timeline ,getinitialData } from '../../reducers/articlesReducer';
 
 import {
   DeleteFilled
@@ -18,7 +18,7 @@ const { TextArea } = Input;
 const Articles = () => {
   let dispatch = useDispatch();
   const [modalVisible, setModalVisible] = useState(false);
-  const [load, loading] = useState(1);
+  const [load, loading] = useState(2);
   const [form] = Form.useForm()
   const handleCancel = () => {
     setModalVisible(false)
@@ -43,38 +43,28 @@ const Articles = () => {
   };
 
   useEffect(() => {
-    dispatch(Timeline(load, 5));
-  }, [dispatch]);
-
-  
-
-  useEffect(() => {
-    const deleteArticle = (id) => { return dispatch(deleteArticle(id)) }
-
-  }, [dispatch])
-
-  useEffect(()=>{
-    const Data = (t)=>{
-
-    }
-  },[dispatch])
+    dispatch(getinitialData());
+  },[dispatch]);
 
   const result = useSelector((state) => state.articles);
-  const articleData = result.articles;
-  const totalPages = result.totalPages;
+  const articleData = result?.articles;
+  const totalPages = result?.totalPages;
 
   function handleClick() {
     setModalVisible(true);
   }
   const onLoadMore =  () => {
-    if (load < totalPages) 
+    if (load <= totalPages) 
     {
       let t = load;
+      dispatch(Timeline(t, 5));
       t++;
       loading(t);
-       dispatch(Timeline(t, 5));
     }
   }
+
+
+  
 
 
   return (
@@ -150,10 +140,9 @@ const Articles = () => {
           <ArticleCard
             key={index}
             article={article}
-            deleteArticle={deleteArticle(article.id)}
           />
         ))}
-   {  (load < totalPages) ? 
+   {  (load <= totalPages) ? 
    (<Button className={Styles['onLoadMore']} onClick={onLoadMore}>loading more</Button>):
    (<div className={Styles['onLoadMore']} >End Of Results</div>)}
 
@@ -162,10 +151,12 @@ const Articles = () => {
   )
 }
 
-const ArticleCard = ({ article, deleteArticle }) => {
+const ArticleCard = ({ article }) => {
   const history = useHistory();
+  let dispatch = useDispatch();
+
   const clickDelete = () => {
-    deleteArticle(article.id)
+    return dispatch(deleteArticle(article.id)) ;
   }
 
 

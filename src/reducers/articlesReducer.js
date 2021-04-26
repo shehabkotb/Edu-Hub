@@ -1,6 +1,6 @@
 import {
     CREATE_ARTICLE,
-    GET_ALL_ARTICLE,
+    INITIAL_DATA,
     TIMELINE,
     DELETE_ARTICLE ,
     
@@ -14,9 +14,10 @@ import articleService from '../services/article';
 const articlesReducer = (state = {articles:[],currentPage:0 , totalPages :0}, action) => {
 
     switch (action.type) {
-        case GET_ALL_ARTICLE:
-            state.articles = [] ; 
-            state.articles.concat(action.data) ; 
+        case INITIAL_DATA:
+            state.totalPages = action.data?.totalPages ; 
+            state.currentPage = action.data?.currentPage ; 
+            state.articles = action.data?.articles ; 
             return state 
         case TIMELINE:
             state.totalPages = action.data?.totalPages ; 
@@ -30,19 +31,18 @@ const articlesReducer = (state = {articles:[],currentPage:0 , totalPages :0}, ac
         case DELETE_ARTICLE:
             state.articles =  state.articles.filter((article)=>{
                 return article.id !== action.data ; 
-            })
-            
-            return state ; 
+            }) ;
+            return state 
         default:
             return state
     }
 }
 
-export const getAllArticles = () => {
+export const getinitialData = () => {
     return async (dispatch) => {
         try {
-            const response = await articleService.getAllArticles();
-            dispatch({ type: GET_ALL_ARTICLE, data: response })
+            const response = await articleService.timeline(1, 5);
+            dispatch({ type: INITIAL_DATA, data: response })
 
         }
         catch (error) {
@@ -93,7 +93,7 @@ export const deleteArticle = (id) => {
         try {
 
            const response = await articleService.deleteArticle(id) ;
-           dispatch({ type: DELETE_ARTICLE, data: id })
+           dispatch({ type: DELETE_ARTICLE ,data:id }) ; 
 
             notification.success({
                 message: 'Deleted article successfully'
