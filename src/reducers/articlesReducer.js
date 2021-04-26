@@ -2,23 +2,33 @@ import {
     CREATE_ARTICLE,
     GET_ALL_ARTICLE,
     TIMELINE,
-    DELETE_ARTICLE
+    DELETE_ARTICLE ,
+    
 } 
 from '../actions/articles';
 import { notification } from 'antd';
 import articleService from '../services/article';
 
-const articlesReducer = (state = [], action) => {
+
+
+const articlesReducer = (state = {articles:[],currentPage:0 , totalPages :0}, action) => {
 
     switch (action.type) {
         case GET_ALL_ARTICLE:
-            return action.data
+            state.articles = [] ; 
+            state.articles.concat(action.data) ; 
+            return state 
         case TIMELINE:
-            return state.concat(action.data) ;
+            state.totalPages = action.data?.totalPages ; 
+            state.currentPage = action.data?.currentPage ; 
+            if(state.currentPage <= state.totalPages){
+                state.articles =  state.articles.concat(action.data?.articles) ; 
+            }
+            return state
         case CREATE_ARTICLE:
-            return state.concat({ ...action.data })
+            return state.articles.concat({ ...action.data })
         case DELETE_ARTICLE:
-            return state.filter((article)=>{
+            return state.articles.filter((article)=>{
                 return article.id !== action.data ; 
             })
         default:
