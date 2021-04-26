@@ -1,0 +1,14 @@
+.camera{
+    position: relative;
+    float: right;
+}
+.sound-wave{
+    position: relative;
+    width: 240px;
+    height: 30px;
+}
+.container-ch{
+    position: relative;
+    float: right;
+    max-width: 240px;
+}

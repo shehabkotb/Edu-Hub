@@ -12,6 +12,10 @@ import moduleReducer from './reducers/moduleReducer'
 import articlesReducer from './reducers/articlesReducer'
 import articlePage from './reducers/articlePageReducer'
 
+import lectureReducer from './reducers/lectureReducer'
+import lectureCommentsReducer from './reducers/lectureCommentsReducer'
+import discussionReducer from './reducers/discussionReducer'
+import announcementsReducer from './reducers/announcementsReducer'
 
 const persistConfig = {
   key: 'root',
@@ -24,6 +28,11 @@ const reducer = combineReducers({
   modules: moduleReducer,
   articles:articlesReducer , 
   articlePage : articlePage , 
+
+  lectures: lectureReducer,
+  lectureComments: lectureCommentsReducer,
+  discussions: discussionReducer,
+  announcements: announcementsReducer
 })
 
 const persistedReducer = persistReducer(persistConfig, reducer)
@@ -31,7 +40,7 @@ const persistedReducer = persistReducer(persistConfig, reducer)
 // debugging with devtools
 let store = createStore(
   persistedReducer,
-  composeWithDevTools(applyMiddleware(thunk ,logger))
+  composeWithDevTools(applyMiddleware(thunk, logger))
 )
 let persistor = persistStore(store)
 
