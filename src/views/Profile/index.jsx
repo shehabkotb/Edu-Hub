@@ -4,8 +4,10 @@ import { useHistory } from 'react-router-dom'
 import Avatar from 'antd/lib/avatar/avatar'
 import Meta from 'antd/lib/card/Meta'
 import style from './style.css'
+import { uploadFile } from 'react-s3'
 import { Form, Input, Card, Button } from 'antd'
 import { editProfile } from '../../reducers/authReducer'
+import ImageUploader from 'react-images-upload'
 
 const Profile = () => {
   const dispatch = useDispatch()
@@ -17,6 +19,9 @@ const Profile = () => {
   //const [password, setPassword] = useState(user.passwordConfirm)
   const [mobile, setMobile] = useState(user.mobile)
   const [userName, setUserName] = useState(user.username)
+  const [photo, setPhoto] = useState()
+  const [active, setActive] = useState(true)
+
   const onNameChange = (txt) => {
     setName(txt.target.value)
   }
@@ -38,9 +43,38 @@ const Profile = () => {
         name: name,
         email: email,
         username: userName,
-        mobile: mobile
+        mobile: mobile,
+        photo:"***REMOVED***" +user._id +"/"+photo.name
       })
     )
+  }
+
+  const S3_BUCKET = '***REMOVED***'
+  const REGION = '***REMOVED***'
+  const ACCESS_KEY = '***REMOVED***'
+  const SECRET_ACCESS_KEY = '***REMOVED***'
+
+  const config = {
+    bucketName: S3_BUCKET,
+    region: REGION,
+    dirName: 'users_profile_photo/'+user._id,
+    accessKeyId: ACCESS_KEY,
+    secretAccessKey: SECRET_ACCESS_KEY
+  }
+
+  const onFileChange = (event) => {
+    setPhoto(event[0])
+    setActive(false)
+  }
+
+  const handleUpload = async () => {
+    await uploadFile(photo, config)
+      .then((data) => {
+        console.log(data)
+        console.log("uploaded")
+        setActive(true)
+      })
+      .catch((err) => console.error(err))
   }
 
   return (
@@ -65,7 +99,7 @@ const Profile = () => {
       </div>
       <Card className="Form">
         <Form size="middle" colon={true} labelAlign="left" layout="vertical">
-          <Form.Item label="Name">
+          <Form.Item label="Name:">
             <Input
               allowClear={true}
               className="input"
@@ -73,7 +107,7 @@ const Profile = () => {
               onChange={onNameChange}
             />
           </Form.Item>
-          <Form.Item label="User Name">
+          <Form.Item label="User Name:">
             <Input
               allowClear={true}
               className="input"
@@ -81,7 +115,7 @@ const Profile = () => {
               onChange={onUserNameChange}
             />
           </Form.Item>
-          <Form.Item label="Email">
+          <Form.Item label="Email:">
             <Input
               allowClear={true}
               className="input"
@@ -89,7 +123,7 @@ const Profile = () => {
               onChange={onEmailChange}
             />
           </Form.Item>
-          <Form.Item label="Mobile">
+          <Form.Item label="Mobile:">
             <Input
               allowClear={true}
               className="input"
@@ -105,7 +139,21 @@ const Profile = () => {
               onChange={onPasswordChange}
             />
           </Form.Item>*/}
-          <Button onClick={onsave}>Save Changes</Button>
+          <Form.Item label="Photo:">
+            <ImageUploader
+              withIcon={true}
+              buttonText="Choose images"
+              onChange={onFileChange}
+              imgExtension={['.jpg', '.png']}
+              maxFileSize={1048576}
+              singleImage={true}
+              label="max size 1MB"
+            />
+            <button onClick={handleUpload}>Upload!</button>
+          </Form.Item>
+          <Button disabled={!active} onClick={onsave}>
+            Save Changes
+          </Button>
         </Form>
       </Card>
     </div>

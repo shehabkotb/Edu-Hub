@@ -24,7 +24,8 @@ const update = async (user) => {
       name: user.name,
       email: user.email,
       mobile: user.mobile,
-      username: user.username
+      username: user.username,
+      photo: user.photo
     },
     getAuthHeader()
   )
