@@ -20,7 +20,7 @@ import Courses from '../views/courses'
 import Browse from '../views/browse'
 import Articles from '../views/articles'
 import ArticleForm from '../views/articles/ArticleForm/ArticleForm'
-// import Profile from '../views/profile'
+import Profile from '../views/Profile'
 import Assignments from '../views/assignments'
 import Exams from '../views/exams'
 import Quizes from '../views/quizes'
@@ -130,7 +130,7 @@ const AuthnticatedApp = () => {
             <Route path="/app/browse" component={Browse} />
             <Route path="/app/articles" component={Articles} />
             <Route path="/app/newArticle" component={ArticleForm} />
-            {/* <Route path="/app/profile" component={Profile} /> */}
+            {<Route path="/app/profile" component={Profile} />}
             <Route path="/app/*" component={NotFoundView} />
           </Switch>
         </Content>
