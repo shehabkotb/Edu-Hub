@@ -7,7 +7,7 @@ import { ReceivedQuestionHeader, ReceivedQuestionTitle, ReceivedQuestionBody, Qu
 const ReceivedChoice = (props) => {
     const {  Points, QuestionTitle, options, AutoGraded, QuestionType } = props.questionData;
     const id = props.id + 1  ; 
-    const DeleteQuestion = props.DeleteMyQuestion
+    const DeleteQuestion = props.DeleteQuestion
     const del = () => {
         DeleteQuestion(props.questionData)  ;
     }

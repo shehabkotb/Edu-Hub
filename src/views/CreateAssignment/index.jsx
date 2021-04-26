@@ -6,7 +6,6 @@ import QuestionHead from '../../components/CreateAssignment/QuestionHead'
 import ReceivedWritten from '../../components/CreateAssignment/ReceivedQuestions/ReceivedWritten'
 import ReceivedChoice from '../../components/CreateAssignment/ReceivedQuestions/ReceivedChoice'
 
-// import { createAssignmentOnline ,createAssignmentFile} from '../../reducers/assignmentReducer'
 import { useDispatch } from 'react-redux'
 
 const CreateAssignment = () => {

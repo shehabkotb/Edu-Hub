@@ -8,6 +8,7 @@ import {
   YoutubeOutlined,
   DeleteOutlined
 } from '@ant-design/icons'
+import { useHistory, useParams } from 'react-router'
 
 const HoverableListItem = styled(List.Item)`
   cursor: pointer;
@@ -29,6 +30,10 @@ const ModuleItem = ({ item, instructorAccess, removeModuleItem }) => {
 
   const dummyBackend = 'http://localhost:4000'
   const navigationURL = type === 'video' ? url : `${dummyBackend}${url}`
+
+  const { courseId } = useParams()
+
+  const history = useHistory()
 
   const getActions = (item) => {
     if (instructorAccess)
@@ -52,7 +57,12 @@ const ModuleItem = ({ item, instructorAccess, removeModuleItem }) => {
   return (
     <HoverableListItem
       extra={getActions(item)}
-      onClick={() => window.open(navigationURL, '_blank')}
+      onClick={() => {
+        if (item.type === 'file') window.open(navigationURL, '_blank')
+        else {
+          history.push(`/app/course/${courseId}/lectures/${item.id}`)
+        }
+      }}
     >
       <Space size={20}>
         {getIcon(item)}
