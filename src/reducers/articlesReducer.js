@@ -28,9 +28,11 @@ const articlesReducer = (state = {articles:[],currentPage:0 , totalPages :0}, ac
         case CREATE_ARTICLE:
             return state.articles.concat({ ...action.data })
         case DELETE_ARTICLE:
-            return state.articles.filter((article)=>{
+            state.articles =  state.articles.filter((article)=>{
                 return article.id !== action.data ; 
             })
+            
+            return state ; 
         default:
             return state
     }
@@ -89,9 +91,10 @@ export const create_article = (Article) => {
 export const deleteArticle = (id) => {
     return async (dispatch) => {
         try {
-            dispatch({type:DELETE_ARTICLE , data :id}) ; 
 
-           await articleService.deleteArticle(id);
+           const response = await articleService.deleteArticle(id) ;
+           dispatch({ type: DELETE_ARTICLE, data: id })
+
             notification.success({
                 message: 'Deleted article successfully'
             })

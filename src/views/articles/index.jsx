@@ -192,7 +192,7 @@ const ArticleCard = ({ article, deleteArticle }) => {
         <p>
           {article?.text}
         </p>
-        {(user?.id === (article?.authorPersonId?.id || article?.authorPersonId)) && (<Button type="icon" className={Styles['iconButton']}
+        {(user?._id === (article?.authorPersonId?._id || article?.authorPersonId)) && (<Button type="icon" className={Styles['iconButton']}
           onClick={clickDelete}
         >
           <DeleteFilled />
