@@ -31,15 +31,8 @@ const Articles = () => {
       "title": values.articleTitle,
       "url": values.url
     };
-
-
-    try {
       dispatch(create_article(Article));
       setModalVisible(false);
-
-    } catch (e) {
-      console.log('can\'t Create Article');
-    }
   };
 
   useEffect(() => {
