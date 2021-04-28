@@ -8,6 +8,7 @@ import {
   removeDiscussion,
   addComment
 } from '../../../reducers/discussionReducer'
+import styles from "./../styles.css"
 
 const DiscussionCard = ({discussion, user}) => {
 
@@ -30,7 +31,7 @@ const DiscussionCard = ({discussion, user}) => {
       <div className="container">
         <Card
           hoverable
-          className="custom-card"
+          className="customcard"
           title={
             <div>
               <Meta
@@ -49,11 +50,11 @@ const DiscussionCard = ({discussion, user}) => {
             </div>
           }
         >
-          <p>{discussion.data}</p>
+          <p className="dis">{discussion.data}</p>
           <Card
             size="small"
             type="inner"
-            className="comment-card"
+            className="commentcard"
             title="comments"
           >
             <AllComments
