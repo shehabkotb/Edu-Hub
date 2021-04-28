@@ -20,43 +20,37 @@ const ArticlePage = () => {
    
     const Data = useSelector((state) => state.articlePage);
     const user = useSelector((state)=> state.auth.user) ;  
-    var [liked ,setLiked] = useState(Data?.islike) ; 
-    var [bookMark , setBookMark] = useState(Data?.isBooked) ; 
-    var [follow , setFollow] = useState(Data?.isFollow) ; 
-    var [likeCount , setLikeCount] = useState(Data?.length) ; 
+    var liked = Data?.islike ; 
+    var bookMark = Data?.isBooked ; 
+    var follow = Data?.isFollow ; 
+    var likeCount  = Data?.length ; 
     const [commentState, setCommentState] = useState(false);
 
     const likeThisArticle = () => {
 
             if (!liked) {
-                setLiked(!liked) ; 
-                setLikeCount(likeCount +1 ) ; 
                 dispatch(likeArticle(id));              
             }
             else {
-                setLiked(!liked) ; 
-                setLikeCount(likeCount -1 ) ; 
                 dispatch(unlikeArticle(id));
             }
     }
     const BookMarkThisArticle = () => {
        
             if (!bookMark) {
-                setBookMark(!bookMark)
+               
                 dispatch(BookMark(id))
             }
             else {
-                setBookMark(!bookMark)
+               
                 dispatch(unBookMark(id))
             }
     }
     const followAuthor = () => {
             if (!follow) {
-                setFollow(!follow)
                 dispatch(followUser(id)) 
             }
             else { 
-                setFollow(!follow)
                 dispatch(unfollowUser(id))
             }
     }
@@ -92,9 +86,9 @@ const ArticlePage = () => {
             </Card>
             <hr className={Styles['Hline']} />
 
-             {(Data?.comments) ?  (<Card bordered={false}>
+            <Card bordered={false}>
                 <ArticleComments showEditor={commentState} articleId={id} />
-            </Card>) :(<Card > there is no comment to show </Card>)}
+            </Card>
         </div>
 
 

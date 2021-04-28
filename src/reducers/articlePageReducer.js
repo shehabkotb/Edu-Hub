@@ -13,30 +13,26 @@ const articlePage = (state = {}, action) => {
         case GET_ONE_ARTICLE:
             return action.data
         case LIKE_ARTICLE:
-            state.islike = !state.islike ;
-            state.length += 1 ;
-            return state;
+            return { ...state, islike: true, length: state.length + 1 }
         case UNLIKE_ARTICLE:
-            state.islike = !state.islike ; 
-            state.length -= 1 ;
-            return state;
-        case BOOKMARK_ARTICLE || UNBOOKMARK_ARTICLE:
-            state.isBooked = !state.isBooked
-            return state;
-        case FOLLOWUSER  :
-            state.isFollow = !state.isFollow;
-            return state
-        case UNFOLLOWUSER : 
-        state.isFollow = !state.isFollow;
-        return state
+            return { ...state, islike: false, length: state.length - 1 }
+        case BOOKMARK_ARTICLE:
+            return { ...state, isBooked: true }
+        case UNBOOKMARK_ARTICLE:
+            return { ...state, isBooked: false }
+        case FOLLOWUSER:
+            return { ...state, isFollow: true }
+        case UNFOLLOWUSER:
+            return { ...state, isFollow: false }
         case CREATE_COMMENT:
-            state.comments.push(action.data);
-            return state;
+            return { ...state, comments: state.comments.concat({ ...action.data }) };
         case DELETE_COMMENT:
-            state.comments = state.comments.filter((comment) => {
-                return comment.id !== action.data;
-            });
-            return state;
+            return {
+                ...state, comments: state.comments.filter((comment) => {
+                    return comment !== action.data;
+                })
+            }
+
         default:
             return state
     }
@@ -49,7 +45,7 @@ export const getArticleData = (id) => {
         try {
 
             const response = await articleService.getThisArticle(id);
-
+            // Get all data articles like comment follow bookMarks of one article ; 
             dispatch({ type: GET_ONE_ARTICLE, data: response });
             notification.success({
                 message: 'get article data successfully'
@@ -121,7 +117,7 @@ export const unBookMark = (id) => {
     return async (dispatch) => {
         try {
             const response = await articleService.unBookMark(id);
-            dispatch({ type: BOOKMARK_ARTICLE, data: response });
+            dispatch({ type: UNBOOKMARK_ARTICLE, data: response });
 
             notification.success({
                 message: 'unbooked Article successfully'
@@ -169,11 +165,12 @@ export const unfollowUser = (id) => {
 }
 
 
-export const createComment = ( articleId , comment) => {
+export const createComment = (articleId, comment) => {
     return async (dispatch) => {
         try {
-            const response = await articleService.createComment(articleId,comment)
-            dispatch({ type: CREATE_COMMENT, data: response })
+            await articleService.createComment(articleId, comment);
+          
+            dispatch({ type: CREATE_COMMENT, data: comment })
             notification.success({
                 message: 'new comment created'
             })
@@ -185,11 +182,13 @@ export const createComment = ( articleId , comment) => {
     }
 }
 
-export const DeleteComment = (articleId,commentId) => {
+export const DeleteComment = (articleId, comment) => {
     return async (dispatch) => {
         try {
-            await articleService.deleteComment(articleId,commentId);
-            dispatch({ type: DELETE_COMMENT, data: commentId });
+            if (comment.id !== undefined) {
+                await articleService.deleteComment(articleId, comment.id);
+            }
+            dispatch({ type: DELETE_COMMENT, data: comment });
             notification.success({
                 message: 'delete comment successfully'
             })
@@ -198,6 +197,7 @@ export const DeleteComment = (articleId,commentId) => {
             notification.error({
                 message: 'failed to delete Comment'
             })
+            console.log(e);
         }
     }
 }

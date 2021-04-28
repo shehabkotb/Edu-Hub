@@ -21,6 +21,7 @@ const ArticleComments = (props) => {
   const handleChange = (e) => {
     setValue(e.target.value);
   }
+  const user = useSelector((state) => state.auth.user);
 
                                                                                             
   const addComment = (comment) => {
@@ -33,17 +34,21 @@ const ArticleComments = (props) => {
       return;
     }
 
+    let date = new Date();
+    let datetoString = date.toString(); 
     let comment = {
       body: value,
+      authorPersonId:user._id,
+      "createdAt": datetoString
     }
     addComment(comment);
     setSubmitting(false);
-    setValue('') ; 
+    setValue('') ;    
   }
 
   useEffect(() => {
     dispatch(getArticleData(articleId));
-}, [dispatch , articleId ,setSubmitting]);
+}, [dispatch]);
 
   return (
     <>
@@ -65,7 +70,7 @@ const ArticleComments = (props) => {
         }
       />}
 
-      {initalComments.length > 0 && <CL comments={initalComments} articleId={articleId} />}
+      {initalComments?.length > 0 && <CL comments={initalComments} articleId={articleId} />}
 
     </>
   )
@@ -83,13 +88,13 @@ const CL = ({ comments, articleId }) => {
         return (
           <div key={index}>
             <div className={Styles['iconCommentBody']}>
-              <Comment content={comment?.body} author={(comment?.createdBy.name || user?.name) } avatar={comment?.createdBy.photo || user.photo} datetime={comment.createdAt} />
+              <Comment content={comment?.body} author={(comment?.createdBy?.name || user?.name) } avatar={comment?.createdBy?.photo || user.photo} datetime={comment.createdAt} />
 
             </div>
             <div className={Styles['iconCommentRemove']}>
-             {user.id === (comment.authorPersonId || comment.createdBy.id) && ( <Button type="icon" className={Styles['iconButton']}
+             {((user._id === comment.authorPersonId )||(user._id === comment?.createdBy?._id)) && ( <Button type="icon" className={Styles['iconButton']}
                 onClick={() => {
-                  return dispatch(DeleteComment(articleId, comment.id))
+                  return dispatch(DeleteComment(articleId, comment))
                 }}
               >
                 <DeleteFilled />

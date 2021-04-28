@@ -2,37 +2,31 @@ import {
     CREATE_ARTICLE,
     INITIAL_DATA,
     TIMELINE,
-    DELETE_ARTICLE ,
-    
-} 
-from '../actions/articles';
+    DELETE_ARTICLE,
+
+}
+    from '../actions/articles';
 import { notification } from 'antd';
 import articleService from '../services/article';
 
 
 
-const articlesReducer = (state = {articles:[],currentPage:0 , totalPages :0}, action) => {
+const articlesReducer = (state = {}, action) => {
 
     switch (action.type) {
         case INITIAL_DATA:
-            state.totalPages = action.data?.totalPages ; 
-            state.currentPage = action.data?.currentPage ; 
-            state.articles = action.data?.articles ; 
-            return state 
+            return {...state , articles:action.data.articles,totalPages:action.data.totalPages , currentPage:action.data.currentPage} ;
+
         case TIMELINE:
-            state.totalPages = action.data?.totalPages ; 
-            state.currentPage = action.data?.currentPage ; 
-            if(state.currentPage <= state.totalPages){
-                state.articles =  state.articles.concat(action.data?.articles) ; 
-            }
-            return state
+            return {...state , articles:state.articles.concat(action.data?.articles),totalPages:action.data.totalPages , currentPage:action.data.currentPage} ;
+
         case CREATE_ARTICLE:
-            return state.articles.concat({ ...action.data })
+            return {...state , articles:[...state.articles , action.data]}
         case DELETE_ARTICLE:
-            state.articles =  state.articles.filter((article)=>{
-                return article.id !== action.data ; 
-            }) ;
-            return state 
+        
+            return {...state , articles: state.articles.filter((article) => {
+                return article.id !== action.data;
+            })}
         default:
             return state
     }
@@ -73,13 +67,13 @@ export const create_article = (Article) => {
         try {
             const response = await articleService.create_article(Article)
 
-            dispatch({ type: CREATE_ARTICLE, data: response })
+            dispatch({ type: CREATE_ARTICLE, data: response }) 
+            console.log(response) ; 
             notification.success({
                 message: 'Added article successfully'
             })
         }
         catch (error) {
-            console.log(error)
             notification.error({
                 message: "Couldn't load Article check your connection"
             })
@@ -92,8 +86,8 @@ export const deleteArticle = (id) => {
     return async (dispatch) => {
         try {
 
-           const response = await articleService.deleteArticle(id) ;
-           dispatch({ type: DELETE_ARTICLE ,data:id }) ; 
+            const response = await articleService.deleteArticle(id);
+            dispatch({ type: DELETE_ARTICLE, data: id });
 
             notification.success({
                 message: 'Deleted article successfully'
@@ -111,7 +105,7 @@ export const deleteArticle = (id) => {
 }
 
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+
 
 
 
