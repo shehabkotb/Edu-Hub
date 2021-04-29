@@ -8,7 +8,7 @@ import {
   removeDiscussion,
   addComment
 } from '../../../reducers/discussionReducer'
-import styles from "./../styles.css"
+import "./../styles.css"
 
 const DiscussionCard = ({discussion, user}) => {
 
