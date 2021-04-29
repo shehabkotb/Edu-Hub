@@ -40,6 +40,7 @@ const CreateAssignment = () => {
         {
             // dispatch(createAssignmentFile(values))  ;
         }
+        console.log(values)  ; 
     };
 
     const onFinishFailed = (errorInfo) => {
