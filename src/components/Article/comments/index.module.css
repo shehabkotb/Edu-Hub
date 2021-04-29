@@ -1,0 +1,16 @@
+
+.iconButton{
+    border:0px ; 
+    color:royalblue ; 
+    margin-top: 15%;
+  }
+
+  .iconCommentBody{
+    width: 80% ;
+    float: left;
+  }
+
+  .iconCommentRemove{
+    float:right ; 
+    width:20% ; 
+  }
