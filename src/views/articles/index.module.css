@@ -33,3 +33,19 @@
 .bookmark-container {
   font-size: 18px;
 }
+
+.viewButton{
+  float:right ; 
+  color:royalblue ; 
+}
+
+.iconButton{
+  border:0px ; 
+  float:right ; 
+  color:royalblue ; 
+}
+
+.onLoadMore{
+  margin-left: 40%;
+  margin-top:50px ; 
+}

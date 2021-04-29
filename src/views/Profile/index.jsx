@@ -1,37 +1,163 @@
-import React from 'react'
-import { Layout, Menu, Card ,Row,Col} from 'antd';
-const { Sider } = Layout;
+import { useSelector, useDispatch } from 'react-redux'
+import React, { useState, useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
+import Avatar from 'antd/lib/avatar/avatar'
+import Meta from 'antd/lib/card/Meta'
+import style from './style.css'
+import { uploadFile } from 'react-s3'
+import { Form, Input, Card, Button } from 'antd'
+import { editProfile } from '../../reducers/authReducer'
+import ImageUploader from 'react-images-upload'
+
 const Profile = () => {
+  const dispatch = useDispatch()
+  const history = useHistory()
+
+  const user = useSelector((state) => state.auth.user)
+  const [name, setName] = useState(user.name)
+  const [email, setEmail] = useState(user.email)
+  //const [password, setPassword] = useState(user.passwordConfirm)
+  const [mobile, setMobile] = useState(user.mobile)
+  const [userName, setUserName] = useState(user.username)
+  const [photo, setPhoto] = useState()
+  const [active, setActive] = useState(true)
+
+  const onNameChange = (txt) => {
+    setName(txt.target.value)
+  }
+  const onEmailChange = (txt) => {
+    setEmail(txt.target.value)
+  }
+  /*const onPasswordChange = (txt) => {
+    setPassword(txt.target.value)
+  }*/
+  const onUserNameChange = (txt) => {
+    setUserName(txt.target.value)
+  }
+  const onMobileChange = (txt) => {
+    setMobile(txt.target.value)
+  }
+  const onsave = () => {
+    dispatch(
+      editProfile({
+        name: name,
+        email: email,
+        username: userName,
+        mobile: mobile,
+        photo:"***REMOVED***" +user._id +"/"+photo.name
+      })
+    )
+  }
+
+  const S3_BUCKET = '***REMOVED***'
+  const REGION = '***REMOVED***'
+  const ACCESS_KEY = '***REMOVED***'
+  const SECRET_ACCESS_KEY = '***REMOVED***'
+
+  const config = {
+    bucketName: S3_BUCKET,
+    region: REGION,
+    dirName: 'users_profile_photo/'+user._id,
+    accessKeyId: ACCESS_KEY,
+    secretAccessKey: SECRET_ACCESS_KEY
+  }
+
+  const onFileChange = (event) => {
+    setPhoto(event[0])
+    setActive(false)
+  }
+
+  const handleUpload = async () => {
+    await uploadFile(photo, config)
+      .then((data) => {
+        console.log(data)
+        console.log("uploaded")
+        setActive(true)
+      })
+      .catch((err) => console.error(err))
+  }
+
   return (
-    <Card>
-    <div className="site-card-wrapper">
-          <Row gutter={16}>
-          <Col span={8}>
-        <Sider width={250} className="site-layout-background">
-          <Menu
-            mode="inline"
-            defaultSelectedKeys={['1']}
-            defaultOpenKeys={['sub1']}
-            style={{ height: '100%', borderRight: 0 }}
-          >
-            <Menu.Item key="1">Basic Setting</Menu.Item>
-            <Menu.Item key="2">Security Setting</Menu.Item>
-            <Menu.Item key="3">Account Binding</Menu.Item>
-            <Menu.Item key="4">New Message Notifications</Menu.Item>
-
-          </Menu>
-         
-        </Sider>
-      </Col>
-      <Col span={16}>
-      {/* <Registeration /> */}
-      </Col>
-
-      </Row>
+    <div className="container">
+      <div className="card">
+        <div className="card-body">
+          <div className="avatar">
+            <Meta
+              avatar={<Avatar size="large" src={user.photo} />}
+              title={user.name}
+            />
+          </div>
+          <h5 className="card-title">{'Role: ' + user.role}</h5>
+          <h5 className="card-text">{'@' + user.username}</h5>
+          <p className="card-text">
+            {user.email}
+            <br />
+            <span className="phone">{user.mobile}</span>
+          </p>
+        </div>
+        <span>user's Bio</span>
       </div>
+      <Card className="Form">
+        <Form size="middle" colon={true} labelAlign="left" layout="vertical">
+          <Form.Item label="Name:">
+            <Input
+              allowClear={true}
+              className="input"
+              value={name}
+              onChange={onNameChange}
+            />
+          </Form.Item>
+          <Form.Item label="User Name:">
+            <Input
+              allowClear={true}
+              className="input"
+              value={userName}
+              onChange={onUserNameChange}
+            />
+          </Form.Item>
+          <Form.Item label="Email:">
+            <Input
+              allowClear={true}
+              className="input"
+              value={email}
+              onChange={onEmailChange}
+            />
+          </Form.Item>
+          <Form.Item label="Mobile:">
+            <Input
+              allowClear={true}
+              className="input"
+              value={mobile}
+              onChange={onMobileChange}
+            />
+          </Form.Item>
+          {/*<Form.Item label="New Password">
+            <Input.Password
+              allowClear={true}
+              className="input"
+              value={password}
+              onChange={onPasswordChange}
+            />
+          </Form.Item>*/}
+          <Form.Item label="Photo:">
+            <ImageUploader
+              withIcon={true}
+              buttonText="Choose images"
+              onChange={onFileChange}
+              imgExtension={['.jpg', '.png']}
+              maxFileSize={1048576}
+              singleImage={true}
+              label="max size 1MB"
+            />
+            <button onClick={handleUpload}>Upload!</button>
+          </Form.Item>
+          <Button disabled={!active} onClick={onsave}>
+            Save Changes
+          </Button>
+        </Form>
       </Card>
-      
-  );
+    </div>
+  )
 }
 
-export default Profile 
+export default Profile

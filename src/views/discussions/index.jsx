@@ -49,7 +49,7 @@ const DiscussionFeed = ({ courseId }) => {
   }
 
   return (
-    <div>
+    <div className="container">
       <span>
         <Input
           size="large"
@@ -62,7 +62,7 @@ const DiscussionFeed = ({ courseId }) => {
         ></Input>
         <Button onClick={onPost}>Post</Button>
       </span>
-      <Feed discussions={discussions.reverse()} user={user} />
+      <Feed discussions={discussions} user={user} />
     </div>
   )
 }

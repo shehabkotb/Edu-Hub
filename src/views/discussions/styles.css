@@ -1,18 +1,22 @@
-.custom-card  {
+.customcard  {
   width: 80%;
   height: 80%;
   padding: 10px;
-  max-height: 500px;
-  overflow-y: scroll;
 }
 
-.comment-card{
+.commentcard{
     max-height: 200px;
     overflow-y: scroll;
+}
+.dis{
+  max-height: 300px;
+  overflow-y: scroll;
 }
 
 .container{
   margin: 10px;
+  align-items: center;
+  align-content: center;
 }
 .txt{
   width: 80%;
@@ -23,5 +27,5 @@
 }
 .deleteButton{
   position: relative;
-  float: right; 
+  float: right;
 }

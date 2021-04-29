@@ -1,5 +1,6 @@
 import usersService from '../services/users'
-import { SET_USER, CLEAR_USER } from '../actions/auth'
+import { SET_USER, CLEAR_USER, UPDATE_USER } from '../actions/auth'
+import { notification } from 'antd'
 
 import { message } from 'antd'
 import subscribeUser from './../subscription';
@@ -19,10 +20,37 @@ const authReducer = (state = intialState, action) => {
   switch (action.type) {
     case SET_USER:
       return { user: adapterFunc(action.user), isAuth: true }
+    case UPDATE_USER:
+      return { user: adapterFunc(action.user), isAuth: true }
     case CLEAR_USER:
       return { user: null, isAuth: false }
     default:
       return state
+  }
+}
+
+export const editProfile = (user) =>{
+  return async (dispatch) => {
+    try {
+      const response = await usersService.update(user);
+      console.log(response)
+      if(response){
+        dispatch({ type: UPDATE_USER, user: response })
+        notification.success({
+          message: 'Saved Successfully'
+        })
+        window.localStorage.setItem('eduhub-user', JSON.stringify(response))
+      }else{
+        notification.error({
+          message: 'Cant Save'
+        })
+      }
+    } catch (error) {
+      notification.error({
+        message: 'Cant Save'
+      })
+      console.log(error)
+    }
   }
 }
 
