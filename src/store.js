@@ -11,7 +11,7 @@ import courseReducer from './reducers/courseReducer'
 import moduleReducer from './reducers/moduleReducer'
 import articlesReducer from './reducers/articlesReducer'
 import articlePage from './reducers/articlePageReducer'
-
+import notificationsReducer from './reducers/notificationsReducer'
 import lectureReducer from './reducers/lectureReducer'
 import lectureCommentsReducer from './reducers/lectureCommentsReducer'
 import discussionReducer from './reducers/discussionReducer'
@@ -27,8 +27,8 @@ const reducer = combineReducers({
   courses: courseReducer,
   modules: moduleReducer,
   articles:articlesReducer , 
-  articlePage : articlePage , 
-
+  articlePage: articlePage , 
+  notifications: notificationsReducer,
   lectures: lectureReducer,
   lectureComments: lectureCommentsReducer,
   discussions: discussionReducer,

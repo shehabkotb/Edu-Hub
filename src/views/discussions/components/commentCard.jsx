@@ -5,6 +5,7 @@ import {
   removeComment
 } from '../../../reducers/discussionReducer'
 import { useDispatch } from 'react-redux'
+import './../styles.css'
 
 
 const Comment = ({ cmnt, Luser,dId }) => {
