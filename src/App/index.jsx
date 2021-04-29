@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   Route,
   Switch,
@@ -7,7 +7,8 @@ import {
   matchPath
 } from 'react-router-dom'
 import { Layout } from 'antd'
-
+import { useSelector, useDispatch } from 'react-redux'
+import { getAllNotifications } from '../reducers/notificationsReducer'
 import SideNav from '../components/SideNav'
 import PublicRoute from '../components/PublicRoute'
 import PrivateRoute from '../components/PrivateRoute'
@@ -72,6 +73,12 @@ const AuthnticatedApp = () => {
 
     return true
   }
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(getAllNotifications())
+  }, [dispatch])
 
   return (
     <Layout style={{ minHeight: '100vh' }}>

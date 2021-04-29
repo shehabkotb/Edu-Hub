@@ -12,7 +12,7 @@ const notificationsReducer = (state = [], action) => {
 
     case DEL:
       return state.filter((val) => {
-        return val._id !== action.data
+        return val._id !== action.data._id
       })
 
     case EDIT:
@@ -103,10 +103,10 @@ export const delAll = () => {
   }
 }
 
-export const del = () => {
+export const del = (not) => {
   return async (dispatch) => {
     try {
-      const response = await notificationsService.del()
+      const response = await notificationsService.del(not)
       dispatch({ type: DEL, data: response })
     } catch (error) {
       console.log(error)
