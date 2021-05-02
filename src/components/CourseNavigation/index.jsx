@@ -1,9 +1,11 @@
 import React from 'react'
 
-import { Button, Dropdown, Menu } from 'antd'
+import { useHistory } from 'react-router-dom'
+
+import { Button, Dropdown, Menu, Space } from 'antd'
 import { Link, NavLink, useRouteMatch } from 'react-router-dom'
 
-import { DownOutlined } from '@ant-design/icons'
+import { DownOutlined, ArrowLeftOutlined } from '@ant-design/icons'
 import { useSelector } from 'react-redux'
 
 const CourseMenu = ({ url }) => {
@@ -34,26 +36,37 @@ const CourseMenu = ({ url }) => {
 const CourseNavigation = () => {
   const { params, url } = useRouteMatch('/app/course/:id')
 
+  const history = useHistory()
+
   let course = useSelector((state) =>
-    state.courses.find((course) => course.id === params.id)
+    state.courses.data.find((course) => course.id === params.id)
   )
 
-  // dummy fix for now
-  if (course === undefined) {
-    course = { backgroundColor: 'darkkhaki', name: 'redux empty dummy fix' }
+  const popHistory = () => {
+    history.goBack()
   }
 
   return (
     <>
-      <Dropdown overlay={<CourseMenu url={url} />} placement="bottomCenter">
+      <Space>
         <Button
-          shape="round"
-          style={{ backgroundColor: course.backgroundColor }}
-        >
-          <span style={{ fontWeight: 600, color: 'white' }}>{course.name}</span>{' '}
-          <DownOutlined style={{ color: 'white' }} />
-        </Button>
-      </Dropdown>
+          shape="circle"
+          type="secondary"
+          onClick={popHistory}
+          icon={<ArrowLeftOutlined />}
+        ></Button>
+        <Dropdown overlay={<CourseMenu url={url} />} placement="bottomCenter">
+          <Button
+            shape="round"
+            style={{ backgroundColor: course.backgroundColor }}
+          >
+            <span style={{ fontWeight: 600, color: 'white' }}>
+              {course.name}
+            </span>{' '}
+            <DownOutlined style={{ color: 'white' }} />
+          </Button>
+        </Dropdown>
+      </Space>
       <NavLink to={`${url}/modules`}>
         <Button type="text">Modules</Button>
       </NavLink>
