@@ -30,6 +30,8 @@ import Modules from '../views/modules'
 import CheatingDetection from '../views/cheatingDetection'
 import DiscussionFeed from '../views/discussions'
 import AnnouncementsFeed from '../views/announcements'
+import Dashboard from '../views/dashboard'
+import CourseCalendar from '../views/courseCalendar'
 
 import NotFoundView from '../views/NotFoundView'
 
@@ -102,6 +104,9 @@ const AuthnticatedApp = () => {
               <Redirect to="/app/courses" />
             </Route>
 
+            <Route path="/app/dashboard" component={Dashboard} />
+            <Route path="/app/calendar" component={CourseCalendar} />
+
             <Route path="/app/courses" component={Courses} />
             <Route path="/app/course/:courseId/modules" component={Modules} />
             <Route
@@ -135,8 +140,8 @@ const AuthnticatedApp = () => {
             />
 
             <Route path="/app/browse" component={Browse} />
-            <Route path="/app/articles" component={Articles} /> 
-            <Route path = "/app/articlePage/:id" component={ArticlePage} />
+            <Route path="/app/articles" component={Articles} />
+            <Route path="/app/articlePage/:id" component={ArticlePage} />
 
             <Route path="/app/profile" component={Profile} />
             <Route path="/app/*" component={NotFoundView} />

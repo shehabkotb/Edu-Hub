@@ -1,119 +1,137 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { Typography, Button, Modal, Form, Input, List } from 'antd'
-import { PlusOutlined } from '@ant-design/icons'
+import { Typography, Modal, Input, List, Collapse } from 'antd'
+import {
+  CaretRightOutlined,
+  ExclamationCircleOutlined
+} from '@ant-design/icons'
 import { FlexSectionHeader } from '../style'
-import CourseCard from './components/CourseCard'
+import CourseCard from '../../components/CourseCard'
 
-import { createCourse, getAllCourses } from '../../reducers/courseReducer'
+import Spinner from '../../components/Spinner'
 
-import { STUDENT } from '../../constants/userRoles'
+import {
+  getAllCourses,
+  deleteCourse,
+  enroll,
+  unEnroll
+} from '../../reducers/courseReducer'
+
 import { useHistory } from 'react-router-dom'
 
-const Courses = () => {
-  const { Title } = Typography
+const { Title, Text } = Typography
+const { confirm } = Modal
 
+const Courses = () => {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(getAllCourses())
   }, [dispatch])
 
   const user = useSelector((state) => state.auth.user)
-  const courses = useSelector((state) => state.courses)
+  const courses = useSelector((state) => state.courses.data)
+  const loading = useSelector((state) => state.courses.loading)
   const history = useHistory()
 
-  const [modalVisible, setModalVisible] = useState(false)
-  const [form] = Form.useForm()
+  const [filter, setFilter] = useState('')
 
-  const handleCancel = () => {
-    setModalVisible(false)
+  const filteredCourses = courses.filter((course) => {
+    return course.name.toLowerCase().indexOf(filter.toLowerCase()) > -1
+  })
+
+  const removeCourse = (courseId) => {
+    dispatch(deleteCourse(courseId))
   }
 
-  const addCourse = (course) => {
-    dispatch(createCourse(course))
+  const handleEnroll = (courseId, userId) => {
+    dispatch(enroll(courseId, userId))
   }
+
+  const handleUnenroll = (courseId, userId) => {
+    dispatch(unEnroll(courseId, userId))
+  }
+
+  const handleSearch = (value) => {
+    setFilter(value)
+  }
+
+  const confirmEnrolled = function (courseId, userId) {
+    confirm({
+      title: 'Do you Want to enroll in this course?',
+      icon: <ExclamationCircleOutlined />,
+      content: 'You have to enroll in the course to view its content',
+      onOk() {
+        handleEnroll(courseId, userId)
+      },
+      onCancel() {
+        return
+      }
+    })
+  }
+
+  const handleCourseCardClick = (courseId, userId, userEnrolled) => {
+    if (userEnrolled) history.push(`/app/course/${courseId}/modules`)
+    else confirmEnrolled(courseId, userId)
+  }
+
+  if (loading) return <Spinner size="large" />
 
   return (
     <React.Fragment>
       <FlexSectionHeader>
         <Title level={3}>All Courses</Title>
-        {user && user.role !== STUDENT && (
-          <Button
-            onClick={() => setModalVisible(true)}
-            type="dashed"
-            shape="round"
-            icon={<PlusOutlined />}
-          >
-            Add Course
-          </Button>
-        )}
+        <Input.Search
+          allowClear
+          onSearch={handleSearch}
+          placeholder="input search text"
+          size="large"
+          style={{ width: '300px', alignSelf: 'center' }}
+        />
       </FlexSectionHeader>
 
-      <Modal
-        title="Add New Course"
-        visible={modalVisible}
-        onOk={form.submit}
-        onCancel={handleCancel}
-        footer={[
-          <Button key="cancel" onClick={handleCancel}>
-            Cancel
-          </Button>,
-          <Button key="submit" type="primary" onClick={form.submit}>
-            Submit
-          </Button>
-        ]}
-      >
-        <Form
-          name="add Course"
-          form={form}
-          onFinish={addCourse}
-          requiredMark={false}
-          labelCol={{ span: 6 }}
-          wrapperCol={{ span: 18 }}
-        >
-          <Form.Item
-            name="courseName"
-            label="Course Name"
-            rules={[
-              {
-                required: true,
-                message: 'Please enter the course name'
-              }
-            ]}
-          >
-            <Input placeholder="Course Name" />
-          </Form.Item>
-
-          <Form.Item name="description" label="Description">
-            <Input.TextArea placeholder="(Optional)" allowClear />
-          </Form.Item>
-
-          <Form.Item name="image" label="Cover Image">
-            <Input placeholder="(Optional) Image Url, defaults to random colour" />
-          </Form.Item>
-        </Form>
-      </Modal>
-
-      <div style={{ marginTop: '16px' }}>
-        <List
-          grid={{
-            gutter: 24,
-            column: 3,
-            xs: 1,
-            sm: 2,
-            xxl: 5
-          }}
-          dataSource={courses}
-          renderItem={(course) => (
-            <List.Item>
-              <CourseCard
-                course={course}
-                onClick={() => history.push(`/app/course/${course.id}/modules`)}
-              />
-            </List.Item>
+      <div style={{ marginTop: '8px' }}>
+        <Collapse
+          expandIcon={({ isActive }) => (
+            <CaretRightOutlined rotate={isActive ? 90 : 0} />
           )}
-        />
+          defaultActiveKey={['1']}
+          ghost
+        >
+          <Collapse.Panel header={<Text strong>Public Courses</Text>} key="1">
+            <List
+              grid={{
+                gutter: 24,
+                column: 3,
+                xs: 1,
+                sm: 2,
+                xxl: 5
+              }}
+              dataSource={filteredCourses}
+              renderItem={(course) => (
+                <List.Item>
+                  <CourseCard
+                    course={course}
+                    removeCourse={() => removeCourse(course.id)}
+                    handleEnroll={() => handleEnroll(course.id, user._id)}
+                    handleUnenroll={() => handleUnenroll(course.id, user._id)}
+                    onClick={() =>
+                      handleCourseCardClick(
+                        course.id,
+                        user._id,
+                        course.enrolled
+                      )
+                    }
+                  />
+                </List.Item>
+              )}
+            />
+          </Collapse.Panel>
+          <Collapse.Panel
+            header={<Text strong>Recomendations</Text>}
+            key="2"
+          ></Collapse.Panel>
+        </Collapse>
       </div>
     </React.Fragment>
   )
