@@ -1,5 +1,5 @@
 import DiscussionCard from "./components/discussionCard"
-import styles from "./styles.css"
+import "./styles.css"
 import { useSelector, useDispatch } from 'react-redux'
 import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
@@ -19,7 +19,6 @@ const Feed = ({discussions,user})=>{
                 key={dis._id}
                 discussion={dis}
                 user={user}
-                styles={styles}
               />
             )
         }
@@ -62,7 +61,7 @@ const DiscussionFeed = ({ courseId }) => {
         ></Input>
         <Button onClick={onPost}>Post</Button>
       </span>
-      <Feed discussions={discussions} user={user} />
+      <Feed discussions={discussions} user={user} className="container" />
     </div>
   )
 }

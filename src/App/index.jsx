@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   Route,
   Switch,
@@ -7,7 +7,8 @@ import {
   matchPath
 } from 'react-router-dom'
 import { Layout } from 'antd'
-
+import { useSelector, useDispatch } from 'react-redux'
+import { getAllNotifications } from '../reducers/notificationsReducer'
 import SideNav from '../components/SideNav'
 import PublicRoute from '../components/PublicRoute'
 import PrivateRoute from '../components/PrivateRoute'
@@ -20,7 +21,7 @@ import Courses from '../views/courses'
 import Browse from '../views/browse'
 import Articles from '../views/articles'
 import ArticlePage from '../views/ArticlePage'
-// import Profile from '../views/profile'
+import Profile from '../views/Profile'
 import Assignments from '../views/assignments'
 import Exams from '../views/exams'
 import Quizes from '../views/quizes'
@@ -29,6 +30,8 @@ import Modules from '../views/modules'
 import CheatingDetection from '../views/cheatingDetection'
 import DiscussionFeed from '../views/discussions'
 import AnnouncementsFeed from '../views/announcements'
+import Dashboard from '../views/dashboard'
+import CourseCalendar from '../views/courseCalendar'
 
 import NotFoundView from '../views/NotFoundView'
 
@@ -73,6 +76,12 @@ const AuthnticatedApp = () => {
     return true
   }
 
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(getAllNotifications())
+  }, [dispatch])
+
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <SideNav collapsed={collapsed} onCollapse={onCollapse} />
@@ -94,6 +103,9 @@ const AuthnticatedApp = () => {
             <Route exact path="/app/">
               <Redirect to="/app/courses" />
             </Route>
+
+            <Route path="/app/dashboard" component={Dashboard} />
+            <Route path="/app/calendar" component={CourseCalendar} />
 
             <Route path="/app/courses" component={Courses} />
             <Route path="/app/course/:courseId/modules" component={Modules} />
@@ -130,10 +142,10 @@ const AuthnticatedApp = () => {
             />
 
             <Route path="/app/browse" component={Browse} />
-            <Route path="/app/articles" component={Articles} /> 
-            <Route path = "/app/articlePage/:id" component={ArticlePage} />
+            <Route path="/app/articles" component={Articles} />
+            <Route path="/app/articlePage/:id" component={ArticlePage} />
 
-            {/* <Route path="/app/profile" component={Profile} /> */}
+            <Route path="/app/profile" component={Profile} />
             <Route path="/app/*" component={NotFoundView} />
           </Switch>
         </Content>

@@ -1,13 +1,9 @@
 import React from 'react'
 
-import { useHistory } from 'react-router-dom'
-
-import { Space, Button } from 'antd'
+import { Space } from 'antd'
 import ProfileIcon from '../ProfileIcon'
 import DropDownNotification from '../DropDownNotification'
 import CourseNavigation from '../CourseNavigation'
-
-import { ArrowLeftOutlined } from '@ant-design/icons'
 
 import styled from 'styled-components'
 
@@ -20,25 +16,9 @@ const FlexedDiv = styled.div`
 `
 
 const AppHeader = ({ courseNavigation }) => {
-  const history = useHistory()
-
-  const popHistory = () => {
-    history.goBack()
-  }
-
-  //will fix back button later
   return (
     <FlexedDiv>
-      <Space>
-        <Button
-          disabled={true}
-          shape="circle"
-          type="secondary"
-          onClick={popHistory}
-          icon={<ArrowLeftOutlined />}
-        ></Button>
-        {courseNavigation && <CourseNavigation />}
-      </Space>
+      <Space>{courseNavigation && <CourseNavigation />}</Space>
       <Space>
         <DropDownNotification />
         <ProfileIcon />
