@@ -1,7 +1,6 @@
 import React from 'react'
 import { Layout, Menu } from 'antd'
 import { NavLink, useLocation } from 'react-router-dom'
-import { LogoPlaceHolder } from './style'
 
 import {
   UserOutlined,
@@ -12,6 +11,7 @@ import {
 
 import { RiArticleLine } from 'react-icons/ri'
 import { ImBooks } from 'react-icons/im'
+import Logo from '../Logo'
 
 const SideNav = (props) => {
   const { collapsed, onCollapse } = props
@@ -36,7 +36,7 @@ const SideNav = (props) => {
         left: 0
       }}
     >
-      <LogoPlaceHolder />
+      <Logo collapsed={collapsed} />
       <Menu
         theme="dark"
         mode="inline"
