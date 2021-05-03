@@ -20,6 +20,20 @@ body {
   margin-right: 8px !important;
 }
 
+.logo1-cls-1,.logo1-cls-2,.logo1-cls-3,.logo1-cls-4,.logo1-cls-5{
+  fill:#29abe2;
+  stroke:#29abe2;
+  stroke-miterlimit:10;
+}
+.logo1-cls-2{stroke-width:7px;}
+.logo1-cls-3{stroke-width:2px;}
+.logo1-cls-4{font-size:105.01px;font-family:Poppins-Bold, Poppins;font-weight:700;}
+.logo1-cls-5{stroke-width:3px;}
+
+.logo2-cls-1,.logo2-cls-2,.logo2-cls-3{fill:#29abe2;}
+.logo2-cls-2{stroke:#29abe2;stroke-miterlimit:10;stroke-width:2px;}
+.logo2-cls-3{font-size:41.91px;font-family:Poppins-Regular, Poppins;}
+
 /*
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
