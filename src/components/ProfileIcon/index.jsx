@@ -1,11 +1,13 @@
 import React from 'react'
 import { Dropdown, Avatar, Menu } from 'antd'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { logout } from '../../reducers/authReducer'
 
 const ProfileIcon = () => {
   const dispatch = useDispatch()
+
+  const user = useSelector((state) => state.auth.user)
 
   const clickHandler = ({ key }) => {
     if (key === 'SIGN_OUT') {
@@ -45,10 +47,7 @@ const ProfileIcon = () => {
       placement="topRight"
       arrow
     >
-      <Avatar
-        src="https://www.w3schools.com/howto/img_avatar.png"
-        style={{ cursor: 'pointer' }}
-      ></Avatar>
+      <Avatar src={user.photo} style={{ cursor: 'pointer' }}></Avatar>
     </Dropdown>
   )
 }

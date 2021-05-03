@@ -1,111 +1,118 @@
-import React, { useState ,useEffect } from 'react';
-import 'antd/dist/antd.css';
-import { Comment, Avatar, Form, Button, Input } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
-import { createComment, DeleteComment ,getArticleData } from '../../../reducers/articlePageReducer'
+import React, { useState, useEffect } from 'react'
+import 'antd/dist/antd.css'
+import { Comment, Avatar, Form, Button, Input } from 'antd'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  createComment,
+  DeleteComment,
+  getArticleData
+} from '../../../reducers/articlePageReducer'
 import { DeleteFilled } from '@ant-design/icons'
 import Styles from './index.module.css'
 
-
-const { TextArea } = Input;
+const { TextArea } = Input
 const ArticleComments = (props) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
-  const articleId = props.articleId;
-  const [submitting, setSubmitting] = useState(false);
+  const articleId = props.articleId
+  const [submitting, setSubmitting] = useState(false)
 
-  const initalComments = useSelector((state) => state.articlePage.comments);
+  const initalComments = useSelector((state) => state.articlePage.comments)
 
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState('')
 
   const handleChange = (e) => {
-    setValue(e.target.value);
+    setValue(e.target.value)
   }
-  const user = useSelector((state) => state.auth.user);
+  const user = useSelector((state) => state.auth.user)
 
-                                                                                            
   const addComment = (comment) => {
-    dispatch(createComment(articleId, comment));
-    setSubmitting(true);
+    dispatch(createComment(articleId, comment))
+    setSubmitting(true)
   }
 
   const handleSubmit = () => {
     if (!value) {
-      return;
+      return
     }
 
-    let date = new Date();
-    let datetoString = date.toString(); 
+    let date = new Date()
+    let datetoString = date.toString()
     let comment = {
       body: value,
-      authorPersonId:user._id,
-      "createdAt": datetoString
+      authorPersonId: user._id,
+      createdAt: datetoString
     }
-    addComment(comment);
-    setSubmitting(false);
-    setValue('') ;    
+    addComment(comment)
+    setSubmitting(false)
+    setValue('')
   }
 
   useEffect(() => {
-    dispatch(getArticleData(articleId));
-}, [dispatch]);
+    dispatch(getArticleData(articleId))
+  }, [dispatch])
 
   return (
     <>
+      {props.showEditor && (
+        <Comment
+          avatar={<Avatar src={user.photo} alt="Han Solo" />}
+          content={
+            <Editor
+              onChange={handleChange}
+              onSubmit={handleSubmit}
+              submitting={submitting}
+              value={value}
+            />
+          }
+        />
+      )}
 
-      { props.showEditor && <Comment
-        avatar={
-          <Avatar
-            src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-            alt="Han Solo"
-          />
-        }
-        content={
-          <Editor
-            onChange={handleChange}
-            onSubmit={handleSubmit}
-            submitting={submitting}
-            value={value}
-          />
-        }
-      />}
-
-      {initalComments?.length > 0 && <CL comments={initalComments} articleId={articleId} />}
-
+      {initalComments?.length > 0 && (
+        <CL comments={initalComments} articleId={articleId} />
+      )}
     </>
   )
 }
 
 const CL = ({ comments, articleId }) => {
+  const dispatch = useDispatch()
 
-  const dispatch = useDispatch();
-
-  const user = useSelector((state) => state.auth.user);
+  const user = useSelector((state) => state.auth.user)
 
   return (
     <div>
-      { comments.map((comment, index) => {
+      {comments.map((comment, index) => {
         return (
           <div key={index}>
             <div className={Styles['iconCommentBody']}>
-              <Comment content={comment?.body} author={(comment?.createdBy?.name || user?.name) } avatar={comment?.createdBy?.photo || user.photo} datetime={comment.createdAt} />
-
+              <Comment
+                content={comment?.body}
+                author={comment?.createdBy?.name || user?.name}
+                avatar={comment?.createdBy?.photo || user.photo}
+                datetime={comment.createdAt}
+              />
             </div>
             <div className={Styles['iconCommentRemove']}>
-             {((user._id === comment.authorPersonId )||(user._id === comment?.createdBy?._id)) && ( <Button type="icon" className={Styles['iconButton']}
-                onClick={() => {
-                  return dispatch(DeleteComment(articleId, comment))
-                }}
-              >
-                <DeleteFilled />
-              </Button>)}
+              {(user._id === comment.authorPersonId ||
+                user._id === comment?.createdBy?._id) && (
+                <Button
+                  type="icon"
+                  className={Styles['iconButton']}
+                  onClick={() => {
+                    return dispatch(DeleteComment(articleId, comment))
+                  }}
+                >
+                  <DeleteFilled />
+                </Button>
+              )}
             </div>
-          </div>)
+          </div>
+        )
       })}
     </div>
   )
-};
-
+}
 
 const Editor = ({ onChange, onSubmit, submitting, value }) => (
   <>
@@ -113,11 +120,16 @@ const Editor = ({ onChange, onSubmit, submitting, value }) => (
       <TextArea rows={4} onChange={onChange} value={value} />
     </Form.Item>
     <Form.Item>
-      <Button htmlType="submit" loading={submitting} onClick={onSubmit} type="primary">
+      <Button
+        htmlType="submit"
+        loading={submitting}
+        onClick={onSubmit}
+        type="primary"
+      >
         Add Comment
-       </Button>
+      </Button>
     </Form.Item>
   </>
-);
+)
 
-export default ArticleComments;
+export default ArticleComments
