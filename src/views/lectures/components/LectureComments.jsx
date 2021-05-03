@@ -1,4 +1,4 @@
-import { Comment, Form, List, Typography, Input, Button } from 'antd'
+import { Comment, Form, List, Typography, Input, Button, Avatar } from 'antd'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router'
@@ -99,7 +99,6 @@ const LectureComments = (props) => {
       <Typography.Title level={4}>Comments</Typography.Title>
       <List
         style={{ padding: '0px 8px' }}
-        // loading={loading}
         dataSource={comments}
         locale={{ emptyText: 'no comments' }}
         renderItem={(comment) => (
@@ -115,14 +114,14 @@ const LectureComments = (props) => {
               author={
                 <Typography.Text strong>{comment.user.name}</Typography.Text>
               }
-              avatar={'https://www.w3schools.com/howto/img_avatar.png'}
+              avatar={<Avatar src={comment.user.photo} />}
               content={comment.comment}
             />
           </List.Item>
         )}
       ></List>
       <CommentForm
-        avatar={'https://www.w3schools.com/howto/img_avatar.png'}
+        avatar={<Avatar src={user.photo} />}
         addComment={(comment) => {
           addComment(selectedLecture.id, comment)
         }}
