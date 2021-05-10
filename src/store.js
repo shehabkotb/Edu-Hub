@@ -6,7 +6,7 @@ import logger from 'redux-logger'
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
 
-import authReducer from './reducers/authReducer'
+import authReducer, { logout } from './reducers/authReducer'
 import courseReducer from './reducers/courseReducer'
 import moduleReducer from './reducers/moduleReducer'
 import articlesReducer from './reducers/articlesReducer'
@@ -16,6 +16,7 @@ import lectureReducer from './reducers/lectureReducer'
 import lectureCommentsReducer from './reducers/lectureCommentsReducer'
 import discussionReducer from './reducers/discussionReducer'
 import announcementsReducer from './reducers/announcementsReducer'
+import axios from 'axios'
 
 const persistConfig = {
   key: 'root',
@@ -26,8 +27,8 @@ const reducer = combineReducers({
   auth: authReducer,
   courses: courseReducer,
   modules: moduleReducer,
-  articles:articlesReducer , 
-  articlePage: articlePage , 
+  articles: articlesReducer,
+  articlePage: articlePage,
   notifications: notificationsReducer,
   lectures: lectureReducer,
   lectureComments: lectureCommentsReducer,
@@ -43,5 +44,18 @@ let store = createStore(
   composeWithDevTools(applyMiddleware(thunk, logger))
 )
 let persistor = persistStore(store)
+
+axios.interceptors.response.use(
+  function (response) {
+    return response
+  },
+  function (error) {
+    if (error.response.status === 401) {
+      store.dispatch(logout())
+    } else {
+      return Promise.reject(error)
+    }
+  }
+)
 
 export { store, persistor }

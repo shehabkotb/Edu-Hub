@@ -3,7 +3,7 @@ import { SET_USER, CLEAR_USER, UPDATE_USER } from '../actions/auth'
 import { notification } from 'antd'
 
 import { message } from 'antd'
-import subscribeUser from './../subscription';
+import subscribeUser from './../subscription'
 import { getAuthHeader } from '../services/config'
 
 // manpulates the data coming from backend
@@ -29,18 +29,18 @@ const authReducer = (state = intialState, action) => {
   }
 }
 
-export const editProfile = (user) =>{
+export const editProfile = (user) => {
   return async (dispatch) => {
     try {
-      const response = await usersService.update(user);
+      const response = await usersService.update(user)
       console.log(response)
-      if(response){
+      if (response) {
+        window.localStorage.setItem('eduhub-user', JSON.stringify(response))
         dispatch({ type: UPDATE_USER, user: response })
         notification.success({
           message: 'Saved Successfully'
         })
-        window.localStorage.setItem('eduhub-user', JSON.stringify(response))
-      }else{
+      } else {
         notification.error({
           message: 'Cant Save'
         })
@@ -74,10 +74,13 @@ export const login = (credentials) => {
   return async (dispatch) => {
     try {
       const response = await usersService.login(credentials)
-      dispatch({ type: SET_USER, user: response })
       window.localStorage.setItem('eduhub-user', JSON.stringify(response))
-      subscribeUser(`http://localhost:4000/notification/subscribe`,getAuthHeader().headers.Authorization);
-      console.log("subscribed")
+      subscribeUser(
+        `http://localhost:4000/notification/subscribe`,
+        getAuthHeader().headers.Authorization
+      )
+      dispatch({ type: SET_USER, user: response })
+      console.log('subscribed')
     } catch (error) {
       console.log(error)
       // the backend should send the error message to show
