@@ -2,63 +2,59 @@ import { Card, Button, Modal, Form, Input } from 'antd'
 import Avatar from 'antd/lib/avatar/avatar'
 import Meta from 'antd/lib/card/Meta'
 import React, { useEffect, useState } from 'react'
-import { useHistory } from "react-router-dom"
-import { useDispatch, useSelector } from 'react-redux';
-import { create_article, deleteArticle, Timeline ,getinitialData } from '../../reducers/articlesReducer';
-
+import { useHistory } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import {
-  DeleteFilled
-} from '@ant-design/icons'
+  create_article,
+  deleteArticle,
+  Timeline,
+  getinitialData
+} from '../../reducers/articlesReducer'
+
+import { DeleteFilled } from '@ant-design/icons'
 
 import Styles from './index.module.css'
 
-const { TextArea } = Input;
-
+const { TextArea } = Input
 
 const Articles = () => {
-  let dispatch = useDispatch();
-  const [modalVisible, setModalVisible] = useState(false);
-  const [load, loading] = useState(2);
+  let dispatch = useDispatch()
+  const [modalVisible, setModalVisible] = useState(false)
+  const [load, loading] = useState(2)
   const [form] = Form.useForm()
   const handleCancel = () => {
     setModalVisible(false)
   }
 
-
   const onFinish = (values) => {
     let Article = {
-      "text": values.articleBody,
-      "title": values.articleTitle,
-      "url": values.url
-    };
-      dispatch(create_article(Article));
-      setModalVisible(false);
-  };
+      text: values.articleBody,
+      title: values.articleTitle,
+      url: values.url
+    }
+    dispatch(create_article(Article))
+    setModalVisible(false)
+  }
 
   useEffect(() => {
-    dispatch(getinitialData());
-  },[dispatch]);
+    dispatch(getinitialData())
+  }, [dispatch])
 
-  const result = useSelector((state) => state.articles);
-  const articleData = result?.articles;
-  const totalPages = result?.totalPages;
+  const result = useSelector((state) => state.articles)
+  const articleData = result?.articles
+  const totalPages = result?.totalPages
 
   function handleClick() {
-    setModalVisible(true);
+    setModalVisible(true)
   }
-  const onLoadMore =  () => {
-    if (load <= totalPages) 
-    {
-      let t = load;
-      dispatch(Timeline(t, 5));
-      t++;
-      loading(t);
+  const onLoadMore = () => {
+    if (load <= totalPages) {
+      let t = load
+      dispatch(Timeline(t, 5))
+      t++
+      loading(t)
     }
   }
-
-
-  
-
 
   return (
     <>
@@ -66,11 +62,9 @@ const Articles = () => {
         <div className={Styles['article-title-container']}>
           <h2>Articles</h2>
           <div className={Styles['article-title-container']}>
-
             <Button type="primary" onClick={handleClick}>
               New Article
-          </Button>
-       
+            </Button>
 
             <Modal
               title="Add New Article"
@@ -80,10 +74,10 @@ const Articles = () => {
               footer={[
                 <Button key="cancel" onClick={handleCancel}>
                   Cancel
-             </Button>,
+                </Button>,
                 <Button key="submit" type="primary" onClick={form.submit}>
                   Submit
-             </Button>
+                </Button>
               ]}
             >
               <Form
@@ -97,8 +91,8 @@ const Articles = () => {
                   rules={[
                     {
                       required: true,
-                      message: 'Please input your Article Title!',
-                    },
+                      message: 'Please input your Article Title!'
+                    }
                   ]}
                 >
                   <Input type="text" placeholder="ArticleTitle" />
@@ -108,21 +102,17 @@ const Articles = () => {
                   rules={[
                     {
                       required: true,
-                      message: 'Please input your article body!',
-                    },
+                      message: 'Please input your article body!'
+                    }
                   ]}
                 >
                   <TextArea
                     type="text"
                     placeholder="article body"
                     autoSize={{ minRows: 5, maxRows: 6 }}
-
                   />
                 </Form.Item>
-                <Form.Item
-                  name="url"
-
-                >
+                <Form.Item name="url">
                   <Input type="text" placeholder="article url" />
                 </Form.Item>
               </Form>
@@ -130,59 +120,61 @@ const Articles = () => {
           </div>
         </div>
         {articleData?.map((article, index) => (
-          <ArticleCard
-            key={index}
-            article={article}
-          />
+          <ArticleCard key={index} article={article} />
         ))}
-   {  (load <= totalPages) ? 
-   (<Button className={Styles['onLoadMore']} onClick={onLoadMore}>loading more</Button>):
-   (<div className={Styles['onLoadMore']} >End Of Results</div>)}
-
+        {load <= totalPages ? (
+          <Button className={Styles['onLoadMore']} onClick={onLoadMore}>
+            loading more
+          </Button>
+        ) : (
+          <div className={Styles['onLoadMore']}>End Of Results</div>
+        )}
       </div>
     </>
   )
 }
 
 const ArticleCard = ({ article }) => {
-  const history = useHistory();
-  let dispatch = useDispatch();
+  const history = useHistory()
+  let dispatch = useDispatch()
 
   const clickDelete = () => {
-    return dispatch(deleteArticle(article.id)) ;
+    return dispatch(deleteArticle(article.id))
   }
-
 
   const viewArticle = () => {
-    history.push(`/app/articlePage/${article.id}`)
+    history.push(`/app/articles/${article.id}`)
   }
-  const user = useSelector((state) => state.auth.user);
-
-
+  const user = useSelector((state) => state.auth.user)
 
   return (
     <div className={Styles['article-card-container']}>
-      <Card
-        hoverable
-        className="article-card"
-
-      >
+      <Card hoverable className="article-card">
         <Meta
           avatar={<Avatar src={article?.authorPersonId?.photo} />}
-          title={(article?.authorPersonId?.name || user.name)}
+          title={article?.authorPersonId?.name || user.name}
           description={article?.title}
         />
 
-        <p>
-          {article?.text}
-        </p>
-        {(user?._id === (article?.authorPersonId?._id || article?.authorPersonId)) && (<Button type="icon" className={Styles['iconButton']}
-          onClick={clickDelete}
+        <p>{article?.text}</p>
+        {user?._id ===
+          (article?.authorPersonId?._id || article?.authorPersonId) && (
+          <Button
+            type="icon"
+            className={Styles['iconButton']}
+            onClick={clickDelete}
+          >
+            <DeleteFilled />
+          </Button>
+        )}
+        <Button
+          type="text"
+          onClick={viewArticle}
+          className={Styles['viewButton']}
         >
-          <DeleteFilled />
-        </Button>)}
-        <Button type="text" onClick={viewArticle} className={Styles['viewButton']} > view </Button>
-
+          {' '}
+          view{' '}
+        </Button>
       </Card>
     </div>
   )

@@ -140,8 +140,8 @@ const AuthnticatedApp = () => {
             />
 
             <Route path="/app/browse" component={Browse} />
+            <Route path="/app/articles/:id" component={ArticlePage} />
             <Route path="/app/articles" component={Articles} />
-            <Route path="/app/articlePage/:id" component={ArticlePage} />
 
             <Route path="/app/profile" component={Profile} />
             <Route path="/app/*" component={NotFoundView} />
