@@ -93,7 +93,7 @@ export const login = (credentials) => {
 export const logout = () => {
   return async (dispatch) => {
     try {
-      // await usersService.logout()
+      await usersService.logout()
       dispatch({ type: CLEAR_USER })
       window.localStorage.removeItem('eduhub-user')
     } catch (error) {
