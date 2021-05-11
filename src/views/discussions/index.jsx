@@ -1,46 +1,34 @@
-import DiscussionCard from "./components/discussionCard"
-import "./styles.css"
+import DiscussionCard from './components/discussionCard'
+import './styles.css'
 import { useSelector, useDispatch } from 'react-redux'
 import React, { useState, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
-import { Button, Input } from "antd"
-import TextArea from 'antd/lib/input/TextArea'
+import { Button, Input } from 'antd'
+
 import {
   addDiscussion,
   getAllDiscussions
 } from '../../reducers/discussionReducer'
 
-
-const Feed = ({discussions,user})=>{
-  return(discussions.map(
-        dis =>{
-            return (
-              <DiscussionCard
-                key={dis._id}
-                discussion={dis}
-                user={user}
-              />
-            )
-        }
-    ))
+const Feed = ({ discussions, user }) => {
+  return discussions.map((dis) => {
+    return <DiscussionCard key={dis._id} discussion={dis} user={user} />
+  })
 }
 
-
 const DiscussionFeed = ({ courseId }) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   useEffect(() => {
     dispatch(getAllDiscussions(courseId))
-  }, [dispatch]);
-  const user = useSelector((state) => state.auth.user);
-  const discussions = useSelector((state) => state.discussions);
-  const [disText, setDisText] = useState('');
+  }, [dispatch, courseId])
+  const user = useSelector((state) => state.auth.user)
+  const discussions = useSelector((state) => state.discussions)
+  const [disText, setDisText] = useState('')
 
   const onPost = () => {
-    if (disText!==''){
+    if (disText !== '') {
       dispatch(addDiscussion(courseId, disText))
       setDisText('')
-    }
-    else console.log("cant post empty post")
+    } else console.log('cant post empty post')
   }
 
   const onTxtChange = (txt) => {

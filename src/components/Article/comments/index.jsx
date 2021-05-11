@@ -10,6 +10,8 @@ import {
 import { DeleteFilled } from '@ant-design/icons'
 import Styles from './index.module.css'
 
+import { DateTime } from 'luxon'
+
 const { TextArea } = Input
 const ArticleComments = (props) => {
   const dispatch = useDispatch()
@@ -50,7 +52,7 @@ const ArticleComments = (props) => {
 
   useEffect(() => {
     dispatch(getArticleData(articleId))
-  }, [dispatch])
+  }, [dispatch, articleId])
 
   return (
     <>
@@ -90,7 +92,7 @@ const CL = ({ comments, articleId }) => {
                 content={comment?.body}
                 author={comment?.createdBy?.name || user?.name}
                 avatar={comment?.createdBy?.photo || user.photo}
-                datetime={comment.createdAt}
+                datetime={DateTime.fromISO(comment.createdAt).toRelative()}
               />
             </div>
             <div className={Styles['iconCommentRemove']}>

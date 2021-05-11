@@ -4,37 +4,36 @@ import './DropDownNotification.css'
 
 import { BellFilled } from '@ant-design/icons'
 import { useSelector, useDispatch } from 'react-redux'
-import { useState, useEffect } from 'react'
 import { delAll, del } from '../../reducers/notificationsReducer'
-import { Tag } from 'antd'
+import { DateTime } from 'luxon'
 
 function getNoticeData(data) {
   return data.map((item) => {
-    var avater
+    let avater
 
-    if (item.type == 'follow') {
+    if (item.type === 'follow') {
       avater =
         'https://gw.alipayobjects.com/zos/rmsportal/GvqBnKhFgObvnSGkDsje.png'
-    } else if (item.type == 'like') {
+    } else if (item.type === 'like') {
       avater =
         'https://gw.alipayobjects.com/zos/rmsportal/OKJXDXrmkNshAMvwtvhu.png'
-    } else if (item.type == 'comment') {
+    } else if (item.type === 'comment') {
       avater =
         'https://gw.alipayobjects.com/zos/rmsportal/ThXAXghbEsBCCSDihZxY.png'
-    } else if (item.type == 'admin') {
+    } else if (item.type === 'admin') {
       avater =
         'https://gw.alipayobjects.com/zos/rmsportal/kISTdvpyTAhtGxpovNWd.png'
-    } else if (item.type == 'alert') {
+    } else if (item.type === 'alert') {
       avater =
         'https://gw.alipayobjects.com/zos/rmsportal/fcHMVNCjPOsbUGdEduuv.jpeg'
     }
 
-    var res = {
+    let res = {
       id: item._id,
       avatar: avater,
       title: item.type,
       description: item.data,
-      datetime: item.updatedAt
+      datetime: DateTime.fromISO(item.updatedAt).toRelative()
     }
 
     return res

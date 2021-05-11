@@ -25,7 +25,7 @@ const AnnouncementsFeed = ({ courseId }) => {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(getAllAnnouncements(courseId))
-  }, [dispatch])
+  }, [dispatch, courseId])
   const user = useSelector((state) => state.auth.user)
   const announcements = useSelector((state) => state.announcements)
   const [annText, setAnnText] = useState('')

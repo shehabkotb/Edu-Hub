@@ -73,11 +73,11 @@ export const addDiscussion = (courseId, data) => {
 export const removeDiscussion = (id) => {
   return async (dispatch) => {
     try {
-      const response = await discussionService.removeDiscussion(id)
-        dispatch({ type: REMOVE_DISCUSSION, data: id })
-        notification.success({
-          message: 'removed successfully'
-        })
+      await discussionService.removeDiscussion(id)
+      dispatch({ type: REMOVE_DISCUSSION, data: id })
+      notification.success({
+        message: 'removed successfully'
+      })
     } catch (error) {
       console.log(error)
       notification.error({
@@ -120,6 +120,5 @@ export const removeComment = (id, comment) => {
     }
   }
 }
-
 
 export default discussionReducer

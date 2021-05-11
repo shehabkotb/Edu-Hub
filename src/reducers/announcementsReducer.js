@@ -58,7 +58,7 @@ export const addAnnouncement = (courseId, data) => {
 export const removeAnnouncement = (id) => {
   return async (dispatch) => {
     try {
-      const response = await announcementService.removeAnnouncement(id)
+      await announcementService.removeAnnouncement(id)
       dispatch({ type: REMOVE_ANNOUNCEMENT, data: id })
       notification.success({
         message: 'removed successfully'
@@ -72,4 +72,4 @@ export const removeAnnouncement = (id) => {
   }
 }
 
-export default announcementsReducer;
+export default announcementsReducer

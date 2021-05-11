@@ -7,7 +7,7 @@ import {
   matchPath
 } from 'react-router-dom'
 import { Layout } from 'antd'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { getAllNotifications } from '../reducers/notificationsReducer'
 import SideNav from '../components/SideNav'
 import PublicRoute from '../components/PublicRoute'
