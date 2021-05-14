@@ -17,7 +17,7 @@ const Profile = () => {
   //const [password, setPassword] = useState(user.passwordConfirm)
   const [mobile, setMobile] = useState(user.mobile)
   const [userName, setUserName] = useState(user.username)
-  const [photo, setPhoto] = useState()
+  const [photo, setPhoto] = useState(user.photo)
   const [active, setActive] = useState(true)
 
   const onNameChange = (txt) => {
@@ -36,19 +36,31 @@ const Profile = () => {
     setMobile(txt.target.value)
   }
   const onsave = () => {
-    dispatch(
-      editProfile({
-        name: name,
-        email: email,
-        username: userName,
-        mobile: mobile,
-        photo:
-          '***REMOVED***' +
-          user._id +
-          '/' +
-          photo.name
-      })
-    )
+    if (typeof(photo.name) != 'undefined') {
+      dispatch(
+        editProfile({
+          name: name,
+          email: email,
+          username: userName,
+          mobile: mobile,
+          photo:
+            '***REMOVED***' +
+            user._id +
+            '/' +
+            photo.name
+        })
+      )
+    } else {
+      dispatch(
+        editProfile({
+          name: name,
+          email: email,
+          username: userName,
+          mobile: mobile,
+          photo: user.photo
+        })
+      )
+    }
   }
 
   const S3_BUCKET = '***REMOVED***'
