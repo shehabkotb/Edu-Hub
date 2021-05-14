@@ -38,7 +38,7 @@ const DiscussionFeed = ({ courseId }) => {
   return (
     <div className="container">
       <span>
-        <Input
+        <Input.TextArea
           size="large"
           allowClear={true}
           bordered={true}
@@ -46,7 +46,7 @@ const DiscussionFeed = ({ courseId }) => {
           placeholder="what you think"
           onChange={onTxtChange}
           className="txt"
-        ></Input>
+        ></Input.TextArea>
         <Button onClick={onPost}>Post</Button>
       </span>
       <Feed discussions={discussions} user={user} className="container" />
