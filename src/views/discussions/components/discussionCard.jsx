@@ -36,15 +36,17 @@ const DiscussionCard = ({ discussion, user }) => {
               avatar={<Avatar src={discussion.user.photo} />}
               title={discussion.user.name}
             />
-            <Button
-              disabled={!(discussion.user._id === user._id)}
-              className="deleteButton"
-              onClick={() => {
-                dispatch(removeDiscussion(discussion._id))
-              }}
-            >
-              delete
-            </Button>
+            {discussion.user._id === user._id && (
+              <Button
+                disabled={!(discussion.user._id === user._id)}
+                className="deleteButton"
+                onClick={() => {
+                  dispatch(removeDiscussion(discussion._id))
+                }}
+              >
+                delete
+              </Button>
+            )}
           </div>
         }
       >

@@ -9,10 +9,10 @@ import { notification } from 'antd'
 const announcementsReducer = (state = [], action) => {
   switch (action.type) {
     case GET_ALL_ANNOUNCEMENTS:
-      return action.data
+      return action.data.reverse()
 
     case ADD_ANNOUNCEMENT:
-      return state.concat({ ...action.data })
+      return state.reverse().concat({ ...action.data }).reverse()
 
     case REMOVE_ANNOUNCEMENT:
       return state.filter((val) => {

@@ -19,15 +19,17 @@ const AnnouncementCard = ({ announcement, user }) => {
               avatar={<Avatar src={announcement.user.photo} />}
               title={announcement.user.name}
             />
-            <Button
-              disabled={!(announcement.user._id === user._id)}
-              className="deleteButton"
-              onClick={() => {
-                dispatch(removeAnnouncement(announcement._id))
-              }}
-            >
-              delete
-            </Button>
+            {announcement.user._id === user._id && (
+              <Button
+                disabled={!(announcement.user._id === user._id)}
+                className="deleteButton"
+                onClick={() => {
+                  dispatch(removeAnnouncement(announcement._id))
+                }}
+              >
+                delete
+              </Button>
+            )}
           </div>
         }
       >

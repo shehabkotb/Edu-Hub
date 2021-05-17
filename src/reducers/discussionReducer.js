@@ -11,9 +11,9 @@ import { notification } from 'antd'
 const discussionReducer = (state = [], action) => {
   switch (action.type) {
     case GET_ALL_DISCUSSIONS:
-      return action.data
+      return action.data.reverse()
     case ADD_DISCUSSION:
-      return state.concat({ ...action.data })
+      return state.reverse().concat({ ...action.data }).reverse()
     case REMOVE_DISCUSSION:
       return state.filter((val) => {
         return val._id !== action.data

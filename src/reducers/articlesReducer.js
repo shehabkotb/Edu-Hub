@@ -2,7 +2,8 @@ import {
   CREATE_ARTICLE,
   INITIAL_DATA,
   TIMELINE,
-  DELETE_ARTICLE
+  DELETE_ARTICLE,
+  GET_MY_ARTICLES
 } from '../actions/articles'
 import { notification } from 'antd'
 import articleService from '../services/article'
@@ -16,7 +17,11 @@ const articlesReducer = (state = {}, action) => {
         totalPages: action.data.totalPages,
         currentPage: action.data.currentPage
       }
-
+    case GET_MY_ARTICLES:
+      return {
+        ...state,
+        articles: action.data.myarticles
+      }
     case TIMELINE:
       return {
         ...state,
@@ -47,6 +52,19 @@ export const getinitialData = () => {
     } catch (error) {
       notification.error({
         message: "Couldn't load all articles check your connection"
+      })
+    }
+  }
+}
+
+export const getMyArticles = (username) => {
+  return async (dispatch) => {
+    try {
+      const response = await articleService.myArticles(username)
+      dispatch({ type: GET_MY_ARTICLES, data: response })
+    } catch (error) {
+      notification.error({
+        message: "Couldn't load your articles check your connection: "+error
       })
     }
   }
