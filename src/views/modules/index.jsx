@@ -47,8 +47,8 @@ const Modules = (props) => {
     dispatch(createModuleItem(courseId, moduleId, moduleItem))
   }
 
-  const removeModuleItem = (moduleId, moduleItemId) => {
-    dispatch(deleteModuleItem(courseId, moduleId, moduleItemId))
+  const removeModuleItem = (moduleId, moduleItem) => {
+    dispatch(deleteModuleItem(courseId, moduleId, moduleItem))
   }
 
   const [addModalActive, setAddModalActive] = useState(false)
@@ -126,8 +126,8 @@ const Modules = (props) => {
                 addModuleItem={(moduleItem) =>
                   addModuleItem(module.id, moduleItem)
                 }
-                removeModuleItem={(moduleItemId) =>
-                  removeModuleItem(module.id, moduleItemId)
+                removeModuleItem={(moduleItem) =>
+                  removeModuleItem(module.id, moduleItem)
                 }
               />
             </List.Item>
