@@ -33,7 +33,7 @@ import DiscussionFeed from '../views/discussions'
 import AnnouncementsFeed from '../views/announcements'
 import Dashboard from '../views/dashboard'
 import CourseCalendar from '../views/courseCalendar'
-
+import GradeBook from '../views/gradeBook'
 import NotFoundView from '../views/NotFoundView'
 
 import 'antd/dist/antd.css'
@@ -131,6 +131,12 @@ const AuthnticatedApp = () => {
               path="/app/course/:courseId/discussions"
               render={(props) => (
                 <DiscussionFeed courseId={props.match.params.courseId} />
+              )}
+            />
+            <Route
+              path="/app/course/:courseId/gradebook"
+              render={(props) => (
+                <GradeBook courseId={props.match.params.courseId} />
               )}
             />
             <Route

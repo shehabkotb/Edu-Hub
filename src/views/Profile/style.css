@@ -32,8 +32,8 @@
   font-size: 26px;
 }
 .avatar {
-  width: 140px;
-  margin: auto;
+  align-content: center;
+  width: fit-content;
 }
 
 
