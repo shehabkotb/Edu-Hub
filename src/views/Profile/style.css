@@ -17,6 +17,7 @@
   position: relative;
   float: left;
   height: 700px;
+  overflow: auto;
 }
 .card:hover {
   box-shadow: 0 0 12px 3px rgba(0, 0, 0, 0.08);
@@ -32,8 +33,8 @@
   font-size: 26px;
 }
 .avatar {
-  width: 140px;
-  margin: auto;
+  align-content: center;
+  width: fit-content;
 }
 
 

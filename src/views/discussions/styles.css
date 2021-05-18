@@ -7,11 +7,11 @@
 
 .commentcard{
     max-height: 200px;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 .dis{
   max-height: 300px;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .container{
