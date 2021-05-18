@@ -24,7 +24,7 @@ const StudentGradeBook = ({ courseId }) => {
       score: 5,
       maxScore: 10, // populated from exam or assignment
       weight: '5%', // populated from exam or assignment
-      gradedAt: '2021-04-23T15:39:00.860+00:00',
+      gradedAt: '2021-03-23T15:39:00.860+00:00',
       gradedBy: '60a37e59b5f990769e04d9ec',
       submissionId: '60a37e6eb29acadd362dc9f7'
     }
@@ -45,21 +45,33 @@ const StudentGradeBook = ({ courseId }) => {
     {
       title: 'Score',
       dataIndex: 'score',
-      key: 'score'
+      key: 'score',
+      sorter: {
+        compare: (a, b) => a.score - b.score
+      }
     },
     {
       title: 'Max Score',
       dataIndex: 'maxScore',
-      key: 'maxScore'
+      key: 'maxScore',
+      sorter: {
+        compare: (a, b) => a.maxScore - b.maxScore
+      }
     },
     {
       title: 'Weight',
       dataIndex: 'weight',
-      key: 'weight'
+      key: 'weight',
+      sorter: {
+        compare: (a, b) => Number(a.weight.slice(0, -1)) - Number(b.weight.slice(0, -1))
+      }
     },
     {
       title: 'Graded At',
       key: 'gradedAt',
+      sorter: {
+        compare: (a, b) => new Date(a.gradedAt) - new Date(b.gradedAt)
+      },
       render: (text, record) => (
         <Space size="middle">
           <a>{new Date(record.gradedAt).toLocaleString()}</a>
