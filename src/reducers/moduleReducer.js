@@ -99,7 +99,14 @@ export const updateModule = (courseId, moduleId, module) => {
 }
 
 export const deleteModule = (courseId, moduleId) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    const { modules } = getState()
+    const moduleToDelete = modules.find((module) => module.id === moduleId)
+
+    for (const moduleItem of moduleToDelete.moduleItems) {
+      if (moduleItem.type === 'file') await s3Service.deleteFile(moduleItem.url)
+    }
+
     try {
       const response = await moduleService.deleteModule(courseId, moduleId)
       dispatch({ type: DELETE_MODULE, data: response })
