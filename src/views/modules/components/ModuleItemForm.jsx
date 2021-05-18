@@ -5,7 +5,7 @@ import { PlusOutlined, InboxOutlined } from '@ant-design/icons'
 
 const { Dragger } = Upload
 
-const FileForm = ({ handleCancel, addModuleItem }) => {
+const FileForm = ({ handleCancel, addModuleItem, loadingUpload }) => {
   const [form] = Form.useForm()
 
   const handleSubmit = (values) => {
@@ -18,6 +18,10 @@ const FileForm = ({ handleCancel, addModuleItem }) => {
 
   const getFileList = (files) => {
     return files.fileList
+  }
+
+  const handleAutoFillName = (value) => {
+    form.setFieldsValue({ ...form.getFieldValue(), title: value.file.name })
   }
 
   return (
@@ -40,7 +44,11 @@ const FileForm = ({ handleCancel, addModuleItem }) => {
             <Button onClick={handleCancel}>Cancel</Button>
           </Form.Item>
           <Form.Item>
-            <Button type="primary" onClick={() => form.submit()}>
+            <Button
+              loading={loadingUpload}
+              type="primary"
+              onClick={() => form.submit()}
+            >
               submit
             </Button>
           </Form.Item>
@@ -54,6 +62,7 @@ const FileForm = ({ handleCancel, addModuleItem }) => {
           ]}
         >
           <Dragger
+            onChange={handleAutoFillName}
             beforeUpload={() => {
               return false
             }}
@@ -123,7 +132,7 @@ const VideoForm = ({ handleCancel, addModuleItem }) => {
   )
 }
 
-const ModuleItemForm = ({ instructorAccess, addModuleItem }) => {
+const ModuleItemForm = ({ instructorAccess, addModuleItem, loadingUpload }) => {
   const [formActive, setFormActive] = useState(false)
   const [moduleItemType, setModuleItemType] = useState('video')
 
@@ -168,6 +177,7 @@ const ModuleItemForm = ({ instructorAccess, addModuleItem }) => {
             <FileForm
               addModuleItem={addModuleItem}
               handleCancel={handleCancel}
+              loadingUpload={loadingUpload}
             />
           )}
         </>

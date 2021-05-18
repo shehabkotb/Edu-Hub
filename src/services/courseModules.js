@@ -56,14 +56,14 @@ const createModuleItem = async (courseId, moduleId, moduleItem) => {
   return response.data.modules
 }
 
-const uploadModuleItem = async (courseId, moduleId, moduleItem) => {
-  const response = await axios.post(
-    getModuleItemsURL(courseId, moduleId),
-    moduleItem,
-    getMultiPartAuthHeader()
-  )
-  return response.data.modules
-}
+// const uploadModuleItem = async (courseId, moduleId, moduleItem) => {
+//   const response = await axios.post(
+//     getModuleItemsURL(courseId, moduleId),
+//     moduleItem,
+//     getMultiPartAuthHeader()
+//   )
+//   return response.data.modules
+// }
 
 const deleteModuleItem = async (courseId, moduleId, moduleItemId) => {
   const response = await axios.delete(
@@ -79,7 +79,6 @@ const moduleService = {
   updateModule,
   deleteModule,
   createModuleItem,
-  uploadModuleItem,
   deleteModuleItem
 }
 export default moduleService
