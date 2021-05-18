@@ -15,6 +15,7 @@
     "antd": "^4.9.2",
     "axios": "^0.21.1",
     "luxon": "^1.26.0",
+    "nivo": "^0.31.0",
     "react": "^16.13.1",
     "react-countdown-clock": "^2.8.1",
     "react-dom": "^16.13.1",
