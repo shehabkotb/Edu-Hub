@@ -1,4 +1,6 @@
 import { Table, Tag, Space } from 'antd'
+import { BarChart, GridlineSeries, Gridline } from 'reaviz'
+
 
 const StudentGradeBook = ({ courseId, id }) => {
   const data = [
@@ -108,7 +110,19 @@ const StudentGradeBook = ({ courseId, id }) => {
 
   return (
     <div>
-      <div>{'The Student "'+id+'" GradeBook: "'+courseId+'"'}</div>
+      <BarChart
+        width={350}
+        height={250}
+        data={data.map((v) => {
+          let res = {
+            key: v.name,
+            data: v.score/v.maxScore
+          }
+          return res
+        })}
+        gridlines={<GridlineSeries line={<Gridline direction="y" />}/>}
+      />
+      <div>{'The Student "' + id + '" GradeBook: "' + courseId + '"'}</div>
       <Table columns={columns} dataSource={data} />
     </div>
   )

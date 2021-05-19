@@ -1,7 +1,7 @@
 import { Table, Tag, Space, Button } from 'antd'
 import React, { useState, useEffect } from 'react'
 import StudentGradeBook from './studentGB'
-
+import { PieChart } from 'reaviz'
 
 const InstructorGradeBook = ({ courseId, id }) => {
   const [student,setStudent]=useState('');
@@ -122,18 +122,33 @@ const InstructorGradeBook = ({ courseId, id }) => {
 
   return (
     <div>
-      <div>{'The Instructor "' + id + '" GradeBook: "' + courseId+'"'}</div>
+      <PieChart
+        width={350}
+        height={250}
+        data={data.map((v) => {
+          let res = {
+            key: v.name,
+            data: Number(v.weight.slice(0, -1))
+          }
+          return res
+        })}
+        
+      />
+      <div>{'The Instructor "' + id + '" GradeBook: "' + courseId + '"'}</div>
       <Table columns={columns} dataSource={data} />
       {showSt == true && (
         <>
-        <Button onClick={()=>{
-          setShowst(false);
-          setStudent('');
-        }}>
-          Close
-        </Button>
-        <StudentGradeBook courseId={courseId} id={student} />
-      </>)}
+          <Button
+            onClick={() => {
+              setShowst(false)
+              setStudent('')
+            }}
+          >
+            Close
+          </Button>
+          <StudentGradeBook courseId={courseId} id={student} />
+        </>
+      )}
     </div>
   )
 }
