@@ -162,7 +162,7 @@ const InstructorGradeBook = ({ courseId, id }) => {
       },
       render: (text, record) => (
         <Space size="middle">
-          <a>{new Date(record.gradedAt).toLocaleString()}</a>
+          {new Date(record.gradedAt).toLocaleString()}
         </Space>
       )
     }
@@ -183,10 +183,14 @@ const InstructorGradeBook = ({ courseId, id }) => {
               return res
             })}
           />
-          <div>
-            {'The Instructor "' + id + '" GradeBook: "' + courseId + '"'}
-          </div>
-          <Table columns={columns} dataSource={data} />
+          <Table
+            columns={columns}
+            dataSource={data}
+            bordered
+            title={() => {
+              return 'The Instructor "' + id + '" GradeBook: "' + courseId + '"'
+            }}
+          />
         </>
       )}
       {showInfo && (

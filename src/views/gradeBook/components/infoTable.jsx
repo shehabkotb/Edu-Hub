@@ -71,7 +71,7 @@ const InfoTable = ({ courseId, data, filter }) => {
         },
         render: (text, record) => (
           <Space size="middle">
-            <a>{new Date(record.gradedAt).toLocaleString()}</a>
+            {new Date(record.gradedAt).toLocaleString()}
           </Space>
         )
       }
@@ -93,7 +93,11 @@ const InfoTable = ({ courseId, data, filter }) => {
             })}
             gridlines={<GridlineSeries line={<Gridline direction="y" />} />}
           />
-          <Table columns={columns} dataSource={idata} />
+          <Table
+            columns={columns}
+            dataSource={idata}
+            bordered
+          />
         </>
       )}
       {showSt && (
