@@ -10,6 +10,32 @@ const InstructorGradeBook = ({ courseId, id }) => {
   const [fltr, setFltr] = useState('')
   const [showInfo, setShowInfo] = useState(false)
   const data = [
+        {
+      _id: '60a37a321603505219f483b5',
+      type: 'assignment',
+      name: 'Assignment2',
+      assignmentId: '60a37c6153bd8067a3a13dc3',
+      studentId: '60a37c775f5a214ad11a7b92',
+      score: 3,
+      maxScore: 10, // populated from exam or assignment
+      weight: '10%', // populated from exam or assignment
+      gradedAt: '2021-02-23T15:39:00.860+00:00',
+      gradedBy: '60a37e59b5f990769e04d9ec',
+      submissionId: '60a37e6eb29acadd362dc9g8'
+    },
+    {
+      _id: '60a37a321603505219f483b1',
+      type: 'exam',
+      name: 'Quiz2',
+      examsId: '60a37c6153bd8067a3a13dc3',
+      studentId: '60a37c775f5a214ad11a7b93',
+      score: 25,
+      maxScore: 40, // populated from exam or assignment
+      weight: '30%', // populated from exam or assignment
+      gradedAt: '2021-05-23T15:39:00.860+00:00',
+      gradedBy: '60a37e59b5f990769e04d9ec',
+      submissionId: '60a37e6eb29acadd362dc9g5'
+    },
     {
       _id: '60a37a321603505219f483b9',
       type: 'exam',
@@ -83,7 +109,12 @@ const InstructorGradeBook = ({ courseId, id }) => {
     {
       title: 'Type',
       dataIndex: 'type',
-      key: 'type',
+      key: 'type'
+    },
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
       render: (text) => (
         <a
           onClick={() => {
@@ -94,11 +125,6 @@ const InstructorGradeBook = ({ courseId, id }) => {
           {text}
         </a>
       )
-    },
-    {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name'
     },
     {
       title: 'Score',

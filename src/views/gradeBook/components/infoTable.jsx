@@ -8,7 +8,7 @@ const InfoTable = ({ courseId, data, filter }) => {
     const [student,setStudent]=useState('');
     const [showSt, setShowst] = useState(false)
     const idata = data.filter((v) => {
-      return v.type == filter
+      return v.name == filter
     })
     const columns = [
       {
