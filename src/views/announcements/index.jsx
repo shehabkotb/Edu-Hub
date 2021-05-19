@@ -43,18 +43,20 @@ const AnnouncementsFeed = ({ courseId }) => {
 
   return (
     <div>
-      <span>
-        <Input.TextArea
-          size="large"
-          allowClear={true}
-          bordered={true}
-          value={annText}
-          placeholder="what you think"
-          onChange={onTxtChange}
-          className="txt"
-        ></Input.TextArea>
-        <Button onClick={onPost}>Post</Button>
-      </span>
+      {user.role==="instructor" &&(
+        <span>
+          <Input.TextArea
+            size="large"
+            allowClear={true}
+            bordered={true}
+            value={annText}
+            placeholder="what you think"
+            onChange={onTxtChange}
+            className="txt"
+          ></Input.TextArea>
+          <Button onClick={onPost}>Post</Button>
+        </span>
+      )}
       <Feed announcements={announcements} user={user} />
     </div>
   )
