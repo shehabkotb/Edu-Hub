@@ -7,6 +7,7 @@ import React, { useState, useEffect } from 'react'
 const InfoTable = ({ courseId, data, filter }) => {
     const [student,setStudent]=useState('');
     const [showSt, setShowst] = useState(false)
+    const [vis, setVis] = useState(true)
     const idata = data.filter((v) => {
       return v.name == filter
     })
@@ -19,6 +20,7 @@ const InfoTable = ({ courseId, data, filter }) => {
           <a
             onClick={() => {
               setStudent(text)
+              setVis(false)
               setShowst(true)
             }}
           >
@@ -77,28 +79,33 @@ const InfoTable = ({ courseId, data, filter }) => {
 
   return (
     <>
-      <BarChart
-        width={350}
-        height={250}
-        data={idata.map((v) => {
-          let res = {
-            key: v.studentId,
-            data: v.score / v.maxScore
-          }
-          return res
-        })}
-        gridlines={<GridlineSeries line={<Gridline direction="y" />} />}
-      />
-      <Table columns={columns} dataSource={idata} />
-      {showSt == true && (
+      {vis && (
+        <>
+          <BarChart
+            width={350}
+            height={250}
+            data={idata.map((v) => {
+              let res = {
+                key: v.studentId,
+                data: v.score / v.maxScore
+              }
+              return res
+            })}
+            gridlines={<GridlineSeries line={<Gridline direction="y" />} />}
+          />
+          <Table columns={columns} dataSource={idata} />
+        </>
+      )}
+      {showSt && (
         <>
           <Button
             onClick={() => {
               setShowst(false)
+              setVis(true)
               setStudent('')
             }}
           >
-            Close
+            Close Student Gradebook
           </Button>
           <StudentGradeBook courseId={courseId} id={student} />
         </>

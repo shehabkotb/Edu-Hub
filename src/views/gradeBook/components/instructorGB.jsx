@@ -9,6 +9,7 @@ const InstructorGradeBook = ({ courseId, id }) => {
   const [showSt, setShowst] = useState(false)
   const [fltr, setFltr] = useState('')
   const [showInfo, setShowInfo] = useState(false)
+  const [vis, setVis] = useState(true)
   const data = [
         {
       _id: '60a37a321603505219f483b5',
@@ -99,6 +100,7 @@ const InstructorGradeBook = ({ courseId, id }) => {
         <a
           onClick={() => {
             setStudent(text)
+            setVis(false)
             setShowst(true)
           }}
         >
@@ -119,6 +121,7 @@ const InstructorGradeBook = ({ courseId, id }) => {
         <a
           onClick={() => {
             setFltr(text)
+            setVis(false)
             setShowInfo(true)
           }}
         >
@@ -167,41 +170,49 @@ const InstructorGradeBook = ({ courseId, id }) => {
 
   return (
     <div>
-      <PieChart
-        width={350}
-        height={250}
-        data={data.map((v) => {
-          let res = {
-            key: v.name,
-            data: Number(v.weight.slice(0, -1))
-          }
-          return res
-        })}
-      />
-      <div>{'The Instructor "' + id + '" GradeBook: "' + courseId + '"'}</div>
-      <Table columns={columns} dataSource={data} />
-      {showInfo == true && (
+      {vis && (
+        <>
+          <PieChart
+            width={350}
+            height={250}
+            data={data.map((v) => {
+              let res = {
+                key: v.name,
+                data: Number(v.weight.slice(0, -1))
+              }
+              return res
+            })}
+          />
+          <div>
+            {'The Instructor "' + id + '" GradeBook: "' + courseId + '"'}
+          </div>
+          <Table columns={columns} dataSource={data} />
+        </>
+      )}
+      {showInfo && (
         <>
           <Button
             onClick={() => {
               setShowInfo(false)
+              setVis(true)
               setFltr('')
             }}
           >
-            Close
+            Close Information Gradebook
           </Button>
           <InfoTable courseId={courseId} data={data} filter={fltr} />
         </>
       )}
-      {showSt == true && (
+      {showSt && (
         <>
           <Button
             onClick={() => {
               setShowst(false)
+              setVis(true)
               setStudent('')
             }}
           >
-            Close
+            Close Student Gradebook
           </Button>
           <StudentGradeBook courseId={courseId} id={student} />
         </>
