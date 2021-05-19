@@ -35,8 +35,8 @@ body {
 
 .logo1-cls-4{
   font-size:105.01px; 
-  font-family:Poppins-Bold, 
-  Poppins; font-weight:700;
+  font-family:Roboto, Poppins-Bold, Poppins; 
+  font-weight:700;
 }
 
 .logo1-cls-5{
@@ -54,8 +54,8 @@ body {
 }
 .logo2-cls-3{
   font-size:41.91px;
-  font-family:Poppins-Regular, Poppins;
-  font-weight:900;
+  font-family:Roboto, Poppins-Regular, Poppins;
+  font-weight:700;
 }
 
 /*
