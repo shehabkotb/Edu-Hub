@@ -1,6 +1,7 @@
 import { Table, Tag, Space, Button } from 'antd'
 import React, { useState, useEffect } from 'react'
 import StudentGradeBook from './studentGB'
+import SummaryTable from './summaryGB'
 import InfoTable from './infoTable'
 import { PieChart } from 'reaviz'
 
@@ -10,7 +11,10 @@ const InstructorGradeBook = ({ courseId, id }) => {
   const [fltr, setFltr] = useState('')
   const [showInfo, setShowInfo] = useState(false)
   const [vis, setVis] = useState(true)
-  const data = [
+  const [fVis, setFVis] = useState(false)
+
+
+  const submitions = [
         {
       _id: '60a37a321603505219f483b5',
       type: 'assignment',
@@ -101,6 +105,7 @@ const InstructorGradeBook = ({ courseId, id }) => {
           onClick={() => {
             setStudent(text)
             setVis(false)
+            setFVis(false)
             setShowst(true)
           }}
         >
@@ -122,6 +127,7 @@ const InstructorGradeBook = ({ courseId, id }) => {
           onClick={() => {
             setFltr(text)
             setVis(false)
+            setFVis(false)
             setShowInfo(true)
           }}
         >
@@ -175,7 +181,7 @@ const InstructorGradeBook = ({ courseId, id }) => {
           <PieChart
             width={350}
             height={250}
-            data={data.map((v) => {
+            data={submitions.map((v) => {
               let res = {
                 key: v.name,
                 data: Number(v.weight.slice(0, -1))
@@ -183,9 +189,19 @@ const InstructorGradeBook = ({ courseId, id }) => {
               return res
             })}
           />
+          <Button
+            onClick={() => {
+              setShowInfo(false)
+              setFVis(true)
+              setVis(false)
+              setFltr('')
+            }}
+          >
+            Open Summary Gradebook
+          </Button>
           <Table
             columns={columns}
-            dataSource={data}
+            dataSource={submitions}
             bordered
             title={() => {
               return 'The Instructor "' + id + '" GradeBook: "' + courseId + '"'
@@ -198,13 +214,14 @@ const InstructorGradeBook = ({ courseId, id }) => {
           <Button
             onClick={() => {
               setShowInfo(false)
+              setFVis(false)
               setVis(true)
               setFltr('')
             }}
           >
             Close Information Gradebook
           </Button>
-          <InfoTable courseId={courseId} data={data} filter={fltr} />
+          <InfoTable courseId={courseId} data={submitions} filter={fltr} />
         </>
       )}
       {showSt && (
@@ -212,6 +229,8 @@ const InstructorGradeBook = ({ courseId, id }) => {
           <Button
             onClick={() => {
               setShowst(false)
+              setShowInfo(false)
+              setFVis(false)
               setVis(true)
               setStudent('')
             }}
@@ -219,6 +238,22 @@ const InstructorGradeBook = ({ courseId, id }) => {
             Close Student Gradebook
           </Button>
           <StudentGradeBook courseId={courseId} id={student} />
+        </>
+      )}
+      {fVis && (
+        <>
+          <Button
+            onClick={() => {
+              setShowst(false)
+              setShowInfo(false)
+              setFVis(false)
+              setVis(true)
+              setStudent('')
+            }}
+          >
+            Close Summary Gradebook
+          </Button>
+          <SummaryTable courseId={courseId}/>
         </>
       )}
     </div>
