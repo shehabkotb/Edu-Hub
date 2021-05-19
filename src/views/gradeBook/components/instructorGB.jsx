@@ -1,11 +1,14 @@
 import { Table, Tag, Space, Button } from 'antd'
 import React, { useState, useEffect } from 'react'
 import StudentGradeBook from './studentGB'
+import InfoTable from './infoTable'
 import { PieChart } from 'reaviz'
 
 const InstructorGradeBook = ({ courseId, id }) => {
   const [student,setStudent]=useState('');
   const [showSt, setShowst] = useState(false)
+  const [fltr, setFltr] = useState('')
+  const [showInfo, setShowInfo] = useState(false)
   const data = [
     {
       _id: '60a37a321603505219f483b9',
@@ -39,7 +42,7 @@ const InstructorGradeBook = ({ courseId, id }) => {
       name: 'Quiz2',
       examsId: '60a37c6153bd8067a3a13dc3',
       studentId: '60a37c775f5a214ad11a7b92',
-      score: 30,
+      score: 20,
       maxScore: 40, // populated from exam or assignment
       weight: '30%', // populated from exam or assignment
       gradedAt: '2021-05-23T15:39:00.860+00:00',
@@ -52,7 +55,7 @@ const InstructorGradeBook = ({ courseId, id }) => {
       name: 'Assignment2',
       assignmentId: '60a37c6153bd8067a3a13dc3',
       studentId: '60a37c775f5a214ad11a7b93',
-      score: 5,
+      score: 7,
       maxScore: 10, // populated from exam or assignment
       weight: '10%', // populated from exam or assignment
       gradedAt: '2021-02-23T15:39:00.860+00:00',
@@ -66,15 +69,31 @@ const InstructorGradeBook = ({ courseId, id }) => {
       title: 'Student',
       dataIndex: 'studentId',
       key: 'studentId',
-      render: (text) => <a onClick={()=>{
-        setStudent(text)
-        setShowst(true)
-      }}>{text}</a>
+      render: (text) => (
+        <a
+          onClick={() => {
+            setStudent(text)
+            setShowst(true)
+          }}
+        >
+          {text}
+        </a>
+      )
     },
     {
       title: 'Type',
       dataIndex: 'type',
-      key: 'type'
+      key: 'type',
+      render: (text) => (
+        <a
+          onClick={() => {
+            setFltr(text)
+            setShowInfo(true)
+          }}
+        >
+          {text}
+        </a>
+      )
     },
     {
       title: 'Name',
@@ -132,10 +151,22 @@ const InstructorGradeBook = ({ courseId, id }) => {
           }
           return res
         })}
-        
       />
       <div>{'The Instructor "' + id + '" GradeBook: "' + courseId + '"'}</div>
       <Table columns={columns} dataSource={data} />
+      {showInfo == true && (
+        <>
+          <Button
+            onClick={() => {
+              setShowInfo(false)
+              setFltr('')
+            }}
+          >
+            Close
+          </Button>
+          <InfoTable courseId={courseId} data={data} filter={fltr} />
+        </>
+      )}
       {showSt == true && (
         <>
           <Button
