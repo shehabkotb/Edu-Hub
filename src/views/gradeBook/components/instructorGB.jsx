@@ -181,13 +181,17 @@ const InstructorGradeBook = ({ courseId, id }) => {
           <PieChart
             width={350}
             height={250}
-            data={submitions.map((v) => {
-              let res = {
-                key: v.name,
-                data: Number(v.weight.slice(0, -1))
-              }
-              return res
-            })}
+            data={submitions
+              .map((v) => {
+                let res = {
+                  key: v.name,
+                  data: Number(v.weight.slice(0, -1))
+                }
+                return res
+              })
+              .sort(function (a, b) {
+                return b.data - a.data
+              })}
           />
           <Button
             onClick={() => {
@@ -253,7 +257,7 @@ const InstructorGradeBook = ({ courseId, id }) => {
           >
             Close Summary Gradebook
           </Button>
-          <SummaryTable courseId={courseId}/>
+          <SummaryTable courseId={courseId} />
         </>
       )}
     </div>

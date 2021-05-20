@@ -84,20 +84,20 @@ const InfoTable = ({ courseId, data, filter }) => {
           <BarChart
             width={350}
             height={250}
-            data={idata.map((v) => {
-              let res = {
-                key: v.studentId,
-                data: v.score / v.maxScore
-              }
-              return res
-            })}
+            data={idata
+              .map((v) => {
+                let res = {
+                  key: v.studentId,
+                  data: v.score / v.maxScore
+                }
+                return res
+              })
+              .sort(function (a, b) {
+                return b.data - a.data
+              })}
             gridlines={<GridlineSeries line={<Gridline direction="y" />} />}
           />
-          <Table
-            columns={columns}
-            dataSource={idata}
-            bordered
-          />
+          <Table columns={columns} dataSource={idata} bordered />
         </>
       )}
       {showSt && (

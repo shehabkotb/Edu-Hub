@@ -140,13 +140,17 @@ const StudentGradeBook = ({ courseId, id }) => {
       <BarChart
         width={350}
         height={250}
-        data={data.grades.map((v) => {
-          let res = {
-            key: v.name,
-            data: v.score / v.maxScore
-          }
-          return res
-        })}
+        data={data.grades
+          .map((v) => {
+            let res = {
+              key: v.name,
+              data: v.score / v.maxScore
+            }
+            return res
+          })
+          .sort(function (a, b) {
+            return b.data - a.data
+          })}
         gridlines={<GridlineSeries line={<Gridline direction="y" />} />}
       />
       <Table
