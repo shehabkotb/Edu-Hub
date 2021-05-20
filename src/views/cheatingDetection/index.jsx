@@ -1,4 +1,4 @@
-import Camera from './components/camera'
+import SpyLogic from './components/spyLogic'
 import { Prompt } from 'react-router'
 import './styles.css'
 
@@ -6,7 +6,7 @@ const CheatingDetection = () => {
   return (
     <div className="container-ch">
       <div className="camera">
-        <Camera />
+        <SpyLogic />
       </div>
       <Prompt
         when={true}
