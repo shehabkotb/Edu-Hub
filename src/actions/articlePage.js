@@ -1,5 +1,6 @@
 export const GET_ONE_ARTICLE = "GET_ONE_ARTICLE" ; 
 export const GET_LIKED_BY = "GET_LIKED_BY" ;
+export const CLEAR = 'CLEAR'
 
 export const FOLLOWUSER = 'FOLLOWUSER' ; 
 export const UNFOLLOWUSER = 'UNFOLLOWUSER' ;

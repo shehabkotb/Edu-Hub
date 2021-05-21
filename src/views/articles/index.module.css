@@ -22,6 +22,11 @@
   transform: scale(1.02);
 }
 
+p{
+  max-height: 100px;
+  overflow: hidden;
+}
+
 .like-container {
   font-size: 18px;
 }
