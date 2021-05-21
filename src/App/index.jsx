@@ -21,6 +21,7 @@ import Courses from '../views/courses'
 import Browse from '../views/browse'
 import Articles from '../views/articles'
 import MyArticle from '../views/articles/myArticles/myArticles'
+import MyBookMarks from '../views/articles/myBookMarks/myBookMarks'
 import ArticlePage from '../views/ArticlePage'
 import Profile from '../views/Profile'
 import Assignments from '../views/assignments'
@@ -150,6 +151,7 @@ const AuthnticatedApp = () => {
             <Route path="/app/articles/:id" component={ArticlePage} />
             <Route path="/app/articles" component={Articles} />
             <Route path="/app/myarticle" component={MyArticle} />
+            <Route path="/app/myBookMarks" component={MyBookMarks} />
             <Route path="/app/profile" component={Profile} />
             <Route path="/app/*" component={NotFoundView} />
           </Switch>

@@ -43,6 +43,7 @@ const MyArticle = () => {
 
   const result = useSelector((state) => state.articles)
   const articleData = result?.articles
+  const history = useHistory()
 
   return (
     <>
@@ -51,8 +52,16 @@ const MyArticle = () => {
         <div className={Styles['article-title-container']}>
           <h2>Your Articles</h2>
           <div className={Styles['article-title-container']}>
-
-            <Button type="primary" onClick={handleClick}>
+            <Button
+              type="secondary"
+              shape="round"
+              onClick={() => {
+                history.push(`/app/myBookMarks`)
+              }}
+            >
+              My BookMarks
+            </Button>
+            <Button shape="round" type="primary" onClick={handleClick}>
               New Article
             </Button>
 
