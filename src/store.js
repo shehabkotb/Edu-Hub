@@ -20,7 +20,8 @@ import axios from 'axios'
 
 const persistConfig = {
   key: 'root',
-  storage
+  storage,
+  blacklist: ['auth']
 }
 
 const reducer = combineReducers({
