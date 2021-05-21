@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import { Typography, Button, Modal, Form, Input, List, Card ,Space , Collapse} from 'antd'
+import { Typography, Button, Modal, Form, Input, List, Card, Space, Collapse, Tag, Divider } from 'antd'
 import CreateAssignment from '../CreateAssignment'
 import { FlexSectionHeader } from '../style'
 import styled from 'styled-components'
-import { DeleteOutlined ,PlusOutlined} from '@ant-design/icons'
+import { DeleteOutlined, PlusOutlined } from '@ant-design/icons'
 
 const Assignments = () => {
   const { Title } = Typography
@@ -27,51 +27,72 @@ const Assignments = () => {
       </FlexSectionHeader>
       {  addAssignment ? (<CreateAssignment />)
         :
-       
-          <Collapse
-        style={{
-          borderRadius: '10px',
-          width: '100%',
-          fontSize: '16px',
-          border: '0px'
-        }}
-        defaultActiveKey={['1']}
-        expandIconPosition={'left'}
-      >
-        <Collapse.Panel
-          header={<Typography.Text strong>Assignment 1</Typography.Text>}
-          bordered={false}
-          key="1"
-          extra={
+
+        (<Collapse
+          style={{
+            borderRadius: '10px',
+            width: '100%',
+            fontSize: '16px',
+            border: '0px'
+          }}
+          defaultActiveKey={['1']}
+          expandIconPosition={'left'}
+        >
+          <Collapse.Panel
+            header={<Typography.Text strong> Stack and Queues </Typography.Text>}
+            bordered={false}
+            key="1"
+            extra={
               <Space
                 onClick={(event) => {
                   // If you don't want click extra trigger collapse, you can prevent this:
                   event.stopPropagation()
                 }}
               >
-                
+
                 <Button
                   type="text"
                   icon={<DeleteOutlined />}
                   danger
-                  // onClick={() => removeModule(module.id)}
+                // onClick={() => removeModule(module.id)}
                 />
               </Space>
-            
-          }
-        >
-          {/* <List
+
+            }
+          >
+            {/* <List
             locale={{ emptyText: 'no items' }}
             // dataSource={module.moduleItems}
             renderItem={(item) => (
               <div>test</div>
             )}
           ></List> */}
-          <div>
-            options
+
+                      <Divider>Assignment Schedule </Divider>
+
+            <div>
+              <b>  Assignment Type:</b> Online Question
           </div>
-        </Collapse.Panel>
-      </Collapse>
+            <div>
+              <b>  Start Date :</b> 11/11/2021
+          </div>
+            <div>
+              <b>           Remaining Time : </b> 3 days , 5 hours , 16 minute , 20 seconds
+            </div>
+           
+<Divider>Available</Divider>
+<div>
+              <Tag color="#f50"> Coming-Soon</Tag>
+              <Tag color="#2db7f5">#2db7f5</Tag>
+              <Tag color="#87d068">open</Tag>
+              <Tag color="#ff0000">Expired</Tag>
+            </div>
+          </Collapse.Panel>
+        </Collapse>
+
+
+
+        )
       }
 
       {/*  array of assignments  */}
