@@ -1,9 +1,8 @@
 import { useSelector, useDispatch } from 'react-redux'
-import React, { useState, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
+import React, { useState } from 'react'
 import Avatar from 'antd/lib/avatar/avatar'
 import Meta from 'antd/lib/card/Meta'
-import style from './style.css'
+import './style.css'
 import { uploadFile } from 'react-s3'
 import { Form, Input, Card, Button } from 'antd'
 import { editProfile } from '../../reducers/authReducer'
@@ -11,7 +10,6 @@ import ImageUploader from 'react-images-upload'
 
 const Profile = () => {
   const dispatch = useDispatch()
-  const history = useHistory()
 
   const user = useSelector((state) => state.auth.user)
   const [name, setName] = useState(user.name)
@@ -19,7 +17,7 @@ const Profile = () => {
   //const [password, setPassword] = useState(user.passwordConfirm)
   const [mobile, setMobile] = useState(user.mobile)
   const [userName, setUserName] = useState(user.username)
-  const [photo, setPhoto] = useState()
+  const [photo, setPhoto] = useState(user.photo)
   const [active, setActive] = useState(true)
 
   const onNameChange = (txt) => {
@@ -38,15 +36,31 @@ const Profile = () => {
     setMobile(txt.target.value)
   }
   const onsave = () => {
-    dispatch(
-      editProfile({
-        name: name,
-        email: email,
-        username: userName,
-        mobile: mobile,
-        photo:"***REMOVED***" +user._id +"/"+photo.name
-      })
-    )
+    if (typeof(photo.name) != 'undefined') {
+      dispatch(
+        editProfile({
+          name: name,
+          email: email,
+          username: userName,
+          mobile: mobile,
+          photo:
+            '***REMOVED***' +
+            user._id +
+            '/' +
+            photo.name
+        })
+      )
+    } else {
+      dispatch(
+        editProfile({
+          name: name,
+          email: email,
+          username: userName,
+          mobile: mobile,
+          photo: user.photo
+        })
+      )
+    }
   }
 
   const S3_BUCKET = '***REMOVED***'
@@ -57,7 +71,7 @@ const Profile = () => {
   const config = {
     bucketName: S3_BUCKET,
     region: REGION,
-    dirName: 'users_profile_photo/'+user._id,
+    dirName: 'users_profile_photo/' + user._id,
     accessKeyId: ACCESS_KEY,
     secretAccessKey: SECRET_ACCESS_KEY
   }
@@ -71,7 +85,7 @@ const Profile = () => {
     await uploadFile(photo, config)
       .then((data) => {
         console.log(data)
-        console.log("uploaded")
+        console.log('uploaded')
         setActive(true)
       })
       .catch((err) => console.error(err))

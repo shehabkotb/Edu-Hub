@@ -25,7 +25,7 @@ const AnnouncementsFeed = ({ courseId }) => {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(getAllAnnouncements(courseId))
-  }, [dispatch])
+  }, [dispatch, courseId])
   const user = useSelector((state) => state.auth.user)
   const announcements = useSelector((state) => state.announcements)
   const [annText, setAnnText] = useState('')
@@ -43,18 +43,20 @@ const AnnouncementsFeed = ({ courseId }) => {
 
   return (
     <div>
-      <span>
-        <Input
-          size="large"
-          allowClear={true}
-          bordered={true}
-          value={annText}
-          placeholder="what you think"
-          onChange={onTxtChange}
-          className="txt"
-        ></Input>
-        <Button onClick={onPost}>Post</Button>
-      </span>
+      {user.role==="instructor" &&(
+        <span>
+          <Input.TextArea
+            size="large"
+            allowClear={true}
+            bordered={true}
+            value={annText}
+            placeholder="what you think"
+            onChange={onTxtChange}
+            className="txt"
+          ></Input.TextArea>
+          <Button onClick={onPost}>Post</Button>
+        </span>
+      )}
       <Feed announcements={announcements} user={user} />
     </div>
   )

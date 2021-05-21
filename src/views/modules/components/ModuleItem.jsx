@@ -28,9 +28,6 @@ const getIcon = (item) => {
 const ModuleItem = ({ item, instructorAccess, removeModuleItem }) => {
   const { title, type, url } = item
 
-  const dummyBackend = 'http://localhost:4000'
-  const navigationURL = type === 'video' ? url : `${dummyBackend}${url}`
-
   const { courseId } = useParams()
 
   const history = useHistory()
@@ -44,7 +41,7 @@ const ModuleItem = ({ item, instructorAccess, removeModuleItem }) => {
           }}
         >
           <Button
-            onClick={() => removeModuleItem(item.id)}
+            onClick={() => removeModuleItem(item)}
             type="text"
             icon={<DeleteOutlined />}
             danger
@@ -58,7 +55,7 @@ const ModuleItem = ({ item, instructorAccess, removeModuleItem }) => {
     <HoverableListItem
       extra={getActions(item)}
       onClick={() => {
-        if (item.type === 'file') window.open(navigationURL, '_blank')
+        if (type === 'file') window.open(url, '_parent')
         else {
           history.push(`/app/course/${courseId}/lectures/${item.id}`)
         }

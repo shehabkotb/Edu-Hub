@@ -1,4 +1,6 @@
 import moduleService from '../services/courseModules'
+import s3Service from '../services/s3Service'
+
 import {
   GET_ALL_MODULES,
   CREATE_MODULE,
@@ -9,7 +11,8 @@ import {
 import {
   CREATE_MODULE_ITEM,
   UPDATE_MODULE_ITEM,
-  DELETE_MODULE_ITEM
+  DELETE_MODULE_ITEM,
+  LOADING_UPLOAD
 } from '../actions/courseModules'
 
 import { notification } from 'antd'
@@ -30,6 +33,12 @@ const moduleReducer = (state = [], action) => {
       return action.data
     case DELETE_MODULE_ITEM:
       return action.data
+    case LOADING_UPLOAD:
+      return state.map((courseModule) => {
+        if (courseModule.id === action.moduleId)
+          return { ...courseModule, loadingUpload: true }
+        else return courseModule
+      })
     default:
       return state
   }
@@ -90,7 +99,14 @@ export const updateModule = (courseId, moduleId, module) => {
 }
 
 export const deleteModule = (courseId, moduleId) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    const { modules } = getState()
+    const moduleToDelete = modules.find((module) => module.id === moduleId)
+
+    for (const moduleItem of moduleToDelete.moduleItems) {
+      if (moduleItem.type === 'file') await s3Service.deleteFile(moduleItem.url)
+    }
+
     try {
       const response = await moduleService.deleteModule(courseId, moduleId)
       dispatch({ type: DELETE_MODULE, data: response })
@@ -109,22 +125,24 @@ export const deleteModule = (courseId, moduleId) => {
 export const createModuleItem = (courseId, moduleId, moduleItem) => {
   return async (dispatch) => {
     try {
-      let response
       if (moduleItem instanceof FormData) {
-        // file
-        response = await moduleService.uploadModuleItem(
+        dispatch({ type: LOADING_UPLOAD, moduleId })
+
+        const fileURL = await s3Service.uploadFile(
           courseId,
-          moduleId,
-          moduleItem
+          'modules',
+          moduleItem.get('file').name,
+          moduleItem.get('file')
         )
-      } else {
-        // video
-        response = await moduleService.createModuleItem(
-          courseId,
-          moduleId,
-          moduleItem
-        )
+
+        moduleItem.append('url', fileURL)
       }
+
+      const response = await moduleService.createModuleItem(
+        courseId,
+        moduleId,
+        moduleItem
+      )
 
       dispatch({ type: CREATE_MODULE_ITEM, data: response })
       notification.success({
@@ -139,13 +157,15 @@ export const createModuleItem = (courseId, moduleId, moduleItem) => {
   }
 }
 
-export const deleteModuleItem = (courseId, moduleId, moduleItemId) => {
+export const deleteModuleItem = (courseId, moduleId, moduleItem) => {
   return async (dispatch) => {
     try {
+      if (moduleItem.type === 'file') await s3Service.deleteFile(moduleItem.url)
+
       const response = await moduleService.deleteModuleItem(
         courseId,
         moduleId,
-        moduleItemId
+        moduleItem.id
       )
       dispatch({ type: DELETE_MODULE_ITEM, data: response })
       notification.success({

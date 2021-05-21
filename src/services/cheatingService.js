@@ -3,8 +3,8 @@ import { getAuthHeader } from './config'
 
 export const baseURL = '/cheatingDetection'
 
-const batchInc = async () => {
-  const response = await axios.post(`${baseURL}/checkCheating`, getAuthHeader())
+const batchInc = async (examId) => {
+  const response = await axios.post(`${baseURL}/checkCheating`,{examId:examId}, getAuthHeader())
   return response.data
 }
 

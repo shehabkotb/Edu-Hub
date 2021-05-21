@@ -11,9 +11,9 @@ import { notification } from 'antd'
 const discussionReducer = (state = [], action) => {
   switch (action.type) {
     case GET_ALL_DISCUSSIONS:
-      return action.data
+      return action.data.reverse()
     case ADD_DISCUSSION:
-      return state.concat({ ...action.data })
+      return state.reverse().concat({ ...action.data }).reverse()
     case REMOVE_DISCUSSION:
       return state.filter((val) => {
         return val._id !== action.data
@@ -73,11 +73,11 @@ export const addDiscussion = (courseId, data) => {
 export const removeDiscussion = (id) => {
   return async (dispatch) => {
     try {
-      const response = await discussionService.removeDiscussion(id)
-        dispatch({ type: REMOVE_DISCUSSION, data: id })
-        notification.success({
-          message: 'removed successfully'
-        })
+      await discussionService.removeDiscussion(id)
+      dispatch({ type: REMOVE_DISCUSSION, data: id })
+      notification.success({
+        message: 'removed successfully'
+      })
     } catch (error) {
       console.log(error)
       notification.error({
@@ -120,6 +120,5 @@ export const removeComment = (id, comment) => {
     }
   }
 }
-
 
 export default discussionReducer

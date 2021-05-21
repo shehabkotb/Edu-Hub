@@ -7,6 +7,13 @@ const timeline  = async (page,limit) => {
   const response = await axios.get(`${baseURL}/timeline?page=${page}&limit=${limit}` , getAuthHeader()) ; 
   return response.data
 }
+const myArticles = async (userName) => {
+  const response = await axios.get(
+    `${baseURL}/${userName}/articles`,
+    getAuthHeader()
+  )
+  return response.data
+}
 const create_article = async (article) => {
   const response = await axios.post(`${baseURL}/newArticle`, article, getAuthHeader()) ; 
   return response.data
@@ -121,11 +128,29 @@ const deleteComment = async (articleId , commentId)=>{
 
 
 
-const articleService = { myBookMarks ,followUser , unfollow  ,myfollowers ,
-   follows , getComments , createComment , deleteComment ,
-    timeline , create_article ,getThisArticle , getlikedBy,
-    likeArticle,UnlikeArticle,unBookMark,BookMark , getAllArticles,
-    getArticleOfUser ,isBooked ,isfollow ,deleteArticle
+const articleService = {
+  myBookMarks,
+  followUser,
+  unfollow,
+  myfollowers,
+  follows,
+  getComments,
+  createComment,
+  deleteComment,
+  timeline,
+  create_article,
+  getThisArticle,
+  getlikedBy,
+  likeArticle,
+  UnlikeArticle,
+  unBookMark,
+  BookMark,
+  getAllArticles,
+  getArticleOfUser,
+  isBooked,
+  isfollow,
+  deleteArticle,
+  myArticles
 } ; 
 
 

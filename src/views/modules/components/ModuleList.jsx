@@ -26,6 +26,8 @@ const ModuleList = (props) => {
   const [editModalActive, setEditModalActive] = useState(false)
   const [form] = Form.useForm()
 
+  const loadingUpload = module.loadingUpload
+
   const handleCancel = () => {
     setEditModalActive(false)
   }
@@ -121,6 +123,7 @@ const ModuleList = (props) => {
           <ModuleItemForm
             addModuleItem={addModuleItem}
             instructorAccess={instructorAccess}
+            loadingUpload={loadingUpload}
           />
         </Collapse.Panel>
       </Collapse>

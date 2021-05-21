@@ -4,7 +4,7 @@ import {
     GET_ONE_ARTICLE, LIKE_ARTICLE, UNLIKE_ARTICLE,
     UNBOOKMARK_ARTICLE, BOOKMARK_ARTICLE,
     FOLLOWUSER, UNFOLLOWUSER,
-    CREATE_COMMENT, DELETE_COMMENT
+    CREATE_COMMENT, DELETE_COMMENT, CLEAR
 } from '../actions/articlePage';
 
 
@@ -18,6 +18,8 @@ const articlePage = (state = {}, action) => {
             return { ...state, islike: false, length: state.length - 1 }
         case BOOKMARK_ARTICLE:
             return { ...state, isBooked: true }
+        case CLEAR:
+            return {};
         case UNBOOKMARK_ARTICLE:
             return { ...state, isBooked: false }
         case FOLLOWUSER:
@@ -36,6 +38,24 @@ const articlePage = (state = {}, action) => {
         default:
             return state
     }
+}
+
+
+
+export const clear = () => {
+  return async (dispatch) => {
+    try {
+
+      dispatch({ type: CLEAR })
+      notification.success({
+        message: 'clear article page'
+      })
+    } catch (e) {
+      notification.error({
+        message: 'cant clear article page'
+      })
+    }
+  }
 }
 
 

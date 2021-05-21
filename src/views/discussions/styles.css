@@ -7,11 +7,11 @@
 
 .commentcard{
     max-height: 200px;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 .dis{
   max-height: 300px;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .container{
@@ -20,7 +20,7 @@
   align-content: center;
 }
 .txt{
-  width: 80%;
+  width: 100%;
   height: 100%;
   padding: 10px;
   position: relative;

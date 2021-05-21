@@ -13,6 +13,8 @@ import {
   deleteComment
 } from '../../../reducers/lectureCommentsReducer'
 
+import { DateTime } from 'luxon'
+
 export const Container = styled.div`
   background-color: #fafafa;
   border-radius: 10px;
@@ -116,6 +118,7 @@ const LectureComments = (props) => {
               }
               avatar={<Avatar src={comment.user.photo} />}
               content={comment.comment}
+              datetime={DateTime.fromISO(comment.updatedAt).toRelative()}
             />
           </List.Item>
         )}

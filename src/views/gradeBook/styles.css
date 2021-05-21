@@ -1,0 +1,16 @@
+.barRow{
+    display:flex; 
+    flex-direction:row;
+}
+.bar1{
+    position: relative;
+    float: inline-start;
+    top: auto;
+    margin: auto;
+}
+.bar2{
+    top: auto;
+    position: relative;
+    float: inline-end;
+    margin: auto;
+}

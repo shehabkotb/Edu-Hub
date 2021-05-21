@@ -12,7 +12,7 @@ export const FormItemFlex = styled(Form.Item)`
 export const FormContainer = styled.div`
   margin: 0 auto;
   width: 26rem;
-  height: 45rem;
+  /* height: 50rem; */
   position: relative;
   z-index: 2;
   background-color: white;
@@ -40,12 +40,13 @@ export const PageContainer = styled.div`
   }
 
   background: #251b43; /* fallback */
-  background-image: url('https://w.wallhaven.cc/full/13/wallhaven-133ep3.jpg');
+  background-image: url('/login-background.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
   display: flex;
   align-items: center;
   width: 100vw;
-  height: 120vh;
+  height: 100vh;
+  min-height: 870px;
 `

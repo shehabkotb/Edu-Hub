@@ -7,7 +7,7 @@ import {
   matchPath
 } from 'react-router-dom'
 import { Layout } from 'antd'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { getAllNotifications } from '../reducers/notificationsReducer'
 import SideNav from '../components/SideNav'
 import PublicRoute from '../components/PublicRoute'
@@ -20,6 +20,8 @@ import ForgetPassword from '../pages/ForgetPassword'
 import Courses from '../views/courses'
 import Browse from '../views/browse'
 import Articles from '../views/articles'
+import MyArticle from '../views/articles/myArticles/myArticles'
+import MyBookMarks from '../views/articles/myBookMarks/myBookMarks'
 import ArticlePage from '../views/ArticlePage'
 import Profile from '../views/Profile'
 import Assignments from '../views/assignments'
@@ -32,7 +34,7 @@ import DiscussionFeed from '../views/discussions'
 import AnnouncementsFeed from '../views/announcements'
 import Dashboard from '../views/dashboard'
 import CourseCalendar from '../views/courseCalendar'
-
+import GradeBook from '../views/gradeBook'
 import NotFoundView from '../views/NotFoundView'
 
 import 'antd/dist/antd.css'
@@ -135,6 +137,12 @@ const AuthnticatedApp = () => {
               )}
             />
             <Route
+              path="/app/course/:courseId/gradebook"
+              render={(props) => (
+                <GradeBook courseId={props.match.params.courseId} />
+              )}
+            />
+            <Route
               path="/app/course/:courseId/announcments"
               render={(props) => (
                 <AnnouncementsFeed courseId={props.match.params.courseId} />
@@ -142,9 +150,10 @@ const AuthnticatedApp = () => {
             />
 
             <Route path="/app/browse" component={Browse} />
+            <Route path="/app/articles/:id" component={ArticlePage} />
             <Route path="/app/articles" component={Articles} />
-            <Route path="/app/articlePage/:id" component={ArticlePage} />
-
+            <Route path="/app/myarticle" component={MyArticle} />
+            <Route path="/app/myBookMarks" component={MyBookMarks} />
             <Route path="/app/profile" component={Profile} />
             <Route path="/app/*" component={NotFoundView} />
           </Switch>
