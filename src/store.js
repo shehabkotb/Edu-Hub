@@ -17,6 +17,7 @@ import lectureCommentsReducer from './reducers/lectureCommentsReducer'
 import discussionReducer from './reducers/discussionReducer'
 import announcementsReducer from './reducers/announcementsReducer'
 import axios from 'axios'
+import examReducer from './reducers/examReducer'
 
 const persistConfig = {
   key: 'root',
@@ -33,7 +34,8 @@ const reducer = combineReducers({
   lectures: lectureReducer,
   lectureComments: lectureCommentsReducer,
   discussions: discussionReducer,
-  announcements: announcementsReducer
+  announcements: announcementsReducer,
+  exams: examReducer
 })
 
 const persistedReducer = persistReducer(persistConfig, reducer)

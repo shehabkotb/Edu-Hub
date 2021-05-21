@@ -18,7 +18,6 @@ import NotFoundPage from '../pages/NotFoundPage'
 import Registeration from '../pages/Registeration'
 import ForgetPassword from '../pages/ForgetPassword'
 import Courses from '../views/courses'
-import Browse from '../views/browse'
 import Articles from '../views/articles'
 import MyArticle from '../views/articles/myArticles/myArticles'
 import ArticlePage from '../views/ArticlePage'
@@ -146,7 +145,6 @@ const AuthnticatedApp = () => {
               )}
             />
 
-            <Route path="/app/browse" component={Browse} />
             <Route path="/app/articles/:id" component={ArticlePage} />
             <Route path="/app/articles" component={Articles} />
             <Route path="/app/myarticle" component={MyArticle} />
