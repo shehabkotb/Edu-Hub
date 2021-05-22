@@ -3,7 +3,7 @@ import { Card } from 'antd'
 import Meta from 'antd/lib/card/Meta'
 import Avatar from 'antd/lib/avatar/avatar'
 import ArticleComments from '../../components/Article/comments/'
-import { getArticleData, likeArticle, unlikeArticle, BookMark, unBookMark, followUser, unfollowUser } 
+import { getArticleData, likeArticle, unlikeArticle, BookMark, unBookMark, followUser, unfollowUser, clear } 
 from '../../reducers/articlePageReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -56,8 +56,10 @@ const ArticlePage = () => {
     }
     useEffect(() => {
         dispatch(getArticleData(id));
+        return () => {
+          dispatch(clear())
+        }
     }, [dispatch , id]);
-    
 
     const hidden = (user._id === Data?.myarticle?.authorPersonId._id) ? true : false;
     return (

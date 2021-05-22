@@ -4,21 +4,26 @@ import { ReactMic } from '@cleandersonlobo/react-mic'
 import { uploadFile } from 'react-s3'
 import { useSelector } from 'react-redux'
 import './../styles.css'
-import cheatingService from './../../../services/cheatingService'
+import cheatingService from '../../../services/cheatingService'
 import ReactCountdownClock from 'react-countdown-clock'
 import { useHistory } from 'react-router-dom'
 
-const Camera = () => {
+const SpyLogic = ({examId="123456789"}) => {
   const history = useHistory()
   const webcamRef = useRef(null)
   const user = useSelector((state) => state.auth.user)
   const [cnt, setCnt] = useState(1)
   const [record, setRecord] = useState(false)
-
+  /*
   const S3_BUCKET = '***REMOVED***'
   const REGION = '***REMOVED***'
   const ACCESS_KEY = '***REMOVED***'
   const SECRET_ACCESS_KEY = '***REMOVED***'
+  */
+ const S3_BUCKET = '***REMOVED***'
+ const REGION = '***REMOVED***'
+ const ACCESS_KEY = '***REMOVED***'
+ const SECRET_ACCESS_KEY = '***REMOVED***'
 
   const config = {
     bucketName: S3_BUCKET,
@@ -43,11 +48,11 @@ const Camera = () => {
   }
 
   const eventHandler = () => {
-    document.title = document.hidden ? "I'm away" : 'EduHub'
+    document.title = document.hidden ? window.close() : "DON'T go away"
   }
 
   useEffect(() => {
-    document.addEventListener('visibilitychange', eventHandler)
+    document.addEventListener('visibilitychange', eventHandler);
   }, [])
 
   useEffect(() => {
@@ -79,7 +84,19 @@ const Camera = () => {
     }
     console.log(blob)
     handleUpload(blob)
-    cheatingService.batchInc()
+    cheatingService.batchInc(examId)
+  }, [webcamRef, cnt])
+
+  //useEffect(setInterval(() => {capture()}, 2000), [webcamRef, cnt])
+
+  useEffect(() => {
+    let intervalId;
+
+      intervalId = setInterval(() => {
+        capture()
+      }, 2000)
+
+    return () => clearInterval(intervalId)
   }, [webcamRef, cnt])
 
   return (
@@ -96,7 +113,7 @@ const Camera = () => {
           facingMode: 'user'
         }}
       />
-      <button onClick={capture}>Capture photo</button>
+      {/*<button onClick={capture}>Capture</button>*/}
       <ReactMic
         record={record}
         className="sound-wave"
@@ -107,7 +124,7 @@ const Camera = () => {
         noiseSuppression={true}
       />
       <ReactCountdownClock
-        seconds={0.01 * 3600}
+        seconds={0.1 * 3600}
         color="#000"
         alpha={0.9}
         size={240}
@@ -122,4 +139,4 @@ const Camera = () => {
   )
 }
 
-export default Camera
+export default SpyLogic

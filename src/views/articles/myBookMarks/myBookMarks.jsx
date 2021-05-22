@@ -5,19 +5,16 @@ import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import {
-  create_article,
   deleteArticle,
-  Timeline,
-  getinitialData
-} from '../../reducers/articlesReducer'
+  getMyBookMarks,
+  create_article
+} from '../../../reducers/articlesReducer'
 
 import { DeleteFilled } from '@ant-design/icons'
 
-import Styles from './index.module.css'
-
+import Styles from '../index.module.css'
 const { TextArea } = Input
-
-const Articles = () => {
+const MyBookMarks = () => {
   let dispatch = useDispatch()
   const [modalVisible, setModalVisible] = useState(false)
   const [load, loading] = useState(2)
@@ -35,53 +32,35 @@ const Articles = () => {
     dispatch(create_article(Article))
     setModalVisible(false)
   }
+  function handleClick() {
+    setModalVisible(true)
+  }
 
   useEffect(() => {
-    dispatch(getinitialData())
+    dispatch(getMyBookMarks())
   }, [dispatch])
 
   const result = useSelector((state) => state.articles)
   const articleData = result?.articles
-  const totalPages = result?.totalPages
-
-  function handleClick() {
-    setModalVisible(true)
-  }
-  const onLoadMore = () => {
-    if (load <= totalPages) {
-      let t = load
-      dispatch(Timeline(t, 5))
-      t++
-      loading(t)
-    }
-  }
   const history = useHistory()
 
   return (
     <>
+      {console.log('my articles')}
       <div className={Styles['articles-wrapper']}>
         <div className={Styles['article-title-container']}>
-          <h2>Articles</h2>
+          <h2>Your BookMarks</h2>
           <div className={Styles['article-title-container']}>
             <Button
-              type="secondary"
               shape="round"
+              type="secondary"
               onClick={() => {
                 history.push(`/app/myarticle`)
               }}
             >
               My Articles
             </Button>
-            <Button
-              shape="round"
-              type="secondary"
-              onClick={() => {
-                history.push(`/app/myBookMarks`)
-              }}
-            >
-              My BookMarks
-            </Button>
-            <Button type="primary" shape="round" onClick={handleClick}>
+            <Button shape='round' type="primary" onClick={handleClick}>
               New Article
             </Button>
 
@@ -139,21 +118,14 @@ const Articles = () => {
           </div>
         </div>
         {articleData?.map((article, index) => (
-          <ArticleCard key={index} article={article} />
+          <MyArticleCard key={index} article={article} />
         ))}
-        {load <= totalPages ? (
-          <Button className={Styles['onLoadMore']} onClick={onLoadMore}>
-            loading more
-          </Button>
-        ) : (
-          <div className={Styles['onLoadMore']}>End Of Results</div>
-        )}
       </div>
     </>
   )
 }
 
-const ArticleCard = ({ article }) => {
+const MyArticleCard = ({ article }) => {
   const history = useHistory()
   let dispatch = useDispatch()
 
@@ -199,4 +171,4 @@ const ArticleCard = ({ article }) => {
   )
 }
 
-export default Articles
+export default MyBookMarks

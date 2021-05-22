@@ -3,7 +3,8 @@ import {
   INITIAL_DATA,
   TIMELINE,
   DELETE_ARTICLE,
-  GET_MY_ARTICLES
+  GET_MY_ARTICLES,
+  GET_MY_BOOKMARKS
 } from '../actions/articles'
 import { notification } from 'antd'
 import articleService from '../services/article'
@@ -21,6 +22,11 @@ const articlesReducer = (state = {}, action) => {
       return {
         ...state,
         articles: action.data.myarticles
+      }
+    case GET_MY_BOOKMARKS:
+      return {
+        ...state,
+        articles: action.data
       }
     case TIMELINE:
       return {
@@ -61,10 +67,29 @@ export const getMyArticles = (username) => {
   return async (dispatch) => {
     try {
       const response = await articleService.myArticles(username)
+      console.log(response.myarticles)
       dispatch({ type: GET_MY_ARTICLES, data: response })
     } catch (error) {
       notification.error({
         message: "Couldn't load your articles check your connection: "+error
+      })
+    }
+  }
+}
+
+export const getMyBookMarks = () => {
+  return async (dispatch) => {
+    try {
+      const response = await articleService.myBookMarks()
+      var res = []
+      for (let i = 0; i < response.length; i++) {
+        res.push(response[i].article)
+      }
+      console.log(res)
+      dispatch({ type: GET_MY_BOOKMARKS, data: res })
+    } catch (error) {
+      notification.error({
+        message: "Couldn't load your bookmarks check your connection: " + error
       })
     }
   }

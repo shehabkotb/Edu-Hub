@@ -21,7 +21,8 @@ import examReducer from './reducers/examReducer'
 
 const persistConfig = {
   key: 'root',
-  storage
+  storage,
+  blacklist: ['auth']
 }
 
 const reducer = combineReducers({
