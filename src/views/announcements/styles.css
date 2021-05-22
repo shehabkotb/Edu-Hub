@@ -1,23 +1,29 @@
 .custom-card  {
-  width: 80%;
-  height: 80%;
   padding: 10px;
-  max-height: 500px;
-  overflow-y: auto;
   margin-top: 30px;
 }
 
 .container{
   margin: 10px;
 }
+
+.annData{
+  white-space: pre;
+  max-height: 200px;
+  overflow-y: auto;
+  overflow-x: auto;
+}
+
 .txt{
   width: 100%;
   height: 100%;
   padding: 10px;
   position: relative;
   float: left;
+  white-space: normal;
 }
 .deleteButton{
   position: relative;
   float: right; 
+  background-color: lightblue;
 }

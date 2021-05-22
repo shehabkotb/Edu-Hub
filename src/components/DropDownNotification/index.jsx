@@ -11,7 +11,7 @@ function getNoticeData(data) {
   return data.map((item) => {
     let avater
 
-    if (item.type === 'follow') {
+    if (item.type === 'follow' || item.type === 'bookmark') {
       avater =
         'https://gw.alipayobjects.com/zos/rmsportal/GvqBnKhFgObvnSGkDsje.png'
     } else if (item.type === 'like') {

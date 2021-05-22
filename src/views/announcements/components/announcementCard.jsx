@@ -33,7 +33,7 @@ const AnnouncementCard = ({ announcement, user }) => {
           </div>
         }
       >
-        <p>{announcement.data}</p>
+        <div className="annData">{announcement.data}</div>
       </Card>
     </div>
   )
