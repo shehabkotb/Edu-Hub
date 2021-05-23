@@ -1,5 +1,6 @@
 import { notification } from 'antd';
 import articleService from '../services/article';
+import checkModerationService from '../services/checkModeration';
 import {
     GET_ONE_ARTICLE, LIKE_ARTICLE, UNLIKE_ARTICLE,
     UNBOOKMARK_ARTICLE, BOOKMARK_ARTICLE,
@@ -188,12 +189,19 @@ export const unfollowUser = (id) => {
 export const createComment = (articleId, comment) => {
     return async (dispatch) => {
         try {
-            await articleService.createComment(articleId, comment);
-          
-            dispatch({ type: CREATE_COMMENT, data: comment })
-            notification.success({
+            const ver = await checkModerationService.check(comment)
+            if (ver) {
+              await articleService.createComment(articleId, comment)
+
+              dispatch({ type: CREATE_COMMENT, data: comment })
+              notification.success({
                 message: 'new comment created'
-            })
+              })
+            } else {
+              notification.error({
+                message: 'Your comment violates EduHub standards'
+              })
+            }
         } catch (e) {
             notification.error({
                 message: 'failed to create Comment'

@@ -6,6 +6,7 @@ import {
   GET_MY_ARTICLES,
   GET_MY_BOOKMARKS
 } from '../actions/articles'
+import checkModerationService from '../services/checkModeration'
 import { notification } from 'antd'
 import articleService from '../services/article'
 
@@ -71,7 +72,7 @@ export const getMyArticles = (username) => {
       dispatch({ type: GET_MY_ARTICLES, data: response })
     } catch (error) {
       notification.error({
-        message: "Couldn't load your articles check your connection: "+error
+        message: "Couldn't load your articles check your connection: " + error
       })
     }
   }
@@ -111,13 +112,20 @@ export const Timeline = (page, limit) => {
 export const create_article = (Article) => {
   return async (dispatch) => {
     try {
-      const response = await articleService.create_article(Article)
+      const ver = await checkModerationService.check(Article)
+      if (ver) {
+        const response = await articleService.create_article(Article)
 
-      dispatch({ type: CREATE_ARTICLE, data: response })
-      console.log(response)
-      notification.success({
-        message: 'Added article successfully'
-      })
+        dispatch({ type: CREATE_ARTICLE, data: response })
+        console.log(response)
+        notification.success({
+          message: 'Added article successfully'
+        })
+      } else {
+        notification.error({
+          message: 'Your article violates EduHub standards'
+        })
+      }
     } catch (error) {
       notification.error({
         message: "Couldn't load Article check your connection"

@@ -1,4 +1,5 @@
 import lectureService from '../services/lectures'
+import checkModerationService from '../services/checkModeration'
 import {
   LOAD_COMMENTS,
   GET_ALL_COMMENTS,
@@ -49,15 +50,22 @@ export const getAllComments = (courseId, moduleItemId) => {
 export const createComment = (courseId, moduleItemId, comment) => {
   return async (dispatch) => {
     try {
-      const response = await lectureService.createLectureComment(
-        courseId,
-        moduleItemId,
-        comment
-      )
-      dispatch({ type: CREATE_COMMENT, data: response })
-      notification.success({
-        message: 'Added comment successfully'
-      })
+      const ver = await checkModerationService.check(comment)
+      if (ver) {
+        const response = await lectureService.createLectureComment(
+          courseId,
+          moduleItemId,
+          comment
+        )
+        dispatch({ type: CREATE_COMMENT, data: response })
+        notification.success({
+          message: 'Added comment successfully'
+        })
+      }else{
+        notification.error({
+          message: "Your comment violates EduHub standards"
+        })
+      }
     } catch (error) {
       console.log(error)
       notification.error({

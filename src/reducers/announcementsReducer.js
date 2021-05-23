@@ -4,6 +4,7 @@ import {
   ADD_ANNOUNCEMENT,
   REMOVE_ANNOUNCEMENT
 } from '../actions/announcements'
+import checkModerationService from '../services/checkModeration'
 import { notification } from 'antd'
 
 const announcementsReducer = (state = [], action) => {
@@ -12,7 +13,10 @@ const announcementsReducer = (state = [], action) => {
       return action.data.reverse()
 
     case ADD_ANNOUNCEMENT:
-      return state.reverse().concat({ ...action.data }).reverse()
+      return state
+        .reverse()
+        .concat({ ...action.data })
+        .reverse()
 
     case REMOVE_ANNOUNCEMENT:
       return state.filter((val) => {
@@ -41,11 +45,21 @@ export const getAllAnnouncements = (courseId) => {
 export const addAnnouncement = (courseId, data) => {
   return async (dispatch) => {
     try {
-      const response = await announcementService.addAnnouncement(courseId, data)
-      dispatch({ type: ADD_ANNOUNCEMENT, data: response })
-      notification.success({
-        message: 'Posted successfully'
-      })
+      const ver = await checkModerationService.check(data)
+      if (ver) {
+        const response = await announcementService.addAnnouncement(
+          courseId,
+          data
+        )
+        dispatch({ type: ADD_ANNOUNCEMENT, data: response })
+        notification.success({
+          message: 'Posted successfully'
+        })
+      } else {
+        notification.error({
+          message: 'Your post violates EduHub standards'
+        })
+      }
     } catch (error) {
       console.log(error)
       notification.error({

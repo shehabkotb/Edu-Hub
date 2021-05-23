@@ -6,6 +6,7 @@ import {
   ADD_DCOMMENT,
   REMOVE_DCOMMENT
 } from '../actions/discussion'
+import checkModerationService from '../services/checkModeration'
 import { notification } from 'antd'
 
 const discussionReducer = (state = [], action) => {
@@ -56,11 +57,18 @@ export const getAllDiscussions = (courseId) => {
 export const addDiscussion = (courseId, data) => {
   return async (dispatch) => {
     try {
-      const response = await discussionService.addDiscussion(courseId, data)
-      dispatch({ type: ADD_DISCUSSION, data: response })
-      notification.success({
-        message: 'Posted successfully'
-      })
+      const ver = await checkModerationService.check(data)
+      if (ver) {
+        const response = await discussionService.addDiscussion(courseId, data)
+        dispatch({ type: ADD_DISCUSSION, data: response })
+        notification.success({
+          message: 'Posted successfully'
+        })
+      } else {
+        notification.error({
+          message: 'Your post violates EduHub standards'
+        })
+      } 
     } catch (error) {
       console.log(error)
       notification.error({
@@ -90,11 +98,18 @@ export const removeDiscussion = (id) => {
 export const addComment = (id, comment) => {
   return async (dispatch) => {
     try {
-      const response = await discussionService.addComment(id, comment)
-      dispatch({ type: ADD_DCOMMENT, data: response })
-      notification.success({
-        message: 'Comment Posted successfully'
-      })
+      const ver = await checkModerationService.check(comment)
+      if (ver) {
+        const response = await discussionService.addComment(id, comment)
+        dispatch({ type: ADD_DCOMMENT, data: response })
+        notification.success({
+          message: 'Comment Posted successfully'
+        })
+      } else {
+        notification.error({
+          message: 'Your comment violates EduHub standards'
+        })
+      }
     } catch (error) {
       console.log(error)
       notification.error({
