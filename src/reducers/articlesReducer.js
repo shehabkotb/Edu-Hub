@@ -21,12 +21,12 @@ const articlesReducer = (state = {}, action) => {
     case GET_MY_ARTICLES:
       return {
         ...state,
-        articles: action.data.myarticles
+        articles: action.data.myarticles.reverse()
       }
     case GET_MY_BOOKMARKS:
       return {
         ...state,
-        articles: action.data
+        articles: action.data.reverse()
       }
     case TIMELINE:
       return {

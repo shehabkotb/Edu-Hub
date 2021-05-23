@@ -50,7 +50,7 @@ const DiscussionCard = ({ discussion, user }) => {
           </div>
         }
       >
-        <p className="dis">{discussion.data}</p>
+        <div className="dis">{discussion.data}</div>
         <Card
           size="small"
           type="inner"

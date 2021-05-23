@@ -54,7 +54,7 @@ const AnnouncementsFeed = ({ courseId }) => {
             onChange={onTxtChange}
             className="txt"
           ></Input.TextArea>
-          <Button onClick={onPost}>Post</Button>
+          <Button className='postButton' onClick={onPost}>Post</Button>
         </span>
       )}
       <Feed announcements={announcements} user={user} />

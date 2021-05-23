@@ -47,7 +47,9 @@ const DiscussionFeed = ({ courseId }) => {
           onChange={onTxtChange}
           className="txt"
         ></Input.TextArea>
-        <Button onClick={onPost}>Post</Button>
+        <Button className="postButton" onClick={onPost}>
+          Post
+        </Button>
       </span>
       <Feed discussions={discussions} user={user} className="container" />
     </div>

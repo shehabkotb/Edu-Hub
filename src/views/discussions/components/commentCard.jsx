@@ -28,15 +28,23 @@ const Comment = ({ cmnt, Luser, dId }) => {
         </span>
       }
     >
-      <p>{cmnt.data}</p>
+      <div className='cmntData'>{cmnt.data}</div>
     </Card>
   )
 }
 
-const AllComments = ({ comments, Luser, dId }) => {
+const AllCommentsData = ({ comments, Luser, dId }) => {
   return comments.map((cmnt) => {
     return <Comment key={cmnt._id} cmnt={cmnt} Luser={Luser} dId={dId} />
   })
+}
+
+const AllComments = ({ comments, Luser, dId }) => {
+  return (
+    <div className="innerCommentcard">
+      <AllCommentsData comments={comments} dId={dId} Luser={Luser} />
+    </div>
+  )
 }
 
 export default AllComments
