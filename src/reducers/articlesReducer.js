@@ -112,7 +112,9 @@ export const Timeline = (page, limit) => {
 export const create_article = (Article) => {
   return async (dispatch) => {
     try {
-      const ver = await checkModerationService.check(Article)
+      const ver =
+        ((await checkModerationService.check(Article.title)) &&
+        (await checkModerationService.check(Article.text)));
       if (ver) {
         const response = await articleService.create_article(Article)
 
