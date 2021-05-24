@@ -1,3 +1,8 @@
+import axios from 'axios'
+import { getAuthHeader } from './services/config'
+
+const baseURL = '/notification'
+
 function urlBase64ToUint8Array(base64String) {
     // eslint-disable-next-line
     const padding = "=".repeat((4 - base64String.length % 4) % 4)
@@ -14,19 +19,16 @@ function urlBase64ToUint8Array(base64String) {
 
 const publicVapidKey=urlBase64ToUint8Array("***REMOVED***");
 
-function sendSubscription(subscription,endpoint,auth) {
+function sendSubscription(subscription) {
     console.log(subscription);
-  return fetch(endpoint, {
-    method: 'POST',
-    body: JSON.stringify(subscription),
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': auth
-    }
-  })
+  return axios.post(
+    `${baseURL}/subscribe`,
+    subscription,
+    getAuthHeader()
+  )
 }
 
-export function subscribeUser(endpoint,auth) {
+export function subscribeUser() {
     try{
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.ready.then(function(registration) {
@@ -43,7 +45,7 @@ export function subscribeUser(endpoint,auth) {
                     userVisibleOnly: true,
                   }).then(function(newSubscription) {
                     console.log('New subscription added.')
-                    sendSubscription(newSubscription,endpoint,auth)
+                    sendSubscription(newSubscription)
                   }).catch(function(e) {
                     if (Notification.permission !== 'granted') {
                       console.log('Permission was not granted.')
@@ -53,7 +55,7 @@ export function subscribeUser(endpoint,auth) {
                   })
                 } else {
                   console.log('Existed subscription detected.')
-                  sendSubscription(existedSubscription,endpoint,auth)
+                  sendSubscription(existedSubscription)
                 }
               })
             })

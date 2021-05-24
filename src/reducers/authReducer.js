@@ -75,10 +75,7 @@ export const login = (credentials) => {
     try {
       const response = await usersService.login(credentials)
       window.localStorage.setItem('eduhub-user', JSON.stringify(response))
-      subscribeUser(
-        `http://localhost:4000/notification/subscribe`,
-        getAuthHeader().headers.Authorization
-      )
+      subscribeUser();
       dispatch({ type: SET_USER, user: response })
       console.log('subscribed')
     } catch (error) {
