@@ -12,16 +12,17 @@ border:1px solid #c2c2c2;
 export const ReceivedQuestionTitle = Styled.div`
    width:100%;
    padding:5px 5px;  
-   font-family:Sans-serif,
-  
+   font-family:Sans-serif;
+`
 
-`
 export const QuestionTitlea = Styled.div`
-    float:left
+    float:left;
 `
+
 export const QuestionIcon = Styled.div`
     float:right; 
 `
+
 export const ReceivedQuestionBody = Styled.div`
     width:100% ; 
     margin:5px 0px ;

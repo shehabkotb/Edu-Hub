@@ -3,60 +3,54 @@ import {
   ReceivedQuestionHeader,
   ReceivedQuestionTitle,
   ReceivedQuestionBody,
-  QuestionIcon
+  QuestionIcon,
+  QuestionTitle
 } from './style'
 import {
-  DeleteOutlined,
   EditOutlined,
   CloseCircleOutlined,
   CheckCircleOutlined
 } from '@ant-design/icons'
-import { Button } from 'antd'
+import { Button, Tag } from 'antd'
 
 const ReceivedWritten = (props) => {
   const {
-    Points,
-    QuestionTitle,
-    Answer,
-    TextMatch,
-    AutoGraded,
-    QuestionType,
-    KeyWords
-  } = props.questionData
-  const id = props.id + 1
+    points,
+    question_text,
+    ans,
+    text_match,
+    auto_graded,
+    keywords,
+    question_number
+  } = props.question
 
-  const DeleteQuestion = props.DeleteQuestion
-  const del = () => {
-    DeleteQuestion(props.questionData)
-  }
   return (
     <ReceivedQuestionHeader>
       <ReceivedQuestionTitle>
-        <QuestionTitle>Question {id}:</QuestionTitle>
+        <QuestionTitle>Question {question_number}:</QuestionTitle>
         <QuestionIcon>
-          (Points : {Points})
+          (Points : {points})
           <Button
             icon={<EditOutlined />}
             style={{ border: '0px', marginRight: '5px' }}
-          ></Button>
-          <Button
-            icon={<DeleteOutlined />}
-            style={{ border: '0px' }}
-            onClick={del}
+            onClick={() => props.draftQuestion(question_number)}
           ></Button>
         </QuestionIcon>
       </ReceivedQuestionTitle>
       <ReceivedQuestionBody>
         <div>
-          <p>{QuestionTitle} :</p>
-          <p>{Answer}</p>
+          <p>{question_text}</p>
+          <p>
+            <b>Model Answer: </b>
+            {ans}
+          </p>
         </div>
 
         <hr style={{ border: '0.5px solid #c2c2c2' }} />
         <div>
-          Question Type : <b>{QuestionType}</b>
+          Question Type : <b>Essay</b>
           &nbsp; TextMatch :{' '}
-          {TextMatch ? (
+          {text_match ? (
             <CheckCircleOutlined
               style={{ fontSize: '16px', color: '#108ee9', margin: '5px' }}
             />
@@ -66,7 +60,7 @@ const ReceivedWritten = (props) => {
             />
           )}
           &nbsp; AutoGraded :{' '}
-          {AutoGraded ? (
+          {auto_graded ? (
             <CheckCircleOutlined
               style={{ fontSize: '16px', color: '#108ee9', margin: '5px' }}
             />
@@ -75,12 +69,14 @@ const ReceivedWritten = (props) => {
               style={{ fontSize: '16px', color: 'gray', margin: '5px' }}
             />
           )}
-          &nbsp; KeyWords :{' '}
-          {KeyWords.length > 0 ? (
-            KeyWords.map((word, index) => <b key={index}>{word} </b>)
-          ) : (
-            <span>none</span>
-          )}
+          &nbsp; KeyWords:{' '}
+          {keywords?.map((element, index) => {
+            return (
+              <Tag key={index} color="red">
+                {element.key_word} : {element.weight}
+              </Tag>
+            )
+          })}
         </div>
       </ReceivedQuestionBody>
     </ReceivedQuestionHeader>

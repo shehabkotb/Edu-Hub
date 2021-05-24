@@ -23,8 +23,8 @@ import MyArticle from '../views/articles/myArticles/myArticles'
 import MyBookMarks from '../views/articles/myBookMarks/myBookMarks'
 import ArticlePage from '../views/ArticlePage'
 import Profile from '../views/Profile'
-import Assignments from '../views/assignments'
 import Exams from '../views/exams'
+import { AssestmentCreation } from '../views/exams'
 import Quizes from '../views/quizes'
 import Lectures from '../views/lectures'
 import Modules from '../views/modules'
@@ -93,9 +93,6 @@ const AuthnticatedApp = () => {
           transition: 'margin-left .2s'
         }}
       >
-        {/* will add search in the future */}
-        {/* {currentLocationIS('/app/courses') && (<Input.Search placeholder="input search text" enterButton />} */}
-
         <AppHeader courseNavigation={currentLocationIS('/app/course/:id')} />
 
         <Content style={{ padding: '20px 32px', height: '100%' }}>
@@ -110,13 +107,14 @@ const AuthnticatedApp = () => {
 
             <Route path="/app/courses" component={Courses} />
             <Route path="/app/course/:courseId/modules" component={Modules} />
-            <Route
-              path="/app/course/:courseId/assignments"
-              component={Assignments}
-            />
 
-            {/* <Route path="/app/course/:courseId/createAssignment" component={CreateAssignment}   />  */}
             <Route path="/app/course/:courseId/quizes" component={Quizes} />
+            <Route
+              path="/app/course/:courseId/exams/create"
+              render={(props) => (
+                <AssestmentCreation {...props} assessmentType="Exam" />
+              )}
+            />
             <Route path="/app/course/:courseId/exams" component={Exams} />
             <Route
               path="/app/course/:courseId/lectures/:lectureId"

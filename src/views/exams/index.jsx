@@ -2,13 +2,13 @@ import React, { useEffect } from 'react'
 import { FlexSectionHeader } from '../style'
 import styled from 'styled-components'
 
-import { Typography, Button, List, Space, Collapse } from 'antd'
+import { Typography, Button, List, Space } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { PlusOutlined, CaretRightOutlined } from '@ant-design/icons'
+import { PlusOutlined } from '@ant-design/icons'
 import { STUDENT } from '../../constants/userRoles'
 import { getAllExams } from '../../reducers/examReducer'
-import { useParams } from 'react-router'
+import { useHistory, useParams } from 'react-router'
 
 import { AiOutlineSolution } from 'react-icons/ai'
 
@@ -17,11 +17,11 @@ const { Title, Text } = Typography
 const Exams = () => {
   const dispatch = useDispatch()
   const { courseId } = useParams()
+  const history = useHistory()
 
   const user = useSelector((state) => state.auth.user)
   const exams = useSelector((state) => state.exams.data)
-  //VscChecklist
-  //AiOutlineSolution
+
   useEffect(() => {
     dispatch(getAllExams(courseId))
   }, [courseId, dispatch])
@@ -32,7 +32,7 @@ const Exams = () => {
         <Title level={3}>All Exams</Title>
         {user && user.role !== STUDENT && (
           <Button
-            // onClick={() => setModalVisible(true)}
+            onClick={() => history.push(`/app/course/${courseId}/exams/create`)}
             type="dashed"
             shape="round"
             icon={<PlusOutlined />}
@@ -64,7 +64,7 @@ const Exams = () => {
 
         <List
           dataSource={exams}
-          renderItem={(exam) => <ExamItem exam={exam} />}
+          renderItem={(exam) => <ExamItem exam={exam} disabled={true} />}
         />
       </div>
     </>
@@ -103,5 +103,7 @@ const ExamItem = ({ exam, disabled }) => {
     </List.Item>
   )
 }
+
+export { default as AssestmentCreation } from './components/AssessmentCreation'
 
 export default Exams

@@ -1,6 +1,5 @@
 import React from 'react'
 import {
-  DeleteOutlined,
   EditOutlined,
   CloseCircleOutlined,
   CheckCircleOutlined
@@ -15,38 +14,32 @@ import {
 } from './style'
 
 const ReceivedChoice = (props) => {
-  const { Points, QuestionTitle, options, AutoGraded, QuestionType } =
-    props.questionData
-  const id = props.id + 1
-  const DeleteQuestion = props.DeleteQuestion
-  const del = () => {
-    DeleteQuestion(props.questionData)
-  }
+  const { points, question_text, choices, auto_graded, question_number, ans } =
+    props.question
 
   return (
     <ReceivedQuestionHeader>
       <ReceivedQuestionTitle>
-        <QuestionTitlea>Question {id}:</QuestionTitlea>
+        <QuestionTitlea>Question {question_number}:</QuestionTitlea>
         <QuestionIcon>
-          (Points : {Points})
+          (Points : {points})
           <Button
             icon={<EditOutlined />}
             style={{ border: '0px', marginRight: '5px' }}
-          ></Button>
-          <Button
-            icon={<DeleteOutlined />}
-            style={{ border: '0px' }}
-            onClick={del}
+            onClick={() => props.draftQuestion(question_number)}
           ></Button>
         </QuestionIcon>
       </ReceivedQuestionTitle>
       <ReceivedQuestionBody>
-        <p>{QuestionTitle}</p>
-        {options ? (
-          options.map((value, index) => (
+        <p>{question_text}</p>
+        <p>
+          <b>Choices:</b>
+        </p>
+        {choices ? (
+          choices?.map((value, index) => (
             <p key={index}>
-              &nbsp;{value.name}
-              {value.correct && (
+              &nbsp;{value}
+              {value === ans && (
                 <CheckCircleOutlined
                   style={{ fontSize: '16px', color: '#108ee9', margin: '5px' }}
                 />
@@ -58,8 +51,8 @@ const ReceivedChoice = (props) => {
         )}
         <hr style={{ border: '0.5px solid #c2c2c2' }} />
         <div>
-          Question Type :<b> {QuestionType} </b> , &nbsp; AutoGraded :{' '}
-          {AutoGraded ? (
+          Question Type :<b> Choice </b> , &nbsp; AutoGraded :{' '}
+          {auto_graded ? (
             <CheckCircleOutlined
               style={{ fontSize: '16px', color: '#108ee9', margin: '5px' }}
             />

@@ -10,7 +10,17 @@ const getAllExams = async (courseId) => {
 
 // getAllAssignments
 
+const submitAssessment = async (courseId, assessment) => {
+  const response = await axios.post(
+    `/${courseId}${baseURL}`,
+    assessment,
+    getAuthHeader()
+  )
+  return response.data
+}
+
 const assestmentsService = {
-  getAllExams
+  getAllExams,
+  submitAssessment
 }
 export default assestmentsService
