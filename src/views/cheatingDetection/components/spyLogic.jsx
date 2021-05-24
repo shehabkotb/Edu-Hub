@@ -53,6 +53,11 @@ const SpyLogic = ({examId="123456789"}) => {
 
   useEffect(() => {
     document.addEventListener('visibilitychange', eventHandler);
+    try {
+      cheatingService.clear()
+    } catch {
+      console.log('no pre counter fount')
+    }
   }, [])
 
   useEffect(() => {

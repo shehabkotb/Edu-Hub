@@ -5,13 +5,10 @@ import { notification } from 'antd'
 const notificationsReducer = (state = [], action) => {
   switch (action.type) {
     case GET_ALL:
-      return action.data.reverse()
+      return action.data
 
     case CREATE:
-      return state
-        .reverse()
-        .concat({ ...action.data })
-        .reverse()
+      return state.concat({ ...action.data })
 
     case DEL:
       return state.filter((val) => {
