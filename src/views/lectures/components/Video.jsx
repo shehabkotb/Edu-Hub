@@ -3,7 +3,6 @@ import React from 'react'
 import styled from 'styled-components'
 
 export const VideoWrapper = styled.div`
-  grid-area: video-wrapper;
   position: relative;
   padding-bottom: 56.25%;
 `

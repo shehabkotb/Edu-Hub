@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { Empty, Row, Col } from 'antd'
+import { Empty, Row, Col, Space } from 'antd'
 
 import Video from './components/Video'
 import VideoInfo from './components/VideoInfo'
@@ -37,28 +37,20 @@ const LecturePage = (props) => {
   return (
     <>
       <Row gutter={[16, 16]}>
-        <Col xs={24} sm={24} md={18}>
-          <Video selectedLecture={selectedLecture}></Video>
+        <Col xs={24} sm={24} xl={18}>
+          <Space size="middle" direction="vertical" style={{ width: '100%' }}>
+            <Video selectedLecture={selectedLecture}></Video>
+            <VideoInfo lecture={selectedLecture} />
+            <LectureComments selectedLecture={selectedLecture} />
+          </Space>
         </Col>
 
-        <Col xs={24} sm={24} md={6}>
+        <Col xs={24} sm={24} xl={6}>
           <PlaylistMenu
             lectures={lectures}
             selectedLecture={selectedLecture}
             chooseLecture={chooseLecture}
           ></PlaylistMenu>
-        </Col>
-      </Row>
-
-      <Row gutter={[0, 16]}>
-        <Col xs={24} sm={24} md={18}>
-          <VideoInfo lecture={selectedLecture} />
-        </Col>
-      </Row>
-
-      <Row>
-        <Col xs={24} sm={24} md={18}>
-          <LectureComments selectedLecture={selectedLecture} />
         </Col>
       </Row>
     </>
