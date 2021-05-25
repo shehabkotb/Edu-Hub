@@ -51,8 +51,7 @@ const edit = async (oldNot, newNot) => {
 
 const del = async (not) => {
   const response = await axios.delete(
-    `${baseURL}/deleteNotification`,
-    not,
+    `${baseURL}/deleteNotification/`+not,
     getAuthHeader()
   )
   return response.data

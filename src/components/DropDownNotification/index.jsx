@@ -50,7 +50,7 @@ const DropDownNotification = () => {
   }
 
   const onItemClick = (item, tabProps) => {
-    dispatch(del({ _id: item.id }))
+    dispatch(del(item.id ))
     console.log(tabProps)
   }
 
