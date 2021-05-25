@@ -1,5 +1,7 @@
 import axios from 'axios'
 import { getAuthHeader } from './config'
+import { notification } from 'antd'
+
 
 export const baseURL = '/notification'
 
@@ -64,12 +66,27 @@ const delAll = async () => {
   return response.data
 }
 
+const unsubscribe = async () => {
+  const response = await axios.delete(`${baseURL}/unsubscribe`, getAuthHeader())
+  if (response.data === 'unsubscribed') {
+    notification.success({
+      message: 'unsubscribed Successfully'
+    })
+  } else {
+    notification.error({
+      message: 'already unsubscribed'
+    })
+  }
+  return response.data
+}
+
 const notificationsService = {
   getAllNotifications,
   push,
   create,
   edit,
   del,
-  delAll
+  delAll,
+  unsubscribe
 }
 export default notificationsService

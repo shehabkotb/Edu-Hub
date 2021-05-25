@@ -37,5 +37,9 @@
   width: fit-content;
 }
 
-
+.unsub{
+  position: relative;
+  float: right;
+  color: brown
+}
 

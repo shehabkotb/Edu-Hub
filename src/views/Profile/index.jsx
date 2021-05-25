@@ -7,6 +7,7 @@ import { uploadFile } from 'react-s3'
 import { Form, Input, Card, Button } from 'antd'
 import { editProfile } from '../../reducers/authReducer'
 import ImageUploader from 'react-images-upload'
+import notificationsService from '../../services/notifications'
 
 const Profile = () => {
   const dispatch = useDispatch()
@@ -165,8 +166,16 @@ const Profile = () => {
             />
             <button onClick={handleUpload}>Upload!</button>
           </Form.Item>
-          <Button disabled={!active} onClick={onsave}>
+          <Button disabled={!active} onClick={onsave} loading={!active}>
             Save Changes
+          </Button>
+          <Button
+            className="unsub"
+            type="text"
+            onClick={() => notificationsService.unsubscribe()}
+            title="re-login to subscribe again!!"
+          >
+            unsubscribe from notifications on all devices
           </Button>
         </Form>
       </Card>

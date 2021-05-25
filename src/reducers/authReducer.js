@@ -4,7 +4,6 @@ import { notification } from 'antd'
 
 import { message } from 'antd'
 import subscribeUser from './../subscription'
-import { getAuthHeader } from '../services/config'
 
 // manpulates the data coming from backend
 const adapterFunc = (user) => {

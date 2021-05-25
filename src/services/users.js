@@ -2,7 +2,6 @@ import axios from 'axios'
 import { getAuthHeader } from './config'
 
 const baseURL = '/users'
-const baseURL2 = '/notification'
 
 const register = async (credentials) =>{
   const response = await axios.post(`${baseURL}/register` ,credentials ) ;
@@ -15,7 +14,6 @@ const login = async (credentials) => {
 }
 
 const logout = async () => {
-  await axios.delete(`${baseURL2}/unsubscribe`, getAuthHeader())
   await axios.post(`${baseURL}/logout`, undefined, getAuthHeader())
 }
 
