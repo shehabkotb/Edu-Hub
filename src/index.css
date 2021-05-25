@@ -25,14 +25,38 @@ body {
   stroke:#29abe2;
   stroke-miterlimit:10;
 }
-.logo1-cls-2{stroke-width:7px;}
-.logo1-cls-3{stroke-width:2px;}
-.logo1-cls-4{font-size:105.01px;font-family:Poppins-Bold, Poppins;font-weight:700;}
-.logo1-cls-5{stroke-width:3px;}
+.logo1-cls-2{
+  stroke-width:7px;
+}
 
-.logo2-cls-1,.logo2-cls-2,.logo2-cls-3{fill:#29abe2;}
-.logo2-cls-2{stroke:#29abe2;stroke-miterlimit:10;stroke-width:2px;}
-.logo2-cls-3{font-size:41.91px;font-family:Poppins-Regular, Poppins;}
+.logo1-cls-3{
+  stroke-width:2px;
+}
+
+.logo1-cls-4{
+  font-size:118.01px; 
+  font-family:Roboto, Poppins-Bold, Poppins; 
+  font-weight:700;
+}
+
+.logo1-cls-5{
+  stroke-width:3px;
+}
+
+.logo2-cls-1,.logo2-cls-2,.logo2-cls-3{
+  fill:#29abe2;
+}
+
+.logo2-cls-2{
+  stroke:#29abe2;
+  stroke-miterlimit:10;
+  stroke-width:2px;
+}
+.logo2-cls-3{
+  font-size:41.91px;
+  font-family:Roboto, Poppins-Regular, Poppins;
+  font-weight:700;
+}
 
 /*
 code {
