@@ -36,7 +36,7 @@ const Courses = () => {
 
   const [filter, setFilter] = useState('')
 
-  const filteredCourses = courses.filter((course) => {
+  const filteredCourses = courses?.filter((course) => {
     return course.name.toLowerCase().indexOf(filter.toLowerCase()) > -1
   })
 
