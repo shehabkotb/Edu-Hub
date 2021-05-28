@@ -11,6 +11,7 @@ import { getAllExams } from '../../reducers/examReducer'
 import { useHistory, useParams } from 'react-router'
 
 import { AiOutlineSolution } from 'react-icons/ai'
+import useCoursePrivillege from '../../hooks/useCourseprivilege'
 
 const { Title, Text } = Typography
 
@@ -18,8 +19,8 @@ const Exams = () => {
   const dispatch = useDispatch()
   const { courseId } = useParams()
   const history = useHistory()
+  const { enrolled, privilege } = useCoursePrivillege()
 
-  const user = useSelector((state) => state.auth.user)
   const exams = useSelector((state) => state.exams.data)
 
   useEffect(() => {
@@ -30,7 +31,7 @@ const Exams = () => {
     <>
       <FlexSectionHeader>
         <Title level={3}>All Exams</Title>
-        {user && user.role !== STUDENT && (
+        {enrolled && privilege !== STUDENT && (
           <Button
             onClick={() => history.push(`/app/course/${courseId}/exams/create`)}
             type="dashed"

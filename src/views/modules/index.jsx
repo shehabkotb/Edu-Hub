@@ -16,12 +16,13 @@ import {
   createModuleItem,
   deleteModuleItem
 } from '../../reducers/moduleReducer'
+import useCoursePrivillege from '../../hooks/useCourseprivilege'
 
 const Modules = (props) => {
   const { Title } = Typography
 
-  const user = useSelector((state) => state.auth.user)
   const modules = useSelector((state) => state.modules)
+  const { enrolled, privillege } = useCoursePrivillege()
 
   const { courseId } = props.match.params
 
@@ -62,7 +63,7 @@ const Modules = (props) => {
     <React.Fragment>
       <FlexSectionHeader>
         <Title level={3}>Modules</Title>
-        {user && user.role !== STUDENT && (
+        {enrolled && privillege !== STUDENT && (
           <Button
             onClick={() => setAddModalActive(true)}
             type="dashed"
@@ -118,7 +119,7 @@ const Modules = (props) => {
             <List.Item>
               <ModuleList
                 module={module}
-                instructorAccess={user.role !== STUDENT}
+                instructorAccess={privillege !== STUDENT}
                 editModule={(updatedModule) =>
                   editModule(module.id, updatedModule)
                 }
