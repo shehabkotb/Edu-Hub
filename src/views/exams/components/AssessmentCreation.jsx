@@ -25,8 +25,12 @@ const AssestmentCreation = (props) => {
 
   const [controlledQuestionType, setControlledQuestionType] = useState('online')
 
+  const [files, setFiles] = useState([])
+
   useEffect(() => {
-    return () => dispatch(clear())
+    return () => {
+      dispatch(clear())
+    }
   }, [dispatch])
 
   const handlecontrolledQuestionType = (value) => {
@@ -51,12 +55,13 @@ const AssestmentCreation = (props) => {
       questions: questions || [],
       openAt: openTime,
       closeAt: closeTime,
+      files: files,
       time: undefined
     }
 
-    dispatch(submitAssessment(courseId, assessment)).then(() => {
+    dispatch(submitAssessment(courseId, assessment)).then(() =>
       history.push(`/app/course/${courseId}/exams`)
-    })
+    )
   }
 
   const getMaxScore = () => {
@@ -71,6 +76,8 @@ const AssestmentCreation = (props) => {
       <Col span={18}>
         <AssessmentQuestionsSection
           controlledQuestionType={controlledQuestionType}
+          files={files}
+          setFiles={setFiles}
           questions={questions}
           title={title}
           setTitle={setTitle}

@@ -116,7 +116,12 @@ const AssessmentOptionsMenu = (props) => {
           </Form.Item>
 
           <Space style={{ marginTop: '8px' }}>
-            <Button htmlType="submit" type="primary">
+            <Button
+              onClick={() => {
+                form.submit()
+              }}
+              type="primary"
+            >
               Create
             </Button>
             <Button
