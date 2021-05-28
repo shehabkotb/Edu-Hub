@@ -1,4 +1,4 @@
-import assestmentsService from '../services/assestments'
+import assessmentsService from '../services/assessments'
 import {
   ADD_QUESTION,
   REPLACE_QUESTION,
@@ -146,7 +146,7 @@ export const markForEdit = (index) => {
 export const submitAssessment = (courseId, assessment) => {
   return async (dispatch) => {
     try {
-      const response = await assestmentsService.submitAssessment(
+      const response = await assessmentsService.submitAssessment(
         courseId,
         assessment
       )

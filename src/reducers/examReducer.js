@@ -1,4 +1,4 @@
-import assestmentsService from '../services/assestments'
+import assessmentsService from '../services/assessments'
 import { LOAD_EXAMS, GET_ALL_EXAMS, CREATE_EXAM } from '../actions/exams'
 
 import { notification } from 'antd'
@@ -22,7 +22,7 @@ export const getAllExams = (courseId) => {
   return async (dispatch) => {
     try {
       dispatch({ type: LOAD_EXAMS })
-      const response = await assestmentsService.getAllExams(courseId)
+      const response = await assessmentsService.getAllExams(courseId)
 
       dispatch({ type: GET_ALL_EXAMS, data: response })
     } catch (error) {

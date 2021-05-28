@@ -105,6 +105,6 @@ const ExamItem = ({ exam, disabled }) => {
   )
 }
 
-export { default as AssestmentCreation } from './components/AssessmentCreation'
+export { default as AssessmentCreation } from './components/AssessmentCreation'
 
 export default Exams

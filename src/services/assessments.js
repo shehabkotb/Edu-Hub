@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { getAuthHeader } from './config'
 
-const baseURL = '/assestments'
+const baseURL = '/assessments'
 
 const getAllExams = async (courseId) => {
   const response = await axios.get(`/${courseId}${baseURL}`, getAuthHeader())
@@ -19,8 +19,8 @@ const submitAssessment = async (courseId, assessment) => {
   return response.data
 }
 
-const assestmentsService = {
+const assessmentsService = {
   getAllExams,
   submitAssessment
 }
-export default assestmentsService
+export default assessmentsService

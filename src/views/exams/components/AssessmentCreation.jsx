@@ -13,7 +13,7 @@ import { useHistory, useParams } from 'react-router'
 import AssessmentOptionsMenu from './AssessmentOptionsMenu'
 import AssessmentQuestionsSection from './AssessmentQuestionsSection'
 
-const AssestmentCreation = (props) => {
+const AssessmentCreation = (props) => {
   const dispatch = useDispatch()
   const history = useHistory()
   const { courseId } = useParams()
@@ -97,4 +97,4 @@ const AssestmentCreation = (props) => {
   )
 }
 
-export default AssestmentCreation
+export default AssessmentCreation

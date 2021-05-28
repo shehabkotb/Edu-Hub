@@ -24,7 +24,7 @@ import MyBookMarks from '../views/articles/myBookMarks/myBookMarks'
 import ArticlePage from '../views/ArticlePage'
 import Profile from '../views/Profile'
 import Exams from '../views/exams'
-import { AssestmentCreation } from '../views/exams'
+import { AssessmentCreation } from '../views/exams'
 import Quizes from '../views/quizes'
 import Lectures from '../views/lectures'
 import Modules from '../views/modules'
@@ -112,7 +112,7 @@ const AuthnticatedApp = () => {
             <Route
               path="/app/course/:courseId/exams/create"
               render={(props) => (
-                <AssestmentCreation {...props} assessmentType="Exam" />
+                <AssessmentCreation {...props} assessmentType="Exam" />
               )}
             />
             <Route path="/app/course/:courseId/exams" component={Exams} />
