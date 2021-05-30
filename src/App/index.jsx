@@ -123,7 +123,7 @@ const AuthnticatedApp = () => {
             <Route path="/app/course/:courseId/lectures" component={Lectures} />
 
             <Route
-              path="/app/course/:courseId/exam/:examId"
+              path="/app/course/:courseId/exam/:assessmentId"
               component={CheatingDetection}
             />
 

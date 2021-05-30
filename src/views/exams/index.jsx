@@ -83,8 +83,13 @@ const Container = styled.div`
   }
 `
 const ExamItem = ({ exam, disabled }) => {
+  const history = useHistory()
+  const { courseId } = useParams()
+
   return (
-    <List.Item>
+    <List.Item
+      onClick={() => window.open(`/app/course/${courseId}/exam/${exam.id}`)}
+    >
       <Container>
         <Space>
           <AiOutlineSolution

@@ -19,6 +19,7 @@ import announcementsReducer from './reducers/announcementsReducer'
 import axios from 'axios'
 import examReducer from './reducers/examReducer'
 import assessmentCreationReducer from './reducers/assessmentCreationReducer'
+import submissionReducer from './reducers/submissionReducer'
 
 const persistConfig = {
   key: 'root',
@@ -38,7 +39,8 @@ const reducer = combineReducers({
   discussions: discussionReducer,
   announcements: announcementsReducer,
   exams: examReducer,
-  assessmentCreation: assessmentCreationReducer
+  assessmentCreation: assessmentCreationReducer,
+  assessmentTaking: submissionReducer
 })
 
 const persistedReducer = persistReducer(persistConfig, reducer)
