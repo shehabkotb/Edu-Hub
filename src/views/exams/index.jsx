@@ -116,14 +116,14 @@ const ExamItem = ({ exam, disabled }) => {
             </Title>
 
             <div>
-              {exam.status.status === 'willOpen' && (
-                <Tag color="geekblue">{exam.status.status}</Tag>
+              {exam.status.code === 'willOpen' && (
+                <Tag color="geekblue">{exam.status.code}</Tag>
               )}
-              {exam.status.status === 'open' && (
-                <Tag color="green">{exam.status.status}</Tag>
+              {exam.status.code === 'open' && (
+                <Tag color="green">{exam.status.code}</Tag>
               )}
-              {exam.status.status === 'closed' && (
-                <Tag color="red">{exam.status.status}</Tag>
+              {exam.status.code === 'closed' && (
+                <Tag color="red">{exam.status.code}</Tag>
               )}
               <Text type="secondary">{exam.status.message}</Text>
             </div>
