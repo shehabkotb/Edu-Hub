@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { FlexSectionHeader } from '../style'
 import styled from 'styled-components'
 
-import { Typography, Button, List, Space } from 'antd'
+import { Typography, Button, List, Space, Tag } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { PlusOutlined } from '@ant-design/icons'
@@ -86,6 +86,8 @@ const ExamItem = ({ exam, disabled }) => {
   const history = useHistory()
   const { courseId } = useParams()
 
+  // weight Maxscore tag [willopen, opened, closed] message submissiontype timelimit
+
   return (
     <List.Item
       onClick={() => window.open(`/app/course/${courseId}/exam/${exam.id}`)}
@@ -98,12 +100,34 @@ const ExamItem = ({ exam, disabled }) => {
               color: disabled ? '#a7a7a7d9' : 'intial'
             }}
           />
-          <Title
-            style={{ margin: 0, color: disabled ? '#a7a7a7d9' : 'intial' }}
-            level={5}
-          >
-            {exam.title}
-          </Title>
+          <Space size="small" direction="vertical">
+            <Space>
+              <span>weight: {exam.weight}</span>
+              <span>maxScore: {exam.maxScore}</span>
+              <span>Type: {exam.submissionType}</span>
+              <span>Duration: {exam.timeLimit}</span>
+            </Space>
+
+            <Title
+              style={{ margin: 0, color: disabled ? '#a7a7a7d9' : 'intial' }}
+              level={5}
+            >
+              {exam.title}
+            </Title>
+
+            <div>
+              {exam.status.status === 'willOpen' && (
+                <Tag color="geekblue">{exam.status.status}</Tag>
+              )}
+              {exam.status.status === 'open' && (
+                <Tag color="green">{exam.status.status}</Tag>
+              )}
+              {exam.status.status === 'closed' && (
+                <Tag color="red">{exam.status.status}</Tag>
+              )}
+              <Text type="secondary">{exam.status.message}</Text>
+            </div>
+          </Space>
         </Space>
       </Container>
     </List.Item>

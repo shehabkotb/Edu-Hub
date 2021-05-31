@@ -6,14 +6,14 @@ import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons'
 const { Title, Text } = Typography
 
 const ChoiceQuestionForm = (props) => {
-  const { question, answer, handleAnswerSubmit } = props
+  const { question, answer, handleAnswerSubmit, noOnlineAnswer } = props
 
   const [form] = Form.useForm()
 
-  const [submitted, setSubmitted] = useState(answer?.submitted || false)
+  const [submitted, setSubmitted] = useState(answer ? true : undefined)
 
   useEffect(() => {
-    setSubmitted(answer?.submitted || false)
+    setSubmitted(answer ? true : undefined)
   }, [answer])
 
   useEffect(() => {
@@ -21,6 +21,14 @@ const ChoiceQuestionForm = (props) => {
       ans: answer?.studentAnswer
     })
   }, [])
+
+  useEffect(() => {
+    if (submitted === false) {
+      setTimeout(() => {
+        form.submit()
+      }, 2000)
+    }
+  }, [submitted])
 
   const handleFormSubmit = (values) => {
     handleAnswerSubmit(question.id, values.ans)
@@ -64,46 +72,67 @@ const ChoiceQuestionForm = (props) => {
             <Title level={4}>{question.question_text}</Title>
           </div>
 
-          <Form.Item name="ans">
-            <Radio.Group
-              onChange={handleSubmittedState}
+          {noOnlineAnswer && (
+            <Space
               style={{ marginTop: '24px' }}
+              direction="vertical"
+              size="large"
             >
-              <Space direction="vertical" size="large">
-                {question.choices?.map((choice, index) => (
-                  <Radio key={index} value={choice}>
-                    {choice}
-                  </Radio>
-                ))}
-              </Space>
-            </Radio.Group>
-          </Form.Item>
-
-          <Divider style={{ border: '1px solid #ccc', margin: '20px 0px' }} />
-
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center'
-            }}
-          >
-            <Space>
-              <Button
-                disabled={submitted}
-                icon={
-                  submitted ? (
-                    <CheckCircleOutlined style={{ color: '#52c41a' }} />
-                  ) : (
-                    <CloseCircleOutlined />
-                  )
-                }
-                onClick={() => form.submit()}
-              >
-                Save
-              </Button>
+              {question.choices?.map((choice, index) => (
+                <div key={index}>
+                  <Radio disabled={true} />
+                  {choice}
+                </div>
+              ))}
             </Space>
-          </div>
+          )}
+
+          {!noOnlineAnswer && (
+            <>
+              <Form.Item name="ans">
+                <Radio.Group
+                  onChange={handleSubmittedState}
+                  style={{ marginTop: '24px' }}
+                >
+                  <Space direction="vertical" size="large">
+                    {question.choices?.map((choice, index) => (
+                      <div key={index}>
+                        <Radio value={choice}>{choice}</Radio>
+                      </div>
+                    ))}
+                  </Space>
+                </Radio.Group>
+              </Form.Item>
+
+              <Divider
+                style={{ border: '1px solid #ccc', margin: '20px 0px' }}
+              />
+
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center'
+                }}
+              >
+                <Space>
+                  <Button
+                    disabled={submitted}
+                    icon={
+                      submitted ? (
+                        <CheckCircleOutlined style={{ color: '#52c41a' }} />
+                      ) : (
+                        <CloseCircleOutlined />
+                      )
+                    }
+                    onClick={() => form.submit()}
+                  >
+                    Save
+                  </Button>
+                </Space>
+              </div>
+            </>
+          )}
         </Form>
       </div>
     </>

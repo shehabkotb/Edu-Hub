@@ -1,50 +1,44 @@
 import SpyLogic from './components/spyLogic'
 import { Prompt, useParams } from 'react-router'
 import './styles.css'
-import { Col, Row } from 'antd'
+import { Affix, Col, Modal, Row } from 'antd'
 import QuestionsSection from './components/QuestionsSection'
 import { useDispatch, useSelector } from 'react-redux'
-import { getOneSubmission } from '../../reducers/submissionReducer'
 import { useEffect } from 'react'
-
+import { getOneSubmission } from '../../reducers/assessmentTakingReducer'
 import Spinner from '../../components/Spinner'
 
-const assessment = {
-  type: 'Exam',
-  title: 'test assessment',
-  maxScore: 10,
-  questionsType: 'online',
-  submissionType: 'online',
-  course: '60a65778348b1936c4257ba5',
-  visiblity: 'published',
-  dueDate: '2021-05-20T12:46:51.964+00:00',
-  weight: 0.2,
-  questions: [
-    {
-      id: '80185',
-      type: 'MCQ',
-      question_number: 1,
-      points: 5,
-      question_text: 'who is the current president of the united states?',
-      auto_graded: true,
-      choices: ['choice a', 'choice b'],
-      ans: 'choice a'
-    },
-    {
-      id: '80186',
-      type: 'Esay',
-      question_number: 2,
-      points: 5,
-      question_text: 'who is the current president of the united states?',
-      auto_graded: true,
-      text_match: true,
-      keywords: [{ key_word: 'first keyword', weight: 0.2 }],
-      ans: 'essay answer'
-    }
-  ]
-}
-
 const CheatingDetection = (props) => {
+  const dispatch = useDispatch()
+  const { submission, loading } = useSelector((state) => state.assessmentTaking)
+
+  const { courseId, assessmentId } = useParams()
+  const user = useSelector((state) => state.auth.user)
+
+  useEffect(() => {
+    dispatch(getOneSubmission(courseId, assessmentId, user._id))
+  }, [dispatch])
+
+  if (loading || Object.keys(submission).length === 0)
+    return <Spinner size="large" />
+  else if (submission.assessment.remainingTime <= 0) {
+    Modal.error({
+      title: 'The Exam has ended',
+      onOk() {
+        window.close()
+      }
+    })
+    return null
+  } else if (submission.finished) {
+    Modal.info({
+      title: 'You already submitted',
+      onOk() {
+        window.close()
+      }
+    })
+    return null
+  }
+
   return (
     <>
       <Prompt
@@ -53,9 +47,16 @@ const CheatingDetection = (props) => {
       />
       <Row>
         <Col span={20}>
-          <QuestionsSection />
+          <QuestionsSection submission={submission} />
         </Col>
-        <Col span={4}>{/* <SpyLogic /> */}</Col>
+        <Col span={4}>
+          <Affix offsetTop={10}>
+            {/* <SpyLogic
+              timeRemaining={submission.assessment.remainingTime}
+              examId={submission.assessment.id}
+            /> */}
+          </Affix>
+        </Col>
       </Row>
     </>
   )

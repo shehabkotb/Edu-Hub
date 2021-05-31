@@ -31,7 +31,14 @@ const AssessmentOptionsMenu = (props) => {
   } = props
 
   useEffect(() => {
-    form.setFieldsValue({ maxScore, questionsType: controlledQuestionType })
+    form.setFieldsValue({
+      maxScore,
+      questionsType: controlledQuestionType,
+      submissionType:
+        controlledQuestionType === 'file'
+          ? 'written'
+          : form.getFieldValue('submissionType')
+    })
   }, [form, maxScore, controlledQuestionType])
 
   return (
@@ -67,7 +74,7 @@ const AssessmentOptionsMenu = (props) => {
             style={{ width: '60%' }}
             label={<Text strong>Submission Type</Text>}
           >
-            <Select>
+            <Select disabled={controlledQuestionType === 'file'}>
               <Option value="online">Online</Option>
               <Option value="written">Upload Written File</Option>
             </Select>
@@ -85,8 +92,11 @@ const AssessmentOptionsMenu = (props) => {
               ]}
             >
               <RangePicker
+                use12Hours
                 placeholder={['OpenTime', 'CloseTime']}
-                showTime
+                showTime={{
+                  format: 'HH:mm:ss'
+                }}
                 format="YYYY-MM-DD HH:mm:ss"
               />
             </Form.Item>

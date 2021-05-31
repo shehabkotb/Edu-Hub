@@ -60,7 +60,7 @@ const AssessmentQuestionsSection = (props) => {
 
   const handleFileSubmit = ({ file, onSuccess, onError }) => {
     s3Sevice
-      .uploadFile(courseId, 'assessments', file.name, file, file.type)
+      .uploadFile(courseId, 'assessments', file.name, file)
       .then((url) => {
         setFiles(files.concat([{ name: file.name, url: url, uid: file.uid }]))
         onSuccess()
@@ -114,9 +114,6 @@ const AssessmentQuestionsSection = (props) => {
           </p>
           <p className="ant-upload-text">
             Click or drag file to this area to upload
-          </p>
-          <p className="ant-upload-hint">
-            Support for a single file upload only.
           </p>
         </Dragger>
       )}

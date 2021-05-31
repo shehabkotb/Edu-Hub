@@ -16,8 +16,6 @@ const examReducer = (state = { data: [], loading: false }, action) => {
   }
 }
 
-/* actions for courses bellow */
-
 export const getAllExams = (courseId) => {
   return async (dispatch) => {
     try {

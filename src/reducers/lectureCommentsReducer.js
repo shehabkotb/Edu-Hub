@@ -27,8 +27,6 @@ const lectureCommentsReducer = (
   }
 }
 
-/* actions for courses bellow */
-
 export const getAllComments = (courseId, moduleItemId) => {
   return async (dispatch) => {
     try {
@@ -61,9 +59,9 @@ export const createComment = (courseId, moduleItemId, comment) => {
         notification.success({
           message: 'Added comment successfully'
         })
-      }else{
+      } else {
         notification.error({
-          message: "Your comment violates EduHub standards"
+          message: 'Your comment violates EduHub standards'
         })
       }
     } catch (error) {

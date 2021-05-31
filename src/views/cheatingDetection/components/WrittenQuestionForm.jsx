@@ -8,12 +8,12 @@ const { Title, Text } = Typography
 const WrittenQuestionForm = (props) => {
   const [form] = Form.useForm()
 
-  const { question, answer, handleAnswerSubmit } = props
+  const { question, answer, handleAnswerSubmit, noOnlineAnswer } = props
 
-  const [submitted, setSubmitted] = useState(answer?.submitted || false)
+  const [submitted, setSubmitted] = useState(answer ? true : undefined)
 
   useEffect(() => {
-    setSubmitted(answer?.submitted || false)
+    setSubmitted(answer ? true : undefined)
   }, [answer])
 
   useEffect(() => {
@@ -21,6 +21,14 @@ const WrittenQuestionForm = (props) => {
       ans: answer?.studentAnswer || ''
     })
   }, [])
+
+  useEffect(() => {
+    if (submitted === false) {
+      setTimeout(() => {
+        form.submit()
+      }, 2000)
+    }
+  }, [submitted])
 
   const handleFormSubmit = (values) => {
     handleAnswerSubmit(question.id, values.ans)
@@ -62,47 +70,42 @@ const WrittenQuestionForm = (props) => {
         <div style={{ marginTop: '16px' }}>
           <Title level={4}>{question.question_text}</Title>
         </div>
-        <Form.Item
-          name="ans"
-          rules={[
-            {
-              required: true,
-              message: 'Please input your Answer!'
-            }
-          ]}
-          style={{ width: '60%', marginTop: '28px' }}
-        >
-          <Input.TextArea
-            onChange={handleSubmittedState}
-            rows={4}
-            placeholder="Answer"
-          />
-        </Form.Item>
-        <Divider style={{ border: '1px solid #ccc' }} />
+        {!noOnlineAnswer && (
+          <>
+            <Form.Item name="ans" style={{ width: '60%', marginTop: '28px' }}>
+              <Input.TextArea
+                onChange={handleSubmittedState}
+                rows={4}
+                placeholder="Answer"
+              />
+            </Form.Item>
+            <Divider style={{ border: '1px solid #ccc' }} />
 
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center'
-          }}
-        >
-          <Space>
-            <Button
-              disabled={submitted}
-              icon={
-                submitted ? (
-                  <CheckCircleOutlined style={{ color: '#52c41a' }} />
-                ) : (
-                  <CloseCircleOutlined />
-                )
-              }
-              onClick={() => form.submit()}
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center'
+              }}
             >
-              Save
-            </Button>
-          </Space>
-        </div>
+              <Space>
+                <Button
+                  disabled={submitted}
+                  icon={
+                    submitted ? (
+                      <CheckCircleOutlined style={{ color: '#52c41a' }} />
+                    ) : (
+                      <CloseCircleOutlined />
+                    )
+                  }
+                  onClick={() => form.submit()}
+                >
+                  Save
+                </Button>
+              </Space>
+            </div>
+          </>
+        )}
       </Form>
     </div>
   )

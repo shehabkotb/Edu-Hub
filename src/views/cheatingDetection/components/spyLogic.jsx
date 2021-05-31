@@ -8,22 +8,29 @@ import cheatingService from '../../../services/cheatingService'
 import ReactCountdownClock from 'react-countdown-clock'
 import { useHistory } from 'react-router-dom'
 
-const SpyLogic = ({examId="123456789"}) => {
+const SpyLogic = (props) => {
   const history = useHistory()
   const webcamRef = useRef(null)
   const user = useSelector((state) => state.auth.user)
   const [cnt, setCnt] = useState(1)
   const [record, setRecord] = useState(false)
+
+  const { examId, timeRemaining } = props
+  // {
+  //   examId: '123456789',
+  //   timeRemaining: 0.1 * 3600
+  // }
+
   /*
   const S3_BUCKET = '***REMOVED***'
   const REGION = '***REMOVED***'
   const ACCESS_KEY = '***REMOVED***'
   const SECRET_ACCESS_KEY = '***REMOVED***'
   */
- const S3_BUCKET = '***REMOVED***'
- const REGION = '***REMOVED***'
- const ACCESS_KEY = '***REMOVED***'
- const SECRET_ACCESS_KEY = '***REMOVED***'
+  const S3_BUCKET = '***REMOVED***'
+  const REGION = '***REMOVED***'
+  const ACCESS_KEY = '***REMOVED***'
+  const SECRET_ACCESS_KEY = '***REMOVED***'
 
   const config = {
     bucketName: S3_BUCKET,
@@ -52,7 +59,7 @@ const SpyLogic = ({examId="123456789"}) => {
   }
 
   useEffect(() => {
-    document.addEventListener('visibilitychange', eventHandler);
+    document.addEventListener('visibilitychange', eventHandler)
     try {
       cheatingService.clear()
     } catch {
@@ -95,11 +102,11 @@ const SpyLogic = ({examId="123456789"}) => {
   //useEffect(setInterval(() => {capture()}, 2000), [webcamRef, cnt])
 
   useEffect(() => {
-    let intervalId;
+    let intervalId
 
-      intervalId = setInterval(() => {
-        capture()
-      }, 2000)
+    intervalId = setInterval(() => {
+      capture()
+    }, 2000)
 
     return () => clearInterval(intervalId)
   }, [webcamRef, cnt])
@@ -129,7 +136,7 @@ const SpyLogic = ({examId="123456789"}) => {
         noiseSuppression={true}
       />
       <ReactCountdownClock
-        seconds={0.1 * 3600}
+        seconds={timeRemaining}
         color="#000"
         alpha={0.9}
         size={240}

@@ -44,8 +44,6 @@ const moduleReducer = (state = [], action) => {
   }
 }
 
-/* actions for courses bellow */
-
 export const getAllModules = (courseId) => {
   return async (dispatch) => {
     try {

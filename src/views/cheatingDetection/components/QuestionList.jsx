@@ -3,7 +3,7 @@ import ChoiceQuestionForm from './ChoiceQuestionForm'
 import WrittenQuestionForm from './WrittenQuestionForm'
 
 const QuestionList = (props) => {
-  const { questions, answers, handleAnswerSubmit } = props
+  const { questions, answers, handleAnswerSubmit, noOnlineAnswer } = props
 
   const getAnswer = (questionId) => {
     return answers.find((answer) => answer.originQuestion === questionId)
@@ -19,6 +19,7 @@ const QuestionList = (props) => {
               question={question}
               answer={getAnswer(question.id)}
               handleAnswerSubmit={handleAnswerSubmit}
+              noOnlineAnswer={noOnlineAnswer}
             />
           )
         if (question.type === 'Esay')
@@ -28,6 +29,7 @@ const QuestionList = (props) => {
               question={question}
               answer={getAnswer(question.id)}
               handleAnswerSubmit={handleAnswerSubmit}
+              noOnlineAnswer={noOnlineAnswer}
             />
           )
         else return null
