@@ -55,7 +55,7 @@ const SpyLogic = (props) => {
   }
 
   const eventHandler = () => {
-    document.title = document.hidden ? window.close() : "DON'T go away"
+    document.title = document.hidden ? /*window.close()*/"hay" : "DON'T go away"
   }
 
   useEffect(() => {

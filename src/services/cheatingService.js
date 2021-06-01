@@ -4,12 +4,14 @@ import { getAuthHeader } from './config'
 export const baseURL = '/cheatingDetection'
 
 const batchInc = async (examId) => {
-  const response = await axios.post(`${baseURL}/checkCheating`,{examId:examId}, getAuthHeader())
-  return response.data
+  axios.post(`${baseURL}/checkCheating`,{examId:examId}, getAuthHeader()).catch(e=>console.log(e))
+  return {}
 }
 
 const clear = async () => {
-  const response = await axios.delete(`${baseURL}/clear`, getAuthHeader())
+  const response = await axios
+    .delete(`${baseURL}/clear`, getAuthHeader())
+    .catch((e) => console.log(e))
   return response.data
 }
 
