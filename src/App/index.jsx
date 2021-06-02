@@ -24,17 +24,17 @@ import MyBookMarks from '../views/articles/myBookMarks/myBookMarks'
 import ArticlePage from '../views/ArticlePage'
 import Profile from '../views/Profile'
 import Exams from '../views/exams'
-import { AssessmentCreation } from '../views/exams'
-import Quizes from '../views/quizes'
+import { AssessmentCreation, Submissions } from '../views/exams'
 import Lectures from '../views/lectures'
 import Modules from '../views/modules'
-import CheatingDetection from '../views/cheatingDetection'
+import AssessmentTaking from '../views/assessmentTaking'
 import DiscussionFeed from '../views/discussions'
 import AnnouncementsFeed from '../views/announcements'
 import Dashboard from '../views/dashboard'
 import CourseCalendar from '../views/courseCalendar'
 import GradeBook from '../views/gradeBook'
 import NotFoundView from '../views/NotFoundView'
+import Grader from '../views/assessmentGrading'
 
 import 'antd/dist/antd.css'
 import 'ant-design-pro/dist/ant-design-pro.css'
@@ -108,7 +108,14 @@ const AuthnticatedApp = () => {
             <Route path="/app/courses" component={Courses} />
             <Route path="/app/course/:courseId/modules" component={Modules} />
 
-            <Route path="/app/course/:courseId/quizes" component={Quizes} />
+            <Route
+              path="/app/course/:courseId/exam/:assessmentId/submissions"
+              component={Submissions}
+            />
+            <Route
+              path="/app/course/:courseId/assessment/:assessmentId/grade"
+              component={Grader}
+            />
             <Route
               path="/app/course/:courseId/exams/create"
               render={(props) => (
@@ -124,7 +131,7 @@ const AuthnticatedApp = () => {
 
             <Route
               path="/app/course/:courseId/exam/:assessmentId"
-              component={CheatingDetection}
+              component={AssessmentTaking}
             />
 
             <Route

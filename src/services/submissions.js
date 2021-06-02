@@ -1,6 +1,14 @@
 import axios from 'axios'
 import { getAuthHeader } from './config'
 
+const getAll = async (courseId, assessmentId) => {
+  const response = await axios.get(
+    `/${courseId}/assessments/${assessmentId}/submissions/`,
+    getAuthHeader()
+  )
+  return response.data
+}
+
 const getOrCreateSumbission = async (courseId, assessmentId, studentId) => {
   const response = await axios.get(
     `/${courseId}/assessments/${assessmentId}/submissions/${studentId}`,
@@ -24,6 +32,7 @@ const updateSubmission = async (
 }
 
 const submissionService = {
+  getAll,
   getOrCreateSumbission,
   updateSubmission
 }

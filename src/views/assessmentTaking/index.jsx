@@ -8,7 +8,7 @@ import { useEffect } from 'react'
 import { getOneSubmission } from '../../reducers/assessmentTakingReducer'
 import Spinner from '../../components/Spinner'
 
-const CheatingDetection = (props) => {
+const AssessmentTaking = (props) => {
   const dispatch = useDispatch()
   const { submission, loading } = useSelector((state) => state.assessmentTaking)
 
@@ -62,4 +62,4 @@ const CheatingDetection = (props) => {
   )
 }
 
-export default CheatingDetection
+export default AssessmentTaking

@@ -2,8 +2,7 @@ import submissionService from '../services/submissions'
 import {
   LOAD_SUBMISSION,
   GET_ONE_SUBMISSION,
-  UPDATE_SUBMISSION,
-  SUBMIT_ANSWERS
+  UPDATE_SUBMISSION
 } from '../actions/assessmentTaking'
 
 import { notification } from 'antd'
@@ -53,7 +52,6 @@ export const submitAnswers = (
 ) => {
   return async (dispatch, getState) => {
     try {
-      debugger
       let answers = getState().assessmentTaking.submission.answers
 
       let alreadyAnswerd = false
@@ -101,7 +99,6 @@ export const updateSubmission = (
 ) => {
   return async (dispatch) => {
     try {
-      debugger
       const response = await submissionService.updateSubmission(
         courseId,
         assessmentId,
