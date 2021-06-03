@@ -8,7 +8,7 @@ import cheatingService from '../../../services/cheatingService'
 import ReactCountdownClock from 'react-countdown-clock'
 import { useHistory } from 'react-router-dom'
 
-const SpyLogic = ({examId="123456789"}) => {
+const SpyLogic = ({ examId = '60b1797ee7f2e72bd0ff6263' }) => {
   const history = useHistory()
   const webcamRef = useRef(null)
   const user = useSelector((state) => state.auth.user)
@@ -20,10 +20,10 @@ const SpyLogic = ({examId="123456789"}) => {
   const ACCESS_KEY = '***REMOVED***'
   const SECRET_ACCESS_KEY = '***REMOVED***'
   */
- const S3_BUCKET = '***REMOVED***'
- const REGION = '***REMOVED***'
- const ACCESS_KEY = '***REMOVED***'
- const SECRET_ACCESS_KEY = '***REMOVED***'
+  const S3_BUCKET = '***REMOVED***'
+  const REGION = '***REMOVED***'
+  const ACCESS_KEY = '***REMOVED***'
+  const SECRET_ACCESS_KEY = '***REMOVED***'
 
   const config = {
     bucketName: S3_BUCKET,
@@ -48,11 +48,13 @@ const SpyLogic = ({examId="123456789"}) => {
   }
 
   const eventHandler = () => {
-    document.title = document.hidden ? /*window.close()*/"hay" : "DON'T go away"
+    document.title = document.hidden
+      ? /*window.close()*/ 'hay'
+      : "DON'T go away"
   }
 
   useEffect(() => {
-    document.addEventListener('visibilitychange', eventHandler);
+    document.addEventListener('visibilitychange', eventHandler)
     try {
       cheatingService.clear()
     } catch {
@@ -95,11 +97,11 @@ const SpyLogic = ({examId="123456789"}) => {
   //useEffect(setInterval(() => {capture()}, 2000), [webcamRef, cnt])
 
   useEffect(() => {
-    let intervalId;
+    let intervalId
 
-      intervalId = setInterval(() => {
-        capture()
-      }, 2000)
+    intervalId = setInterval(() => {
+      capture()
+    }, 2000)
 
     return () => clearInterval(intervalId)
   }, [webcamRef, cnt])
