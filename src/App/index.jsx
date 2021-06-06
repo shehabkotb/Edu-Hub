@@ -50,6 +50,7 @@ const App = () => {
       <Route path="/Register" component={Registeration} />
       <PublicRoute path="/ForgetPassword" component={ForgetPassword} />
       <PublicRoute path="/Login" component={Login} />
+
       <PrivateRoute path="/app" component={AuthnticatedApp} />
       {/* future landing page redirect to app for now */}
       <Route exact path="/">

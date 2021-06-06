@@ -1,6 +1,17 @@
-import { Affix, Button, Divider, Form, Input, Space } from 'antd'
-import { Col, Row, Typography } from 'antd'
-import React from 'react'
+import {
+  Affix,
+  Button,
+  Divider,
+  Form,
+  Input,
+  Space,
+  Col,
+  Row,
+  Typography,
+  Empty
+} from 'antd'
+
+import React, { useEffect, useState } from 'react'
 
 import { ArrowLeftOutlined, ArrowRightOutlined } from '@ant-design/icons'
 import { DateTime } from 'luxon'
@@ -8,7 +19,21 @@ import PlagarismTag from '../../components/PlagarismTag'
 import GradingQuestionList from './components/GradingQuestionList'
 import AutoGradingTag from '../../components/AutoGradingTag'
 
-const { Text } = Typography
+import Styled from 'styled-components'
+import FileDisplay from './components/FileDispaly'
+import { useDispatch, useSelector } from 'react-redux'
+import { useParams } from 'react-router'
+import { getAllSubmissions } from '../../reducers/submissionsReducer'
+
+const { Text, Title } = Typography
+
+const Container = Styled.div`
+    background-color: #fafafa;
+    width: 95%;
+    margin: 0 auto;
+    border-radius: 10px;
+    padding: 20px 20px;
+`
 
 const submissionsData = {
   assessment: {
@@ -46,7 +71,16 @@ const submissionsData = {
         _id: '60a3944f9219df36fc82ea60',
         name: 'admin'
       },
-      files: [],
+      files: [
+        {
+          name: 'text.docx',
+          url: 'https://eduhub-course-files.s3.amazonaws.com/60a65778348b1936c4257ba5/submissions/test+upload.docx'
+        },
+        {
+          name: '1622424537804_test.pdf',
+          url: 'https://eduhub-course-files.s3.amazonaws.com/60a65778348b1936c4257ba5/submissions/1622424537804_test.pdf'
+        }
+      ],
       answers: [
         {
           originQuestion: {
@@ -332,12 +366,43 @@ const submissionsData = {
 }
 
 const Grader = () => {
-  const selectedSubmission = submissionsData.submissions[0]
+  const dispatch = useDispatch()
+
+  const { courseId, assessmentId } = useParams()
+
+  const [selectedIndex, setSelectedIndex] = useState(0)
+  const data = useSelector((state) => state.submissions.data)
+  const { assessment, submissions } = data || {}
+
+  const selectedSubmission = submissions
+    ? submissions[selectedIndex]
+    : undefined
+
+  useEffect(() => {
+    dispatch(getAllSubmissions(courseId, assessmentId))
+  }, [])
+
+  if (!selectedSubmission) return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
 
   return (
     <Row gutter={[16, 16]}>
       <Col span={18}>
-        <GradingQuestionList answers={selectedSubmission.answers} />
+        <Container>
+          <Title level={3}>
+            Submissions {selectedIndex + 1} <Text type="secondary">out of</Text>{' '}
+            {submissions.length}
+          </Title>
+          <Divider />
+          {assessment.submissionType === 'online' && (
+            <GradingQuestionList
+              answers={selectedSubmission.answers}
+              submissionId={selectedSubmission.id}
+            />
+          )}
+          {assessment.submissionType === 'written' && (
+            <FileView files={selectedSubmission.files} />
+          )}
+        </Container>
       </Col>
 
       <Col span={6}>
@@ -351,9 +416,19 @@ const Grader = () => {
           >
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <Space>
-                <Button type="text" icon={<ArrowLeftOutlined />}></Button>
+                <Button
+                  type="text"
+                  icon={<ArrowLeftOutlined />}
+                  onClick={() => setSelectedIndex(selectedIndex - 1)}
+                  disabled={selectedIndex === 0}
+                ></Button>
                 <Text>{selectedSubmission.student.name}</Text>
-                <Button type="text" icon={<ArrowRightOutlined />}></Button>
+                <Button
+                  type="text"
+                  icon={<ArrowRightOutlined />}
+                  onClick={() => setSelectedIndex(selectedIndex + 1)}
+                  disabled={submissions.length - 1 === selectedIndex}
+                ></Button>
               </Space>
             </div>
             <Divider />
@@ -380,6 +455,7 @@ const Grader = () => {
                   initialValue={selectedSubmission.score}
                   label="Total Score:"
                   name="score"
+                  disabled={assessment.type === 'online'}
                 >
                   <Input style={{ width: '20%' }}></Input>
                 </Form.Item>
@@ -393,6 +469,26 @@ const Grader = () => {
         </Affix>
       </Col>
     </Row>
+  )
+}
+
+const FileView = ({ files }) => {
+  const [selectedFileURL, setselectedFileURL] = useState(files[0]?.url || '')
+
+  const selectFile = (url) => {
+    setselectedFileURL(url)
+  }
+
+  return (
+    <>
+      <FileDisplay files={files} handleClick={selectFile} />
+      <iframe
+        title="test"
+        src={`https://docs.google.com/viewer?embedded=true&url=${selectedFileURL}`}
+        style={{ width: '100%', height: '680px', marginTop: '16px' }}
+        frameborder="0"
+      ></iframe>
+    </>
   )
 }
 

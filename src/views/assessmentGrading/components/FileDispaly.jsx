@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 
 import {
   FilePdfOutlined,
@@ -7,20 +6,21 @@ import {
   FileWordOutlined,
   FileOutlined
 } from '@ant-design/icons'
+import { Button } from 'antd'
 
 const FileDisplay = (props) => {
-  const { files } = props
+  const { files, handleClick } = props
   return (
     <>
       {files.map((file, index) => {
-        return <FileItem key={index} file={file} />
+        return <FileItem key={index} file={file} handleClick={handleClick} />
       })}
     </>
   )
 }
 
 const FileItem = (props) => {
-  const { file } = props
+  const { file, handleClick } = props
 
   const getFileType = (file) => {
     const index = file.url.lastIndexOf('.')
@@ -33,9 +33,13 @@ const FileItem = (props) => {
         style={{ marginRight: '6px', fontSize: '16px' }}
         fileType={getFileType(file)}
       />
-      <a style={{ fontSize: '16px' }} href={file.url}>
+      <Button
+        type="link"
+        style={{ fontSize: '16px' }}
+        onClick={() => handleClick(file.url)}
+      >
         {file.name}
-      </a>
+      </Button>
     </div>
   )
 }

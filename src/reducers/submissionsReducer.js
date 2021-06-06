@@ -32,4 +32,39 @@ export const getAllSubmissions = (courseId, assessmentId) => {
   }
 }
 
+export const gradeQuestions = (submissionId, questionId, score) => {
+  return async (dispatch, getState) => {
+    try {
+      debugger
+      let totalGrade = 0
+      const { submissions } = getState()
+
+      const newSubmissions = submissions.data.submissions.map((submission) => {
+        if (submission.id === submissionId) {
+          const newAnswers = submission.answers.map((answer) => {
+            if (answer.originQuestion.id === questionId) {
+              totalGrade += parseInt(score)
+              return { ...answer, score: score }
+            } else {
+              if (answer.score) totalGrade += parseInt(answer.score)
+              return answer
+            }
+          })
+          return { ...submission, answers: newAnswers, score: totalGrade }
+        } else return submission
+      })
+
+      dispatch({
+        type: GET_ALL_SUBMISSIONS,
+        data: { ...newSubmissions, score: totalGrade }
+      })
+    } catch (error) {
+      console.log(error)
+      notification.error({
+        message: "Couldn't grade question"
+      })
+    }
+  }
+}
+
 export default assessmentTakingReducer

@@ -6,17 +6,13 @@ import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons'
 const { Title, Text, Paragraph } = Typography
 
 const WrittenQuestion = (props) => {
-  const { question, studentAnswer } = props
+  const { question, studentAnswer, saveQuestionGrade } = props
 
   const [form] = Form.useForm()
 
-  // const handleFormSubmit = (values) => {
-  //   handleAnswerSubmit(question.id, values.ans)
-  // }
-
-  // const handleSubmittedState = () => {
-  //   setSubmitted(false)
-  // }
+  const handleFormSubmit = (values) => {
+    saveQuestionGrade(values.score)
+  }
 
   return (
     <>
@@ -30,7 +26,7 @@ const WrittenQuestion = (props) => {
           marginTop: '20px'
         }}
       >
-        <Form form={form} name="question">
+        <Form form={form} onFinish={handleFormSubmit} name="question">
           <div
             style={{
               display: 'flex',
@@ -61,6 +57,7 @@ const WrittenQuestion = (props) => {
                     size="small"
                     placeholder="Score"
                     min={0}
+                    onBlur={() => form.submit()}
                   />
                 </div>
               </Form.Item>

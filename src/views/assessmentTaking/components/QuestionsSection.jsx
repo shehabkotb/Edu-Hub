@@ -11,7 +11,7 @@ import {
   updateSubmission
 } from '../../../reducers/assessmentTakingReducer'
 import Spinner from '../../../components/Spinner'
-import FileDisplay from './FileDisplay'
+import FileDisplay from '../../../components/FileDisplay'
 import s3Service from '../../../services/s3Service'
 
 import { FlexSectionHeader } from '../../style'
