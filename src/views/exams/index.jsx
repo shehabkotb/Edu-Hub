@@ -86,7 +86,6 @@ const StyledListItem = styled(List.Item)`
   }
 `
 const ExamItem = ({ exam, disabled }) => {
-  const history = useHistory()
   const { courseId } = useParams()
   const { privilege } = useCoursePrivillege()
   const dispatch = useDispatch()

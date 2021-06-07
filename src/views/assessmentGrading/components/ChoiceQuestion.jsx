@@ -1,18 +1,7 @@
-import {
-  Form,
-  Input,
-  InputNumber,
-  Radio,
-  Row,
-  Space,
-  Tag,
-  Typography
-} from 'antd'
-import React, { useEffect, useState } from 'react'
+import { Form, InputNumber, Radio, Row, Space, Tag, Typography } from 'antd'
+import React from 'react'
 
-import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons'
-
-const { Title, Text, Paragraph } = Typography
+const { Title, Text } = Typography
 
 const ChoiceQuestion = (props) => {
   const { question, studentAnswer, field } = props

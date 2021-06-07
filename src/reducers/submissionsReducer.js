@@ -17,14 +17,7 @@ const submissionsReducer = (
     case GET_ALL_SUBMISSIONS:
       return { data: action.data, loading: false }
     case SUBMIT_GRADE:
-      return {
-        ...state,
-        submissions: state.data.submissions.map((submission) => {
-          if (submission.id === action.data.id) return action.data
-          else return submission
-        }),
-        loading: false
-      }
+      return { data: action.data, loading: false }
     default:
       return state
   }
@@ -53,14 +46,17 @@ export const gradeQuestions = (
 ) => {
   return async (dispatch) => {
     try {
-      const response = await submissionService.updateSubmission(
+      const response = await submissionService.gradeSubmission(
         courseId,
         assessmentId,
         studentId,
         submission
       )
-      debugger
+
       dispatch({ type: SUBMIT_GRADE, data: response })
+      notification.success({
+        message: 'sucessfully graded'
+      })
     } catch (error) {
       console.log(error)
       notification.error({

@@ -1,7 +1,5 @@
-import { Form, Input, InputNumber, Space, Typography } from 'antd'
-import React, { useEffect, useState } from 'react'
-
-import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons'
+import { Form, InputNumber, Space, Typography } from 'antd'
+import React from 'react'
 
 const { Title, Text, Paragraph } = Typography
 

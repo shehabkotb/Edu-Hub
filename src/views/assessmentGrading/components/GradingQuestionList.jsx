@@ -1,22 +1,15 @@
 import React, { useEffect } from 'react'
-
 import WrittenQuestion from './WrittenQuestion'
-import Styled from 'styled-components'
 import ChoiceQuestion from './ChoiceQuestion'
-import { useDispatch } from 'react-redux'
-import { gradeQuestions } from '../../../reducers/submissionsReducer'
+
 import { Empty, Form, Input } from 'antd'
 
 const GradingQuestionList = (props) => {
-  const dispatch = useDispatch()
+  const { form, answers } = props
 
-  const { form, answers, submissionId } = props
-
-  const saveQuestionGrade = (questionId, score) => {
-    dispatch(gradeQuestions(submissionId, questionId, score))
-  }
-
-  useEffect(() => {}, [])
+  useEffect(() => {
+    form.resetFields()
+  }, [answers])
 
   return (
     <>

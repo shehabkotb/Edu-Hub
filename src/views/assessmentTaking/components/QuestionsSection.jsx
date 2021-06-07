@@ -1,16 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Button, Divider, message, Modal, Typography, Upload } from 'antd'
 
 import { InboxOutlined } from '@ant-design/icons'
 import QuestionList from './QuestionList'
 import { useDispatch, useSelector } from 'react-redux'
-import { useHistory, useParams } from 'react-router'
+import { useParams } from 'react-router'
 import {
-  getOneSubmission,
   submitAnswers,
   updateSubmission
 } from '../../../reducers/assessmentTakingReducer'
-import Spinner from '../../../components/Spinner'
 import FileDisplay from '../../../components/FileDisplay'
 import s3Service from '../../../services/s3Service'
 
@@ -21,7 +19,6 @@ const { Dragger } = Upload
 
 const QuestionsSection = (props) => {
   const dispatch = useDispatch()
-  const history = useHistory()
   const { courseId, assessmentId } = useParams()
   const user = useSelector((state) => state.auth.user)
 

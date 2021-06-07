@@ -3,7 +3,6 @@ import {
   Button,
   Divider,
   Form,
-  Input,
   Space,
   Col,
   Row,
@@ -28,7 +27,6 @@ import {
   getAllSubmissions,
   gradeQuestions
 } from '../../reducers/submissionsReducer'
-import Submissions from '../exams/components/Submissions'
 
 const { Text, Title } = Typography
 
@@ -49,7 +47,6 @@ const Grader = () => {
   const { assessment, submissions } = data || {}
 
   useEffect(() => {
-    debugger
     dispatch(getAllSubmissions(courseId, assessmentId))
   }, [])
 
@@ -67,20 +64,17 @@ const FileView = ({ files }) => {
 
   useEffect(() => {
     setselectedFileURL(files[0]?.url || '')
-    return () => {
-      setselectedFileURL('')
-    }
   }, [files])
 
   return (
     <>
       <FileDisplay files={files} handleClick={selectFile} />
-      <iframe
+      <embed
         title="test"
-        src={`https://docs.google.com/viewer?embedded=true&url=${selectedFileURL}`}
+        src={`${selectedFileURL}`}
         style={{ width: '100%', height: '680px', marginTop: '16px' }}
         frameBorder="0"
-      ></iframe>
+      ></embed>
     </>
   )
 }
@@ -95,7 +89,9 @@ const GradingPage = (props) => {
 
   const [selectedIndex, setSelectedIndex] = useState(state?.index || 0)
 
-  debugger
+  useEffect(() => {
+    form.resetFields()
+  }, [selectedIndex])
 
   const handleSubmit = (submission) => {
     let totalScore = 0
@@ -107,14 +103,14 @@ const GradingPage = (props) => {
     }
     console.log(submission)
 
-    // dispatch(
-    //   gradeQuestions(
-    //     courseId,
-    //     assessmentId,
-    //     submissions[selectedIndex].student._id,
-    //     submission
-    //   )
-    // )
+    dispatch(
+      gradeQuestions(
+        courseId,
+        assessmentId,
+        submissions[selectedIndex].student._id,
+        submission
+      )
+    )
   }
 
   return (
