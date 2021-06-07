@@ -8,12 +8,19 @@ import cheatingService from '../../../services/cheatingService'
 import ReactCountdownClock from 'react-countdown-clock'
 import { useHistory } from 'react-router-dom'
 
-const SpyLogic = ({ examId = '60b1797ee7f2e72bd0ff6263' }) => {
+const SpyLogic = (props) => {
   const history = useHistory()
   const webcamRef = useRef(null)
   const user = useSelector((state) => state.auth.user)
   const [cnt, setCnt] = useState(1)
   const [record, setRecord] = useState(false)
+
+  const { examId, timeRemaining } = props
+  // {
+  //   examId: '123456789',
+  //   timeRemaining: 0.1 * 3600
+  // }
+
   /*
   const S3_BUCKET = '***REMOVED***'
   const REGION = '***REMOVED***'
@@ -131,7 +138,7 @@ const SpyLogic = ({ examId = '60b1797ee7f2e72bd0ff6263' }) => {
         noiseSuppression={true}
       />
       <ReactCountdownClock
-        seconds={0.1 * 3600}
+        seconds={timeRemaining}
         color="#000"
         alpha={0.9}
         size={240}

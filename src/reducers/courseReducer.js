@@ -42,8 +42,6 @@ const courseReducer = (state = { data: [], loading: false }, action) => {
   }
 }
 
-/* actions for courses bellow */
-
 export const getAllCourses = () => {
   return async (dispatch) => {
     try {

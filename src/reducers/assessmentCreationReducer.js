@@ -38,8 +38,6 @@ const assessmentCreationReducer = (state = { questions: [] }, action) => {
   }
 }
 
-/* actions for courses bellow */
-
 export const addQuestion = () => {
   return async (dispatch, getState) => {
     try {

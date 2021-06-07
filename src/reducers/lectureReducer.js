@@ -4,7 +4,8 @@ import { GET_ALL_LECTURES, LOAD_LECTURES } from '../actions/lecture'
 import { notification } from 'antd'
 
 const iso8601Duration = (duration) => {
-  const durationRegex = /(-)?P(?:([.,\d]+)Y)?(?:([.,\d]+)M)?(?:([.,\d]+)W)?(?:([.,\d]+)D)?T(?:([.,\d]+)H)?(?:([.,\d]+)M)?(?:([.,\d]+)S)?/
+  const durationRegex =
+    /(-)?P(?:([.,\d]+)Y)?(?:([.,\d]+)M)?(?:([.,\d]+)W)?(?:([.,\d]+)D)?T(?:([.,\d]+)H)?(?:([.,\d]+)M)?(?:([.,\d]+)S)?/
 
   const matches = duration.match(durationRegex)
 
@@ -26,8 +27,6 @@ const lectureReducer = (state = { data: [], loading: false }, action) => {
       return state
   }
 }
-
-/* actions for courses bellow */
 
 export const getAllLectures = (courseId) => {
   return async (dispatch) => {
