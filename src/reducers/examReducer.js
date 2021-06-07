@@ -1,5 +1,10 @@
 import assessmentsService from '../services/assessments'
-import { LOAD_EXAMS, GET_ALL_EXAMS, CREATE_EXAM } from '../actions/exams'
+import {
+  LOAD_EXAMS,
+  GET_ALL_EXAMS,
+  CREATE_EXAM,
+  DELETE_EXAM
+} from '../actions/exams'
 
 import { notification } from 'antd'
 
@@ -11,6 +16,11 @@ const examReducer = (state = { data: [], loading: false }, action) => {
       return { data: action.data, loading: false }
     case CREATE_EXAM:
       return { data: action.data, loading: false }
+    case DELETE_EXAM:
+      return {
+        data: state.data.filter((exam) => exam.id !== action.examId),
+        loading: false
+      }
     default:
       return state
   }
@@ -27,6 +37,24 @@ export const getAllExams = (courseId) => {
       console.log(error)
       notification.error({
         message: "Couldn't load Exams check your connection"
+      })
+    }
+  }
+}
+
+export const deleteExam = (courseId, assessmentId) => {
+  return async (dispatch) => {
+    try {
+      await assessmentsService.deleteAssessment(courseId, assessmentId)
+
+      dispatch({ type: DELETE_EXAM, examId: assessmentId })
+      notification.success({
+        message: 'sucessfully deleted exam'
+      })
+    } catch (error) {
+      console.log(error)
+      notification.error({
+        message: "Couldn't delete Exam"
       })
     }
   }

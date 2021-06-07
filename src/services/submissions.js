@@ -31,10 +31,25 @@ const updateSubmission = async (
   return response.data
 }
 
+const gradeSubmission = async (
+  courseId,
+  assessmentId,
+  studentId,
+  submission
+) => {
+  const response = await axios.put(
+    `/${courseId}/assessments/${assessmentId}/submissions/${studentId}/grade`,
+    submission,
+    getAuthHeader()
+  )
+  return response.data
+}
+
 const submissionService = {
   getAll,
   getOrCreateSumbission,
-  updateSubmission
+  updateSubmission,
+  gradeSubmission
 }
 
 export default submissionService

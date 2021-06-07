@@ -1,10 +1,14 @@
 import submissionService from '../services/submissions'
-import { GET_ALL_SUBMISSIONS, LOAD_SUBMISSIONS } from '../actions/submissions'
+import {
+  GET_ALL_SUBMISSIONS,
+  LOAD_SUBMISSIONS,
+  SUBMIT_GRADE
+} from '../actions/submissions'
 
 import { notification } from 'antd'
 
-const assessmentTakingReducer = (
-  state = { submissions: {}, loading: false },
+const submissionsReducer = (
+  state = { data: { submissions: {}, assessment: {} }, loading: false },
   action
 ) => {
   switch (action.type) {
@@ -12,6 +16,15 @@ const assessmentTakingReducer = (
       return { data: {}, loading: true }
     case GET_ALL_SUBMISSIONS:
       return { data: action.data, loading: false }
+    case SUBMIT_GRADE:
+      return {
+        ...state,
+        submissions: state.data.submissions.map((submission) => {
+          if (submission.id === action.data.id) return action.data
+          else return submission
+        }),
+        loading: false
+      }
     default:
       return state
   }
@@ -32,39 +45,29 @@ export const getAllSubmissions = (courseId, assessmentId) => {
   }
 }
 
-export const gradeQuestions = (submissionId, questionId, score) => {
-  return async (dispatch, getState) => {
+export const gradeQuestions = (
+  courseId,
+  assessmentId,
+  studentId,
+  submission
+) => {
+  return async (dispatch) => {
     try {
+      const response = await submissionService.updateSubmission(
+        courseId,
+        assessmentId,
+        studentId,
+        submission
+      )
       debugger
-      let totalGrade = 0
-      const { submissions } = getState()
-
-      const newSubmissions = submissions.data.submissions.map((submission) => {
-        if (submission.id === submissionId) {
-          const newAnswers = submission.answers.map((answer) => {
-            if (answer.originQuestion.id === questionId) {
-              totalGrade += parseInt(score)
-              return { ...answer, score: score }
-            } else {
-              if (answer.score) totalGrade += parseInt(answer.score)
-              return answer
-            }
-          })
-          return { ...submission, answers: newAnswers, score: totalGrade }
-        } else return submission
-      })
-
-      dispatch({
-        type: GET_ALL_SUBMISSIONS,
-        data: { ...newSubmissions, score: totalGrade }
-      })
+      dispatch({ type: SUBMIT_GRADE, data: response })
     } catch (error) {
       console.log(error)
       notification.error({
-        message: "Couldn't grade question"
+        message: "Couldn't grade assessment"
       })
     }
   }
 }
 
-export default assessmentTakingReducer
+export default submissionsReducer

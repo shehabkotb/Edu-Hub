@@ -7,11 +7,10 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { PlusOutlined } from '@ant-design/icons'
 import { STUDENT } from '../../constants/userRoles'
-import { getAllExams } from '../../reducers/examReducer'
+import { deleteExam, getAllExams } from '../../reducers/examReducer'
 import { useHistory, useParams } from 'react-router'
 
 import { AiOutlineSolution } from 'react-icons/ai'
-import { DeleteOutlined } from '@ant-design/icons'
 
 import useCoursePrivillege from '../../hooks/useCourseprivilege'
 import { Link } from 'react-router-dom'
@@ -90,6 +89,7 @@ const ExamItem = ({ exam, disabled }) => {
   const history = useHistory()
   const { courseId } = useParams()
   const { privilege } = useCoursePrivillege()
+  const dispatch = useDispatch()
 
   const optionMenu = (
     <Menu>
@@ -103,7 +103,9 @@ const ExamItem = ({ exam, disabled }) => {
           All Submissions
         </Link>
       </Menu.Item>
-      <Menu.Item danger>Delete</Menu.Item>
+      <Menu.Item danger onClick={() => dispatch(deleteExam(courseId, exam.id))}>
+        Delete
+      </Menu.Item>
     </Menu>
   )
 

@@ -28,9 +28,18 @@ const submitAssessment = async (courseId, assessment) => {
   return response.data
 }
 
+const deleteAssessment = async (courseId, assessmentId) => {
+  const response = await axios.delete(
+    `/${courseId}${baseURL}/${assessmentId}`,
+    getAuthHeader()
+  )
+  return response.data
+}
+
 const assessmentsService = {
   getAllExams,
   getAllAssignments,
-  submitAssessment
+  submitAssessment,
+  deleteAssessment
 }
 export default assessmentsService

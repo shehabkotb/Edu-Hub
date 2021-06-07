@@ -122,7 +122,7 @@ const AssessmentOptionsMenu = (props) => {
             style={{ width: '60%' }}
             label={<Text strong>Max Score</Text>}
           >
-            <InputNumber disabled />
+            <InputNumber disabled={controlledQuestionType === 'online'} />
           </Form.Item>
 
           <Space style={{ marginTop: '8px' }}>

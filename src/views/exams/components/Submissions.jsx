@@ -400,13 +400,16 @@ const Submissions = (props) => {
         <Column
           title="Score"
           dataIndex="score"
-          render={(score) => (score ? score : '-')}
+          render={(score) => (score === undefined ? '-' : score)}
         />
         <Column
           title="Action"
-          render={(text, record) => (
+          render={(text, record, index) => (
             <Link
-              to={`/app/course/${courseId}/assessment/${assessmentId}/grade`}
+              to={{
+                pathname: `/app/course/${courseId}/assessment/${assessmentId}/grade`,
+                state: { index: index }
+              }}
             >
               Grade
             </Link>
