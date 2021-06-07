@@ -1,9 +1,11 @@
 import { Table, Tag, Space, Button } from 'antd'
 import React, { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import StudentGradeBook from './studentGB'
 import SummaryTable from './summaryGB'
 import InfoTable from './infoTable'
 import { PieChart } from 'reaviz'
+import { getSubsOfCourse } from '../../../reducers/gradebookReducer'
 
 const InstructorGradeBook = ({ courseId, id }) => {
   const [student,setStudent]=useState('');
@@ -13,125 +15,55 @@ const InstructorGradeBook = ({ courseId, id }) => {
   const [vis, setVis] = useState(true)
   const [fVis, setFVis] = useState(false)
 
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(getSubsOfCourse(courseId))
+  }, [dispatch, courseId])
 
-  const submitions = [
-        {
-      _id: '60a37a321603505219f483b5',
-      type: 'assignment',
-      name: 'Assignment2',
-      assignmentId: '60a37c6153bd8067a3a13dc3',
-      studentId: '60a37c775f5a214ad11a7b92',
-      score: 3,
-      maxScore: 10, // populated from exam or assignment
-      weight: '10%', // populated from exam or assignment
-      gradedAt: '2021-02-23T15:39:00.860+00:00',
-      gradedBy: '60a37e59b5f990769e04d9ec',
-      submissionId: '60a37e6eb29acadd362dc9g8'
-    },
-    {
-      _id: '60a37a321603505219f483b1',
-      type: 'exam',
-      name: 'Quiz2',
-      examsId: '60a37c6153bd8067a3a13dc3',
-      studentId: '60a37c775f5a214ad11a7b93',
-      score: 25,
-      maxScore: 40, // populated from exam or assignment
-      weight: '30%', // populated from exam or assignment
-      gradedAt: '2021-05-23T15:39:00.860+00:00',
-      gradedBy: '60a37e59b5f990769e04d9ec',
-      submissionId: '60a37e6eb29acadd362dc9g5'
-    },
-    {
-      _id: '60a37a321603505219f483b9',
-      type: 'exam',
-      name: 'Quiz1',
-      examsId: '60a37c6153bd8067a3a13dc3',
-      studentId: '60a37c775f5a214ad11a7b90',
-      score: 30,
-      maxScore: 40, // populated from exam or assignment
-      weight: '40%', // populated from exam or assignment
-      gradedAt: '2021-04-23T15:39:00.860+00:00',
-      gradedBy: '60a37e59b5f990769e04d9ec',
-      submissionId: '60a37e6eb29acadd362dc9f7'
-    },
-    {
-      _id: '60a37a321603505219f483b9',
-      type: 'assignment',
-      name: 'Assignment1',
-      assignmentId: '60a37c6153bd8067a3a13dc3',
-      studentId: '60a37c775f5a214ad11a7b91',
-      score: 5,
-      maxScore: 10, // populated from exam or assignment
-      weight: '5%', // populated from exam or assignment
-      gradedAt: '2021-03-23T15:39:00.860+00:00',
-      gradedBy: '60a37e59b5f990769e04d9ec',
-      submissionId: '60a37e6eb29acadd362dc9f7'
-    },
-    {
-      _id: '60a37a321603505219f483b1',
-      type: 'exam',
-      name: 'Quiz2',
-      examsId: '60a37c6153bd8067a3a13dc3',
-      studentId: '60a37c775f5a214ad11a7b92',
-      score: 20,
-      maxScore: 40, // populated from exam or assignment
-      weight: '30%', // populated from exam or assignment
-      gradedAt: '2021-05-23T15:39:00.860+00:00',
-      gradedBy: '60a37e59b5f990769e04d9ec',
-      submissionId: '60a37e6eb29acadd362dc9f5'
-    },
-    {
-      _id: '60a37a321603505219f483b5',
-      type: 'assignment',
-      name: 'Assignment2',
-      assignmentId: '60a37c6153bd8067a3a13dc3',
-      studentId: '60a37c775f5a214ad11a7b93',
-      score: 7,
-      maxScore: 10, // populated from exam or assignment
-      weight: '10%', // populated from exam or assignment
-      gradedAt: '2021-02-23T15:39:00.860+00:00',
-      gradedBy: '60a37e59b5f990769e04d9ec',
-      submissionId: '60a37e6eb29acadd362dc9f8'
-    }
-  ]
+  const submitions = useSelector((state) =>
+    state.courseGradebook.filter((v) => v.assessment != null)
+  )
 
   const columns = [
     {
       title: 'Student',
-      dataIndex: 'studentId',
-      key: 'studentId',
+      dataIndex: 'student',
+      key: 'student',
       render: (text) => (
         <a
           onClick={() => {
-            setStudent(text)
+            console.log(text._id)
+            setStudent(text._id)
             setVis(false)
             setFVis(false)
             setShowst(true)
           }}
         >
-          {text}
+          {text.name}
         </a>
       )
     },
     {
       title: 'Type',
-      dataIndex: 'type',
-      key: 'type'
+      dataIndex: 'assessment',
+      key: 'assessment',
+      render: (text) => <span>{text.type}</span>
     },
     {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
+      title: 'Title',
+      dataIndex: 'assessment',
+      key: 'assessment',
       render: (text) => (
         <a
           onClick={() => {
-            setFltr(text)
+            console.log(text.title)
+            setFltr(text.title)
             setVis(false)
             setFVis(false)
             setShowInfo(true)
           }}
         >
-          {text}
+          {text.title}
         </a>
       )
     },
@@ -145,19 +77,22 @@ const InstructorGradeBook = ({ courseId, id }) => {
     },
     {
       title: 'Max Score',
-      dataIndex: 'maxScore',
-      key: 'maxScore',
+      dataIndex: 'assessment',
+      key: 'assessment',
+      render: (text) => <span>{text.maxScore}</span>,
       sorter: {
-        compare: (a, b) => a.maxScore - b.maxScore
+        compare: (a, b) => a.assessment.maxScore - b.assessment.maxScore
       }
     },
     {
       title: 'Weight',
-      dataIndex: 'weight',
-      key: 'weight',
+      dataIndex: 'assessment',
+      key: 'assessment',
+      render: (text) => <span>{String(text.weight*100)+"%"}</span>,
       sorter: {
         compare: (a, b) =>
-          Number(a.weight.slice(0, -1)) - Number(b.weight.slice(0, -1))
+          Number(a.assessment.weight) -
+          Number(b.assessment.weight)
       }
     },
     {
@@ -184,8 +119,8 @@ const InstructorGradeBook = ({ courseId, id }) => {
             data={submitions
               .map((v) => {
                 let res = {
-                  key: v.name,
-                  data: Number(v.weight.slice(0, -1))
+                  key: v.assessment.title,
+                  data: Number(v.assessment.weight * 100)
                 }
                 return res
               })

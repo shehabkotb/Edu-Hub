@@ -21,6 +21,7 @@ import examReducer from './reducers/examReducer'
 import assessmentCreationReducer from './reducers/assessmentCreationReducer'
 import assessmentTakingReducer from './reducers/assessmentTakingReducer'
 import submissionsReducer from './reducers/submissionsReducer'
+import gradebookReducer from './reducers/gradebookReducer'
 
 const persistConfig = {
   key: 'root',
@@ -42,7 +43,8 @@ const reducer = combineReducers({
   exams: examReducer,
   assessmentCreation: assessmentCreationReducer,
   assessmentTaking: assessmentTakingReducer,
-  submissions: submissionsReducer
+  submissions: submissionsReducer,
+  courseGradebook: gradebookReducer,
 })
 
 const persistedReducer = persistReducer(persistConfig, reducer)

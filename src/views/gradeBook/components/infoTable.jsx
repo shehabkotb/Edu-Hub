@@ -9,34 +9,36 @@ const InfoTable = ({ courseId, data, filter }) => {
     const [showSt, setShowst] = useState(false)
     const [vis, setVis] = useState(true)
     const idata = data.filter((v) => {
-      return v.name == filter
+      return v.assessment.title == filter
     })
     const columns = [
       {
         title: 'Student',
-        dataIndex: 'studentId',
-        key: 'studentId',
+        dataIndex: 'student',
+        key: 'student',
         render: (text) => (
           <a
             onClick={() => {
-              setStudent(text)
+              setStudent(text._id)
               setVis(false)
               setShowst(true)
             }}
           >
-            {text}
+            {text.name}
           </a>
         )
       },
       {
-        title: 'Type',
-        dataIndex: 'type',
-        key: 'type'
+        title: 'Title',
+        dataIndex: 'assessment',
+        key: 'assessment',
+        render: (text) => <span>{text.title}</span>
       },
       {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name'
+        title: 'Type',
+        dataIndex: 'assessment',
+        key: 'assessment',
+        render: (text) => <span>{text.type}</span>
       },
       {
         title: 'Score',
@@ -48,19 +50,21 @@ const InfoTable = ({ courseId, data, filter }) => {
       },
       {
         title: 'Max Score',
-        dataIndex: 'maxScore',
-        key: 'maxScore',
+        dataIndex: 'assessment',
+        key: 'assessment',
+        render: (text) => <span>{text.maxScore}</span>,
         sorter: {
-          compare: (a, b) => a.maxScore - b.maxScore
+          compare: (a, b) => a.assessment.maxScore - b.assessment.maxScore
         }
       },
       {
         title: 'Weight',
-        dataIndex: 'weight',
-        key: 'weight',
+        dataIndex: 'assessment',
+        key: 'assessment',
+        render: (text) => <span>{String(text.weight * 100) + '%'}</span>,
         sorter: {
           compare: (a, b) =>
-            Number(a.weight.slice(0, -1)) - Number(b.weight.slice(0, -1))
+            Number(a.assessment.weight) - Number(b.assessment.weight)
         }
       },
       {

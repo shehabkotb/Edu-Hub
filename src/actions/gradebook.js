@@ -1,0 +1,1 @@
+export const GET_SUBS_OF_COURSE = 'GET_SUBS_OF_COURSE';
