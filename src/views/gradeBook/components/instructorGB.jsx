@@ -1,11 +1,10 @@
 import { Table, Tag, Space, Button } from 'antd'
-import React, { useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
 import StudentGradeBook from './studentGB'
 import SummaryTable from './summaryGB'
 import InfoTable from './infoTable'
 import { PieChart } from 'reaviz'
-import { getSubsOfCourse } from '../../../reducers/gradebookReducer'
 
 const InstructorGradeBook = ({ courseId, id }) => {
   const [student,setStudent]=useState('');
@@ -15,10 +14,6 @@ const InstructorGradeBook = ({ courseId, id }) => {
   const [vis, setVis] = useState(true)
   const [fVis, setFVis] = useState(false)
 
-  const dispatch = useDispatch()
-  useEffect(() => {
-    dispatch(getSubsOfCourse(courseId))
-  }, [dispatch, courseId])
 
   const submitions = useSelector((state) =>
     state.courseGradebook.filter((v) => v.assessment != null)
@@ -143,8 +138,9 @@ const InstructorGradeBook = ({ courseId, id }) => {
             dataSource={submitions}
             bordered
             title={() => {
-              return 'The Instructor "' + id + '" GradeBook: "' + courseId + '"'
+              return 'The Instructor GradeBook'
             }}
+            pagination={false}
           />
         </>
       )}

@@ -6,7 +6,7 @@ const gradebookReducer = (state = [], action) => {
   switch (action.type) {
     case GET_SUBS_OF_COURSE:
       return action.data.reverse()
-
+    
     default:
       return state
   }
@@ -18,12 +18,12 @@ export const getSubsOfCourse = (courseId) => {
           const response = await gradebookService.getSubsOfCourse(courseId)
           dispatch({ type: GET_SUBS_OF_COURSE, data: response })
         } catch (error) {
-          console.log(error)
           notification.error({
-            message: "Couldn't fitch gradebook check your connection"
+            message: "Couldn't fitch gradebook check your connection: "
           })
         }
     }
 }
+
 
 export default gradebookReducer

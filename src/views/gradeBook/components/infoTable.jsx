@@ -91,8 +91,8 @@ const InfoTable = ({ courseId, data, filter }) => {
             data={idata
               .map((v) => {
                 let res = {
-                  key: v.studentId,
-                  data: v.score / v.maxScore
+                  key: v.student.name,
+                  data: v.score / v.assessment.maxScore
                 }
                 return res
               })
@@ -101,7 +101,12 @@ const InfoTable = ({ courseId, data, filter }) => {
               })}
             gridlines={<GridlineSeries line={<Gridline direction="y" />} />}
           />
-          <Table columns={columns} dataSource={idata} bordered />
+          <Table
+            columns={columns}
+            dataSource={idata}
+            bordered
+            pagination={false}
+          />
         </>
       )}
       {showSt && (

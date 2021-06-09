@@ -8,7 +8,8 @@ import {
   GuideBar
 } from 'reaviz'
 import StudentGradeBook from './studentGB'
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
 import './../styles.css'
 
 const SummaryTable = ({ courseId }) => {
@@ -16,56 +17,23 @@ const SummaryTable = ({ courseId }) => {
   const [showSt, setShowst] = useState(false)
   const [vis, setVis] = useState(true)
 
-  
-  const studentGrades = [
-    {
-      studentId: '60a37c775f5a214ad11a7b90',
-      totalScore: '33%', // sum( (score / maxScore) * weight ) * 100
-      assignmentsScore: '3%',
-      examsScore: '30%',
-      finalExamsScore: '50%',
-      grade: 'D'
-    },
-    {
-      studentId: '60a37c775f5a214ad11a7b91',
-      totalScore: '53%', // sum( (score / maxScore) * weight ) * 100
-      assignmentsScore: '3%',
-      examsScore: '30%',
-      finalExamsScore: '40%',
-      grade: 'D'
-    },
-    {
-      studentId: '60a37c775f5a214ad11a7b92',
-      totalScore: '33%', // sum( (score / maxScore) * weight ) * 100
-      assignmentsScore: '3%',
-      examsScore: '30%',
-      finalExamsScore: '40%',
-      grade: 'D'
-    },
-    {
-      studentId: '60a37c775f5a214ad11a7b93',
-      totalScore: '43%', // sum( (score / maxScore) * weight ) * 100
-      assignmentsScore: '3%',
-      examsScore: '30%',
-      finalExamsScore: '30%',
-      grade: 'D'
-    }
-  ]
+
+  const studentGrades = useSelector((state) => state.summaryGradebook)
 
   const fCol = [
     {
       title: 'Student',
-      dataIndex: 'studentId',
-      key: 'studentId',
+      dataIndex: 'student',
+      key: 'student',
       render: (text) => (
         <a
           onClick={() => {
-            setStudent(text)
+            setStudent(text._id)
             setVis(false)
             setShowst(true)
           }}
         >
-          {text}
+          {text.name}
         </a>
       )
     },
@@ -75,7 +43,8 @@ const SummaryTable = ({ courseId }) => {
       key: 'assignmentsScore',
       sorter: {
         compare: (a, b) =>
-          Number(a.assignmentsScore.slice(0, -1)) - Number(b.assignmentsScore.slice(0, -1))
+          Number(a.assignmentsScore.slice(0, -1)) -
+          Number(b.assignmentsScore.slice(0, -1))
       }
     },
     {
@@ -87,7 +56,7 @@ const SummaryTable = ({ courseId }) => {
           Number(a.examsScore.slice(0, -1)) - Number(b.examsScore.slice(0, -1))
       }
     },
-    {
+    /*{
       title: 'Final Exam',
       dataIndex: 'finalExamsScore',
       key: 'finalExamsScore',
@@ -95,7 +64,7 @@ const SummaryTable = ({ courseId }) => {
         compare: (a, b) =>
           Number(a.finalExamsScore.slice(0, -1)) - Number(b.finalExamsScore.slice(0, -1))
       }
-    },
+    },*/
     {
       title: 'Total Score',
       dataIndex: 'totalScore',
@@ -112,9 +81,11 @@ const SummaryTable = ({ courseId }) => {
     }
   ]
 
-  const calculateDistribution = (arr)=>{
-    var a = [],b = [],prev
-    var res=[]
+  const calculateDistribution = (arr) => {
+    var a = [],
+      b = [],
+      prev
+    var res = []
     arr.sort(function (a, b) {
       return (
         Number(a.totalScore.slice(0, -1)) - Number(b.totalScore.slice(0, -1))
@@ -130,8 +101,8 @@ const SummaryTable = ({ courseId }) => {
       prev = Number(arr[i].totalScore.slice(0, -1))
     }
 
-    for (var i=0;i<a.length;i++){
-      res.push({ key: a[i]+"%", data: b[i] })
+    for (var i = 0; i < a.length; i++) {
+      res.push({ key: a[i] + '%', data: b[i] })
     }
     console.log(res)
     return res
@@ -149,7 +120,7 @@ const SummaryTable = ({ courseId }) => {
               data={studentGrades
                 .map((v) => {
                   let res = {
-                    key: v.studentId,
+                    key: v.student.name,
                     data: Number(v.totalScore.slice(0, -1))
                   }
                   return res
@@ -182,6 +153,7 @@ const SummaryTable = ({ courseId }) => {
             columns={fCol}
             dataSource={studentGrades}
             bordered
+            pagination={false}
             title={() => 'students summary gradebook'}
           />
         </>

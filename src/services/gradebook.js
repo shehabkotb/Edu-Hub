@@ -14,8 +14,19 @@ const getSubsOfCourse = async (courseId) => {
     }
 }
 
+const getSummaryOfCourse = async (courseId) => {
+  try {
+    const response = await axios.get(`/${courseId}/grade-book-summary`, getAuthHeader())
+    return response.data
+  } catch (e) {
+    console.log('error in fitching summary gradebook: ' + e)
+    return []
+  }
+}
+
 const gradebookService = {
-  getSubsOfCourse
+  getSubsOfCourse,
+  getSummaryOfCourse
 }
 
 export default gradebookService;
