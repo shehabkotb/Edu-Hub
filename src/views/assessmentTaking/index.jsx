@@ -51,10 +51,10 @@ const AssessmentTaking = (props) => {
         </Col>
         <Col span={4}>
           <Affix offsetTop={10}>
-            {/* <SpyLogic
+            <SpyLogic
               timeRemaining={submission.assessment.remainingTime}
               examId={submission.assessment.id}
-            /> */}
+            />
           </Affix>
         </Col>
       </Row>

@@ -183,6 +183,12 @@ const GradingPage = (props) => {
                     status={submissions[selectedIndex].autoGradingStatus}
                   />
                 </Space>
+                {assessment.type === 'Exam' && (
+                  <Text>
+                    Number of Joins:{' '}
+                    {submissions[selectedIndex].numberOfExamJoins}
+                  </Text>
+                )}
                 <Form.Item
                   initialValue={submissions[selectedIndex].score}
                   label={`Total Score out of ${assessment.maxScore}:`}
