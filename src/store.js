@@ -27,7 +27,7 @@ import summaryGradebookReducer from './reducers/summaryGradebookReducer'
 const persistConfig = {
   key: 'root',
   storage,
-  blacklist: ['auth', 'assessmentCreation', 'assessmentTaking']
+  blacklist: ['auth', 'assessmentCreation', 'assessmentTaking', 'submissions']
 }
 
 const reducer = combineReducers({
@@ -46,7 +46,7 @@ const reducer = combineReducers({
   assessmentTaking: assessmentTakingReducer,
   submissions: submissionsReducer,
   courseGradebook: gradebookReducer,
-  summaryGradebook: summaryGradebookReducer,
+  summaryGradebook: summaryGradebookReducer
 })
 
 const persistedReducer = persistReducer(persistConfig, reducer)

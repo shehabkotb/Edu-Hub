@@ -7,10 +7,7 @@ import {
 
 import { notification } from 'antd'
 
-const submissionsReducer = (
-  state = { data: { submissions: {}, assessment: {} }, loading: false },
-  action
-) => {
+const submissionsReducer = (state = { data: {}, loading: false }, action) => {
   switch (action.type) {
     case LOAD_SUBMISSIONS:
       return { data: {}, loading: true }
@@ -26,6 +23,7 @@ const submissionsReducer = (
 export const getAllSubmissions = (courseId, assessmentId) => {
   return async (dispatch) => {
     try {
+      dispatch({ type: LOAD_SUBMISSIONS })
       const response = await submissionService.getAll(courseId, assessmentId)
 
       dispatch({ type: GET_ALL_SUBMISSIONS, data: response })
@@ -33,6 +31,28 @@ export const getAllSubmissions = (courseId, assessmentId) => {
       console.log(error)
       notification.error({
         message: "Couldn't load Submissions check your connection"
+      })
+    }
+  }
+}
+
+export const checkPlagiarism = (courseId, assessmentId) => {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: LOAD_SUBMISSIONS })
+      const response = await submissionService.checkPlagiarism(
+        courseId,
+        assessmentId
+      )
+
+      dispatch({ type: GET_ALL_SUBMISSIONS, data: response })
+      notification.success({
+        message: 'queued Plagiarism checking'
+      })
+    } catch (error) {
+      console.log(error)
+      notification.error({
+        message: `Couldn't queue Plagiarism checking ${error.toString()}`
       })
     }
   }

@@ -31,6 +31,14 @@ const updateSubmission = async (
   return response.data
 }
 
+const checkPlagiarism = async (courseId, assessmentId) => {
+  const response = await axios.get(
+    `/${courseId}/assessments/${assessmentId}/check-plagiarism`,
+    getAuthHeader()
+  )
+  return response.data
+}
+
 const gradeSubmission = async (
   courseId,
   assessmentId,
@@ -49,7 +57,8 @@ const submissionService = {
   getAll,
   getOrCreateSumbission,
   updateSubmission,
-  gradeSubmission
+  gradeSubmission,
+  checkPlagiarism
 }
 
 export default submissionService

@@ -51,7 +51,7 @@ export const getAllCourses = () => {
     } catch (error) {
       console.log(error)
       notification.error({
-        message: `Couldn't load Courses ${error.toString()}`
+        message: `Couldn't load Courses`
       })
     }
   }

@@ -4,9 +4,14 @@ import {
   FilePdfOutlined,
   FileExcelOutlined,
   FileWordOutlined,
-  FileOutlined
+  FileOutlined,
+  DownloadOutlined
 } from '@ant-design/icons'
-import { Button } from 'antd'
+import { Button, Typography } from 'antd'
+
+import PlagarismTag from '../../../components/PlagarismTag'
+
+const { Text } = Typography
 
 const FileDisplay = (props) => {
   const { files, handleClick } = props
@@ -33,13 +38,29 @@ const FileItem = (props) => {
         style={{ marginRight: '6px', fontSize: '16px' }}
         fileType={getFileType(file)}
       />
-      <Button
-        type="link"
-        style={{ fontSize: '16px' }}
-        onClick={() => handleClick(file.url)}
-      >
-        {file.name}
-      </Button>
+      {getFileType(file) === 'pdf' && (
+        <Button
+          type="link"
+          style={{ fontSize: '16px' }}
+          onClick={() => handleClick(file.url)}
+        >
+          {file.name}
+        </Button>
+      )}
+      {getFileType(file) !== 'pdf' && (
+        <Button href={file.url} type="link" style={{ fontSize: '16px' }}>
+          {file.name}
+          {<DownloadOutlined />}
+        </Button>
+      )}
+      <PlagarismTag status={file.plagarismFileStatus} />
+      {file.plagarismFileStatus === 'med' ||
+        file.plagarismFileStatus === 'high' ||
+        (file.plagarismFileStatus === 'veryHigh' && (
+          <Text type="secondary">
+            Copied from <Text strong>{file.plagiarisedFrom}</Text>
+          </Text>
+        ))}
     </div>
   )
 }
@@ -50,7 +71,7 @@ const FileIcon = (props) => {
   if (fileType === 'pdf') return <FilePdfOutlined {...rest} />
   else if (fileType === 'docx') return <FileWordOutlined {...rest} />
   else if (fileType === 'xls') return <FileExcelOutlined {...rest} />
-  else return <FileOutlined />
+  else return <FileOutlined style={{ marginRight: '6px', fontSize: '16px' }} />
 }
 
 export default FileDisplay

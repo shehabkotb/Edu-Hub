@@ -27,6 +27,8 @@ import {
   getAllSubmissions,
   gradeQuestions
 } from '../../reducers/submissionsReducer'
+import Spinner from '../../components/Spinner'
+import { useHistory } from 'react-router-dom'
 
 const { Text, Title } = Typography
 
@@ -44,11 +46,14 @@ const Grader = () => {
   const { courseId, assessmentId } = useParams()
 
   const data = useSelector((state) => state.submissions.data)
+  const loading = useSelector((state) => state.submissions.loading)
   const { assessment, submissions } = data || {}
 
   useEffect(() => {
     dispatch(getAllSubmissions(courseId, assessmentId))
-  }, [])
+  }, [courseId, assessmentId])
+
+  if (loading) return <Spinner size="large" />
 
   if (!submissions) return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
 
@@ -62,8 +67,16 @@ const FileView = ({ files }) => {
     setselectedFileURL(url)
   }
 
+  const getPdfUrl = (files) => {
+    for (const file of files) {
+      const index = file.url.lastIndexOf('.')
+      if (file.url.slice(index + 1) === 'pdf') return file.url
+    }
+    return ''
+  }
+
   useEffect(() => {
-    setselectedFileURL(files[0]?.url || '')
+    setselectedFileURL(getPdfUrl(files))
   }, [files])
 
   return (
@@ -81,6 +94,7 @@ const FileView = ({ files }) => {
 
 const GradingPage = (props) => {
   const dispatch = useDispatch()
+  const history = useHistory()
   const { state } = useLocation()
   const { courseId, assessmentId } = useParams()
   const { submissions, assessment } = props
@@ -110,7 +124,10 @@ const GradingPage = (props) => {
         submissions[selectedIndex].student._id,
         submission
       )
-    )
+    ).then(() => {
+      if (submissions.length - 1 !== selectedIndex)
+        setSelectedIndex(selectedIndex + 1)
+    })
   }
 
   return (
@@ -119,8 +136,9 @@ const GradingPage = (props) => {
         <Col span={18}>
           <Container>
             <Title level={3}>
-              Submissions {selectedIndex + 1}{' '}
-              <Text type="secondary">out of</Text> {submissions.length}
+              {assessment.title} <Text type="secondary">submission</Text>{' '}
+              {selectedIndex + 1} <Text type="secondary">out of</Text>{' '}
+              {submissions.length}
             </Title>
             <Divider />
             {assessment.submissionType === 'online' && (
@@ -171,12 +189,14 @@ const GradingPage = (props) => {
                     submissions[selectedIndex].submittedAt
                   ).toLocaleString(DateTime.DATETIME_MED)}
                 </Text>
-                <Space>
-                  <Text>Plagarism Degree: </Text>
-                  <PlagarismTag
-                    status={submissions[selectedIndex].plagarismStatus}
-                  />
-                </Space>
+                {assessment.submissionType === 'written' && (
+                  <Space>
+                    <Text>Plagarism Degree: </Text>
+                    <PlagarismTag
+                      status={submissions[selectedIndex].plagarismStatus}
+                    />
+                  </Space>
+                )}
                 <Space>
                   <Text>AutoGrading Status: </Text>
                   <AutoGradingTag
@@ -193,6 +213,7 @@ const GradingPage = (props) => {
                   initialValue={submissions[selectedIndex].score}
                   label={`Total Score out of ${assessment.maxScore}:`}
                   name="score"
+                  preserve={false}
                   rules={
                     assessment.submissionType === 'written' && [
                       { required: true }
@@ -212,7 +233,11 @@ const GradingPage = (props) => {
                 <Button type="primary" onClick={() => form.submit()}>
                   Grade
                 </Button>
-                <Button>Cancel</Button>
+                <Button
+                  onClick={() => history.push(`/app/course/${courseId}/exams`)}
+                >
+                  Cancel
+                </Button>
               </Space>
             </div>
           </Affix>

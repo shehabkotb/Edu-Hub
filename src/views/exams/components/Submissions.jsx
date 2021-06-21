@@ -9,7 +9,10 @@ import { STUDENT } from '../../../constants/userRoles'
 import { Link } from 'react-router-dom'
 import { DateTime } from 'luxon'
 import PlagarismTag from '../../../components/PlagarismTag'
-import { getAllSubmissions } from '../../../reducers/submissionsReducer'
+import {
+  checkPlagiarism,
+  getAllSubmissions
+} from '../../../reducers/submissionsReducer'
 import Spinner from '../../../components/Spinner'
 
 const { Title, Text } = Typography
@@ -38,12 +41,12 @@ const Submissions = (props) => {
         <Title level={3}>
           All Submissions for <Text type="secondary">{assessment?.title}</Text>
         </Title>
-        {privilege !== STUDENT && (
+        {privilege !== STUDENT && assessment?.submissionType === 'written' && (
           <Button
-            // onClick={() => history.push(`/app/course/${courseId}/exams/create`)}
+            onClick={() => dispatch(checkPlagiarism(courseId, assessmentId))}
             type="primary"
           >
-            Check Plagarism
+            Check Plagiarism
           </Button>
         )}
       </FlexSectionHeader>
@@ -71,13 +74,15 @@ const Submissions = (props) => {
               )
           }}
         />
-        <Column
-          title="Plagirism Degree"
-          dataIndex="plagarismStatus"
-          render={(plagarismStatus) => (
-            <PlagarismTag status={plagarismStatus} />
-          )}
-        />
+        {assessment?.submissionType === 'written' && (
+          <Column
+            title="Plagirism Degree"
+            dataIndex="plagarismStatus"
+            render={(plagarismStatus) => (
+              <PlagarismTag status={plagarismStatus} />
+            )}
+          />
+        )}
         <Column
           title="Score"
           dataIndex="score"

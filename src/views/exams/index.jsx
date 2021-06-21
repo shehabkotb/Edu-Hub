@@ -157,6 +157,10 @@ const ExamItem = ({ exam, disabled }) => {
                 <Text type="secondary"> minutes</Text>
               </Text>
             </span>
+            <span>
+              <Text type="secondary">Submission: </Text>
+              <Text strong>{exam.submissionType}</Text>
+            </span>
           </Space>
 
           <Title
