@@ -39,6 +39,14 @@ const checkPlagiarism = async (courseId, assessmentId) => {
   return response.data
 }
 
+const autoGrade = async (courseId, assessmentId) => {
+  const response = await axios.get(
+    `/${courseId}/assessments/${assessmentId}/auto-grade`,
+    getAuthHeader()
+  )
+  return response.data
+}
+
 const gradeSubmission = async (
   courseId,
   assessmentId,
@@ -58,7 +66,8 @@ const submissionService = {
   getOrCreateSumbission,
   updateSubmission,
   gradeSubmission,
-  checkPlagiarism
+  checkPlagiarism,
+  autoGrade
 }
 
 export default submissionService

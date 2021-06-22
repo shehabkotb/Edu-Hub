@@ -46,11 +46,18 @@ const WrittenQuestionForm = (props) => {
 
   const addWeight = (word, weight) => {
     if (!word || !weight) return
-    else setWeights(weights.concat({ key_word: word, weight }))
+    else {
+      setWeights(weights.concat({ key_word: word, weight }))
+      setControlledKeyWord('')
+    }
   }
 
   const removeWeight = (removedWeight) => {
-    setWeights(weights.filter((element) => element.key_Word !== removedWeight))
+    const newWeights = weights.filter(
+      (element) => element['key_word'] !== removedWeight
+    )
+    debugger
+    setWeights(newWeights)
   }
 
   const handleQuestionSubmit = (values) => {
@@ -106,14 +113,15 @@ const WrittenQuestionForm = (props) => {
             <Checkbox>TextMatch</Checkbox>
           </Form.Item>
           {weights?.map((element, index) => {
+            debugger
             return (
               <Tag
-                key={index}
+                key={element['key_word']}
                 color="red"
                 closable
-                onClose={() => removeWeight(element.key_word)}
+                onClose={() => removeWeight(element['key_word'])}
               >
-                {element.key_word} : {element.weight}
+                {element['key_word']} : {element.weight}
               </Tag>
             )
           })}
@@ -123,6 +131,7 @@ const WrittenQuestionForm = (props) => {
             placeholder="keyWord"
             value={controlledKeyWord}
             onChange={handleControlledKeyWord}
+            onPressEnter={() => addWeight(controlledKeyWord, controlledWeight)}
           />
           <Input
             size="small"

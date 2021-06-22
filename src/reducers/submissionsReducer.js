@@ -52,7 +52,26 @@ export const checkPlagiarism = (courseId, assessmentId) => {
     } catch (error) {
       console.log(error)
       notification.error({
-        message: `Couldn't queue Plagiarism checking ${error.toString()}`
+        message: `Couldn't queue Plagiarism checking`
+      })
+    }
+  }
+}
+
+export const autoGrade = (courseId, assessmentId) => {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: LOAD_SUBMISSIONS })
+      const response = await submissionService.autoGrade(courseId, assessmentId)
+
+      dispatch({ type: GET_ALL_SUBMISSIONS, data: response })
+      notification.success({
+        message: 'queued Auto Grader'
+      })
+    } catch (error) {
+      console.log(error)
+      notification.error({
+        message: `Couldn't queue Auto Grader ${error.toString()}`
       })
     }
   }

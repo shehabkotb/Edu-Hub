@@ -55,7 +55,8 @@ const Grader = () => {
 
   if (loading) return <Spinner size="large" />
 
-  if (!submissions) return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+  if (!submissions || (Array.isArray(submissions) && submissions.length === 0))
+    return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
 
   return <GradingPage submissions={submissions} assessment={assessment} />
 }
@@ -107,14 +108,23 @@ const GradingPage = (props) => {
     form.resetFields()
   }, [selectedIndex])
 
-  const handleSubmit = (submission) => {
+  const calculateTotalScore = (answers) => {
     let totalScore = 0
-    if (assessment.submissionType === 'online') {
-      submission.answers.forEach(
-        (answer) => (totalScore += parseInt(answer.score))
-      )
-      submission.score = totalScore
+    for (const answer of answers) {
+      totalScore += answer?.score || 0
     }
+    return totalScore
+  }
+
+  const handleScoreCalculation = (changedValues, allValues) => {
+    const answers = allValues?.answers
+    if (answers) {
+      let totalScore = calculateTotalScore(answers)
+      form.setFieldsValue({ score: totalScore })
+    }
+  }
+
+  const handleSubmit = (submission) => {
     console.log(submission)
 
     dispatch(
@@ -130,8 +140,22 @@ const GradingPage = (props) => {
     })
   }
 
+  const getInitialScore = () => {
+    if (submissions[selectedIndex].score)
+      return submissions[selectedIndex].score
+    else return calculateTotalScore(submissions[selectedIndex].answers)
+  }
+
   return (
-    <Form form={form} onFinish={handleSubmit} layout="vertical">
+    <Form
+      onValuesChange={handleScoreCalculation}
+      form={form}
+      initialValues={{
+        score: getInitialScore()
+      }}
+      onFinish={handleSubmit}
+      layout="vertical"
+    >
       <Row gutter={[16, 16]}>
         <Col span={18}>
           <Container>
@@ -141,7 +165,7 @@ const GradingPage = (props) => {
               {submissions.length}
             </Title>
             <Divider />
-            {assessment.submissionType === 'online' && (
+            {assessment.questionsType === 'online' && (
               <GradingQuestionList
                 form={form}
                 answers={submissions[selectedIndex].answers}
@@ -197,12 +221,14 @@ const GradingPage = (props) => {
                     />
                   </Space>
                 )}
-                <Space>
-                  <Text>AutoGrading Status: </Text>
-                  <AutoGradingTag
-                    status={submissions[selectedIndex].autoGradingStatus}
-                  />
-                </Space>
+                {assessment?.questionsType === 'online' && (
+                  <Space>
+                    <Text>AutoGrading Status: </Text>
+                    <AutoGradingTag
+                      status={submissions[selectedIndex].autoGradingStatus}
+                    />
+                  </Space>
+                )}
                 {assessment.type === 'Exam' && (
                   <Text>
                     Number of Joins:{' '}
