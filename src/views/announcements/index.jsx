@@ -7,6 +7,7 @@ import {
   addAnnouncement,
   getAllAnnouncements
 } from '../../reducers/announcementsReducer'
+import useCoursePrivilege from '../../hooks/useCourseprivilege'
 
 const Feed = ({ announcements, user }) => {
   return announcements.map((ann) => {
@@ -30,6 +31,8 @@ const AnnouncementsFeed = ({ courseId }) => {
   const announcements = useSelector((state) => state.announcements)
   const [annText, setAnnText] = useState('')
 
+  const { privilege } = useCoursePrivilege()
+
   const onPost = () => {
     if (annText !== '') {
       dispatch(addAnnouncement(courseId, annText))
@@ -43,7 +46,7 @@ const AnnouncementsFeed = ({ courseId }) => {
 
   return (
     <div>
-      {user.role==="instructor" &&(
+      {privilege === 'instructor' && (
         <span>
           <Input.TextArea
             size="large"
@@ -54,7 +57,9 @@ const AnnouncementsFeed = ({ courseId }) => {
             onChange={onTxtChange}
             className="txt"
           ></Input.TextArea>
-          <Button className='postButton' onClick={onPost}>Post</Button>
+          <Button className="postButton" onClick={onPost}>
+            Post
+          </Button>
         </span>
       )}
       <Feed announcements={announcements} user={user} />

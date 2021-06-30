@@ -12,7 +12,7 @@ import { useHistory, useParams } from 'react-router'
 
 import { AiOutlineSolution } from 'react-icons/ai'
 
-import useCoursePrivillege from '../../hooks/useCourseprivilege'
+import useCoursePrivilege from '../../hooks/useCourseprivilege'
 import { Link } from 'react-router-dom'
 
 const { Title, Text } = Typography
@@ -21,7 +21,7 @@ const Exams = () => {
   const dispatch = useDispatch()
   const { courseId } = useParams()
   const history = useHistory()
-  const { enrolled, privilege } = useCoursePrivillege()
+  const { enrolled, privilege } = useCoursePrivilege()
 
   const exams = useSelector((state) => state.exams.data)
 
@@ -87,7 +87,7 @@ const StyledListItem = styled(List.Item)`
 `
 const ExamItem = ({ exam, disabled }) => {
   const { courseId } = useParams()
-  const { privilege } = useCoursePrivillege()
+  const { privilege } = useCoursePrivilege()
   const dispatch = useDispatch()
 
   const optionMenu = (

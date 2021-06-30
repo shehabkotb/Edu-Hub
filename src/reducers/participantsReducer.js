@@ -48,7 +48,7 @@ export const updatePrivilege = (courseId, enrollmentId, enrolledAs) => {
     } catch (error) {
       console.log(error)
       notification.error({
-        message: "Couldn't update Privillege check your connection"
+        message: "Couldn't update Privilege check your connection"
       })
     }
   }

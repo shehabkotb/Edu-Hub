@@ -7,7 +7,7 @@ import { Link, NavLink, useRouteMatch } from 'react-router-dom'
 
 import { DownOutlined, ArrowLeftOutlined } from '@ant-design/icons'
 import { useSelector } from 'react-redux'
-import useCoursePrivillege from '../../hooks/useCourseprivilege'
+import useCoursePrivilege from '../../hooks/useCourseprivilege'
 
 const CourseMenu = ({ url, privilege }) => {
   return (
@@ -45,7 +45,7 @@ const CourseNavigation = () => {
     state.courses.data.find((course) => course.id === params.id)
   )
 
-  const { privilege } = useCoursePrivillege(params.id)
+  const { privilege } = useCoursePrivilege(params.id)
 
   const popHistory = () => {
     history.goBack()

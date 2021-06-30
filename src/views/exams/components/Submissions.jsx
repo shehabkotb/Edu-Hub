@@ -4,7 +4,7 @@ import { FlexSectionHeader } from '../../style'
 
 import { Avatar, Button, Space, Table, Typography } from 'antd'
 import { useParams } from 'react-router'
-import useCoursePrivillege from '../../../hooks/useCourseprivilege'
+import useCoursePrivilege from '../../../hooks/useCourseprivilege'
 import { STUDENT } from '../../../constants/userRoles'
 import { Link } from 'react-router-dom'
 import { DateTime } from 'luxon'
@@ -25,7 +25,7 @@ const Submissions = (props) => {
   const dispatch = useDispatch()
 
   const { courseId, assessmentId } = useParams()
-  const { privilege } = useCoursePrivillege()
+  const { privilege } = useCoursePrivilege()
 
   const data = useSelector((state) => state.submissions.data)
   const loading = useSelector((state) => state.submissions.loading)

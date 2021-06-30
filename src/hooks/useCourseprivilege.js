@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router'
 
-const useCoursePrivillege = (id) => {
+const useCoursePrivilege = (id) => {
   const params = useParams()
   const courseId = id || params.courseId
 
@@ -15,4 +15,4 @@ const useCoursePrivillege = (id) => {
   return { enrolled, privilege }
 }
 
-export default useCoursePrivillege
+export default useCoursePrivilege

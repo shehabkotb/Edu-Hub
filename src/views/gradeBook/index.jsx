@@ -5,25 +5,27 @@ import { useSelector, useDispatch } from 'react-redux'
 import React, { useState, useEffect } from 'react'
 import { getSummaryOfCourse } from '../../reducers/summaryGradebookReducer'
 import { getSubsOfCourse } from '../../reducers/gradebookReducer'
-
+import useCoursePrivilege from '../../hooks/useCourseprivilege'
 
 const GradeBook = ({ courseId }) => {
-  const user = useSelector((state) => state.auth.user)
+  const { privilege } = useCoursePrivilege()
   const dispatch = useDispatch()
-  
+
+  const user = useSelector((state) => state.auth.user)
+
   useEffect(() => {
     dispatch(getSummaryOfCourse(courseId))
-    if (user.role === 'instructor') {
+    if (privilege === 'instructor') {
       dispatch(getSubsOfCourse(courseId))
     }
   }, [dispatch, courseId])
 
   return (
     <>
-      {user.role === 'student' && (
+      {privilege === 'student' && (
         <StudentGradeBook courseId={courseId} id={user._id} />
       )}
-      {user.role === 'instructor' && (
+      {privilege === 'instructor' && (
         <InstructorGradeBook courseId={courseId} id={user._id} />
       )}
     </>

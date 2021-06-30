@@ -3,11 +3,9 @@ import { BarChart, GridlineSeries, Gridline } from 'reaviz'
 import { useSelector, useDispatch } from 'react-redux'
 import React from 'react'
 
-
 const StudentGradeBook = ({ courseId, id }) => {
-
-  const data = useSelector((state) =>
-    state.summaryGradebook.filter((val) => val.student._id === id)[0]
+  const data = useSelector(
+    (state) => state.summaryGradebook.filter((val) => val.student._id === id)[0]
   )
 
   const columns = [
