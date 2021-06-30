@@ -7,8 +7,9 @@ import { Link, NavLink, useRouteMatch } from 'react-router-dom'
 
 import { DownOutlined, ArrowLeftOutlined } from '@ant-design/icons'
 import { useSelector } from 'react-redux'
+import useCoursePrivillege from '../../hooks/useCourseprivilege'
 
-const CourseMenu = ({ url }) => {
+const CourseMenu = ({ url, privilege }) => {
   return (
     <Menu>
       <Menu.Item>
@@ -20,15 +21,17 @@ const CourseMenu = ({ url }) => {
       <Menu.Item>
         <Link to={`${url}/discussions`}>Discussions</Link>
       </Menu.Item>
-      <Menu.Item>
-        <Link to={`${url}/files`}>Files</Link>
-      </Menu.Item>
-      <Menu.Item>
-        <Link to={`${url}/particpants`}>Particpants</Link>
-      </Menu.Item>
-      <Menu.Item>
-        <Link to={`${url}/settings`}>Settings</Link>
-      </Menu.Item>
+      {privilege !== 'student' && (
+        <Menu.Item>
+          <Link to={`${url}/particpants`}>Particpants</Link>
+        </Menu.Item>
+      )}
+
+      {privilege !== 'student' && (
+        <Menu.Item>
+          <Link to={`${url}/settings`}>Settings</Link>
+        </Menu.Item>
+      )}
     </Menu>
   )
 }
@@ -41,6 +44,8 @@ const CourseNavigation = () => {
   let course = useSelector((state) =>
     state.courses.data.find((course) => course.id === params.id)
   )
+
+  const { privilege } = useCoursePrivillege(params.id)
 
   const popHistory = () => {
     history.goBack()
@@ -55,7 +60,10 @@ const CourseNavigation = () => {
           onClick={popHistory}
           icon={<ArrowLeftOutlined />}
         ></Button>
-        <Dropdown overlay={<CourseMenu url={url} />} placement="bottomCenter">
+        <Dropdown
+          overlay={<CourseMenu url={url} privilege={privilege} />}
+          placement="bottomCenter"
+        >
           <Button
             shape="round"
             style={{ backgroundColor: course.backgroundColor }}

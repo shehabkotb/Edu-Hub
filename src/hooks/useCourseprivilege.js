@@ -1,8 +1,10 @@
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router'
 
-const useCoursePrivillege = () => {
-  const { courseId } = useParams()
+const useCoursePrivillege = (id) => {
+  const params = useParams()
+  const courseId = id || params.courseId
+
   const courses = useSelector((state) => state.courses.data)
 
   const currentCourse = courses.find((course) => course.id === courseId)

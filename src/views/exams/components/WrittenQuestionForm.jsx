@@ -56,7 +56,7 @@ const WrittenQuestionForm = (props) => {
     const newWeights = weights.filter(
       (element) => element['key_word'] !== removedWeight
     )
-    debugger
+
     setWeights(newWeights)
   }
 
@@ -113,7 +113,6 @@ const WrittenQuestionForm = (props) => {
             <Checkbox>TextMatch</Checkbox>
           </Form.Item>
           {weights?.map((element, index) => {
-            debugger
             return (
               <Tag
                 key={element['key_word']}
