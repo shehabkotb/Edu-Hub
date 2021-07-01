@@ -1,4 +1,0 @@
-export const GET_SUBS_OF_COURSE = 'GET_SUBS_OF_COURSE';
-export const GET_SUMMARY_OF_COURSE = 'GET_SUMMARY_OF_COURSE';
-export const CLEAR_SUBS = 'CLEAR_SUBS';
-export const CLEAR_SUMM = 'CLEAR_SUMM';

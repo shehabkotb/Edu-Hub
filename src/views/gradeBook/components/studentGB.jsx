@@ -91,8 +91,8 @@ const StudentGradeBook = ({ courseId, id }) => {
       <BarChart
         width={350}
         height={250}
-        data={data.grades
-          .map((v) => {
+        data={data?.grades
+          ?.map((v) => {
             let res = {
               key: v.title,
               data: v.score / v.maxScore
@@ -106,7 +106,7 @@ const StudentGradeBook = ({ courseId, id }) => {
       />
       <Table
         columns={columns}
-        dataSource={data.grades}
+        dataSource={data?.grades}
         bordered
         title={() => {
           return 'The Student GradeBook'

@@ -1,12 +1,12 @@
 import gradebookService from '../services/gradebook'
-import { GET_SUMMARY_OF_COURSE } from '../actions/gradebook'
 import { notification } from 'antd'
+
+const GET_SUMMARY_OF_COURSE = 'GET_SUMMARY_OF_COURSE'
 
 const summaryGradebookReducer = (state = [], action) => {
   switch (action.type) {
     case GET_SUMMARY_OF_COURSE:
-      return action.data.reverse()
-
+      return action?.data?.reverse() || []
     default:
       return state
   }
