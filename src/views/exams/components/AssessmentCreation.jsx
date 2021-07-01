@@ -41,18 +41,22 @@ const AssessmentCreation = (props) => {
     const openTime = values.time[0].toISOString()
     const closeTime = values.time[1].toISOString()
     const check = questions.filter((question) => question.status === 'DRAFT')
-    if (check.length > 0)
+
+    if (check.length > 0 && values.questionsType === 'online') {
       Modal.info({
         title: 'Unsaved Questions',
         content: 'save all questions before submitting'
       })
+      return
+    }
 
     const assessment = {
       title: title,
       ...values,
       type: assessmentType,
       course: courseId,
-      questions: questions || [],
+      questions:
+        questions.filter((question) => question.status !== 'DRAFT') || [],
       openAt: openTime,
       closeAt: closeTime,
       files: files,

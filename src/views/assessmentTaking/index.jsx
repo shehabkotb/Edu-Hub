@@ -37,6 +37,14 @@ const AssessmentTaking = (props) => {
       }
     })
     return null
+  } else if (submission.assessment.status.code === 'willOpen') {
+    Modal.info({
+      title: "Exam didn't open yet",
+      onOk() {
+        window.close()
+      }
+    })
+    return null
   }
 
   return (
@@ -51,10 +59,10 @@ const AssessmentTaking = (props) => {
         </Col>
         <Col span={4}>
           <Affix offsetTop={10}>
-            <SpyLogic
+            {/* <SpyLogic
               timeRemaining={submission.assessment.remainingTime}
               examId={submission.assessment.id}
-            />
+            /> */}
           </Affix>
         </Col>
       </Row>
