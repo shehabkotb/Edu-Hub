@@ -52,7 +52,6 @@ const QuestionsSection = (props) => {
   }
 
   const handleFileRemove = async (removedFile) => {
-    debugger
     let s3URL = removedFile.url
     if (!removedFile.error) {
       setFiles(
@@ -189,7 +188,6 @@ const QuestionsSection = (props) => {
           <Title level={5}>Upload your answer</Title>
           <Dragger
             onChange={(info) => {
-              debugger
               const { status } = info.file
               if (status === 'done')
                 message.success(`${info.file.name} file uploaded successfully.`)
