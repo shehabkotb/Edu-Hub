@@ -16,7 +16,7 @@ const StudentGradeBook = ({ courseId, id }) => {
     },
     {
       title: 'Name',
-      dataIndex: 'name',
+      dataIndex: 'title',
       key: 'name'
     },
     {

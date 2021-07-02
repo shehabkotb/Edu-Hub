@@ -7,13 +7,12 @@ import InfoTable from './infoTable'
 import { PieChart } from 'reaviz'
 
 const InstructorGradeBook = ({ courseId, id }) => {
-  const [student,setStudent]=useState('');
+  const [student, setStudent] = useState('')
   const [showSt, setShowst] = useState(false)
   const [fltr, setFltr] = useState('')
   const [showInfo, setShowInfo] = useState(false)
   const [vis, setVis] = useState(true)
   const [fVis, setFVis] = useState(false)
-
 
   const submitions = useSelector((state) =>
     state.courseGradebook.filter((v) => v.assessment != null)
@@ -83,11 +82,10 @@ const InstructorGradeBook = ({ courseId, id }) => {
       title: 'Weight',
       dataIndex: 'assessment',
       key: 'assessment',
-      render: (text) => <span>{String(text.weight*100)+"%"}</span>,
+      render: (text) => <span>{String(text.weight * 100) + '%'}</span>,
       sorter: {
         compare: (a, b) =>
-          Number(a.assessment.weight) -
-          Number(b.assessment.weight)
+          Number(a.assessment.weight) - Number(b.assessment.weight)
       }
     },
     {

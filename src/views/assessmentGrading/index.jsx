@@ -18,6 +18,7 @@ import { DateTime } from 'luxon'
 import PlagarismTag from '../../components/PlagarismTag'
 import GradingQuestionList from './components/GradingQuestionList'
 import AutoGradingTag from '../../components/AutoGradingTag'
+import SubmissionTimeTag from '../../components/SubmissionTimeTag'
 
 import Styled from 'styled-components'
 import FileDisplay from './components/FileDispaly'
@@ -226,6 +227,14 @@ const GradingPage = (props) => {
                     <Text>AutoGrading Status: </Text>
                     <AutoGradingTag
                       status={submissions[selectedIndex].autoGradingStatus}
+                    />
+                  </Space>
+                )}
+                {assessment?.type === 'Assignment' && (
+                  <Space>
+                    <Text>Submit Status: </Text>
+                    <SubmissionTimeTag
+                      status={submissions[selectedIndex].status}
                     />
                   </Space>
                 )}

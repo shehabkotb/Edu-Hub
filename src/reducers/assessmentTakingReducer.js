@@ -107,6 +107,9 @@ export const updateSubmission = (
       )
 
       dispatch({ type: UPDATE_SUBMISSION, data: response })
+      notification.success({
+        message: 'submitted successfully'
+      })
     } catch (error) {
       console.log(error)
       notification.error({

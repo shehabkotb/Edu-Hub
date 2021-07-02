@@ -1,5 +1,13 @@
-import React, { useState } from 'react'
-import { Button, Divider, message, Modal, Typography, Upload } from 'antd'
+import React, { useEffect, useState } from 'react'
+import {
+  Button,
+  Divider,
+  message,
+  Modal,
+  Typography,
+  Upload,
+  Space
+} from 'antd'
 
 import { InboxOutlined } from '@ant-design/icons'
 import QuestionList from './QuestionList'
@@ -11,8 +19,10 @@ import {
 } from '../../../reducers/assessmentTakingReducer'
 import FileDisplay from '../../../components/FileDisplay'
 import s3Service from '../../../services/s3Service'
+import SubmissionTimeTag from '../../../components/SubmissionTimeTag'
 
 import { FlexSectionHeader } from '../../style'
+import { DateTime } from 'luxon'
 
 const { Title, Text } = Typography
 const { Dragger } = Upload
@@ -31,6 +41,10 @@ const QuestionsSection = (props) => {
   const { submission } = props
   const { assessment } = submission
 
+  useEffect(() => {
+    setFiles(submission.files)
+  }, [])
+
   const handleAnswerSubmit = (questionId, newAnswer) => {
     dispatch(
       submitAnswers(courseId, assessmentId, user._id, questionId, newAnswer)
@@ -38,16 +52,21 @@ const QuestionsSection = (props) => {
   }
 
   const handleFileRemove = async (removedFile) => {
-    let s3URL = ''
+    debugger
+    let s3URL = removedFile.url
     if (!removedFile.error) {
       setFiles(
         files.filter((file) => {
-          if (file.uid === removedFile.uid) s3URL = file.url
-
-          return file.uid !== removedFile.uid
+          if (file.uid === removedFile.uid || file._id === removedFile._id)
+            return false
+          else return true
         })
       )
-      await s3Service.deleteFile(s3URL)
+      await s3Service
+        .deleteFile(s3URL)
+        .then((response) =>
+          message.success('file deleted make sure to resubmit with new file')
+        )
     }
   }
 
@@ -64,23 +83,52 @@ const QuestionsSection = (props) => {
       })
   }
 
-  const handleFinish = () => {
-    Modal.confirm({
-      title: 'Are you sure?',
-      content: [
-        <div key="1">Make sure all your answers are saved</div>,
-        <div key="2">You won't be able to change them anymore</div>
-      ],
+  const handleFinish = (alreadySumbitted) => {
+    if (assessment.submissionType === 'written' && files.length === 0) {
+      message.error(`must upload at least one file`)
+      return
+    }
+    if (assessment.type === 'Exam') {
+      Modal.confirm({
+        title: 'Are you sure?',
+        content: [
+          <div key="1">Make sure all your answers are saved</div>,
+          <div key="2">You won't be able to change them anymore</div>
+        ],
 
-      onOk() {
-        dispatch(
-          updateSubmission(courseId, assessmentId, user._id, {
-            files: files,
-            finished: true
-          })
-        )
-      }
-    })
+        onOk() {
+          dispatch(
+            updateSubmission(courseId, assessmentId, user._id, {
+              files: files,
+              finished: true
+            })
+          )
+        }
+      })
+    } else if (assessment.type === 'Assignment' && alreadySumbitted) {
+      Modal.confirm({
+        title: 'Are you sure?',
+        content: [
+          <div key="1">Your previous submission will be discarded.</div>
+        ],
+
+        onOk() {
+          dispatch(
+            updateSubmission(courseId, assessmentId, user._id, {
+              files: files,
+              finished: true
+            })
+          )
+        }
+      })
+    } else {
+      dispatch(
+        updateSubmission(courseId, assessmentId, user._id, {
+          files: files,
+          finished: true
+        })
+      )
+    }
   }
 
   return (
@@ -94,12 +142,30 @@ const QuestionsSection = (props) => {
       }}
     >
       <FlexSectionHeader>
-        <Title level={3}>{assessment.title}</Title>
-        <Button onClick={handleFinish} type="primary">
-          <Text style={{ color: 'white' }} strong>
-            Finish
-          </Text>
-        </Button>
+        <Space>
+          <Title level={3}>{assessment.title}</Title>
+          {submission.submittedAt && assessment.type === 'Assignment' && (
+            <>
+              <Text type="secondary">Submitted at:</Text>
+              {DateTime.fromISO(submission.submittedAt).toLocaleString(
+                DateTime.DATETIME_MED
+              )}
+              <SubmissionTimeTag status={submission.status} />
+            </>
+          )}
+        </Space>
+        {submission.finished && (
+          <Button onClick={() => handleFinish(true)} type="default">
+            <Text strong>Resubmit</Text>
+          </Button>
+        )}
+        {!submission.finished && (
+          <Button onClick={() => handleFinish()} type="primary">
+            <Text style={{ color: 'white' }} strong>
+              Submit
+            </Text>
+          </Button>
+        )}
       </FlexSectionHeader>
 
       <Divider />
@@ -123,6 +189,7 @@ const QuestionsSection = (props) => {
           <Title level={5}>Upload your answer</Title>
           <Dragger
             onChange={(info) => {
+              debugger
               const { status } = info.file
               if (status === 'done')
                 message.success(`${info.file.name} file uploaded successfully.`)
@@ -131,6 +198,7 @@ const QuestionsSection = (props) => {
             }}
             customRequest={handleFileSubmit}
             onRemove={handleFileRemove}
+            fileList={files}
           >
             <p className="ant-upload-drag-icon">
               <InboxOutlined />

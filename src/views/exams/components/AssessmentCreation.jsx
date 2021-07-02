@@ -38,8 +38,8 @@ const AssessmentCreation = (props) => {
   }
 
   const handleSubmit = (values) => {
-    const openTime = values.time[0].toISOString()
-    const closeTime = values.time[1].toISOString()
+    const openTime = values.time?.[0]?.toISOString()
+    const closeTime = values.time?.[1]?.toISOString()
     const check = questions.filter((question) => question.status === 'DRAFT')
 
     if (check.length > 0 && values.questionsType === 'online') {
@@ -60,12 +60,17 @@ const AssessmentCreation = (props) => {
       openAt: openTime,
       closeAt: closeTime,
       files: files,
-      time: undefined
+      time: undefined,
+      dueDate:
+        assessmentType === 'Assignment'
+          ? values.dueDate.toISOString()
+          : undefined
     }
 
-    dispatch(submitAssessment(courseId, assessment)).then(() =>
-      history.push(`/app/course/${courseId}/exams`)
-    )
+    dispatch(submitAssessment(courseId, assessment)).then(() => {
+      const location = assessmentType === 'EXAM' ? 'exams' : 'assignments'
+      history.push(`/app/course/${courseId}/${location}`)
+    })
   }
 
   const getMaxScore = () => {

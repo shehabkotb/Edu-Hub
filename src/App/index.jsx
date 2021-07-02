@@ -42,6 +42,7 @@ import S from './style'
 
 import AppHeader from '../components/AppHeader'
 import CourseParticipants from '../views/courseParticipants'
+import Assignments from '../views/assignments'
 
 // public routes redirects to /app if authenticated
 // private routes redirects to login if not authenticated
@@ -111,7 +112,7 @@ const AuthnticatedApp = () => {
             <Route path="/app/course/:courseId/modules" component={Modules} />
 
             <Route
-              path="/app/course/:courseId/exam/:assessmentId/submissions"
+              path="/app/course/:courseId/assessment/:assessmentId/submissions"
               component={Submissions}
             />
             <Route
@@ -124,7 +125,17 @@ const AuthnticatedApp = () => {
                 <AssessmentCreation {...props} assessmentType="Exam" />
               )}
             />
+            <Route
+              path="/app/course/:courseId/assignments/create"
+              render={(props) => (
+                <AssessmentCreation {...props} assessmentType="Assignment" />
+              )}
+            />
             <Route path="/app/course/:courseId/exams" component={Exams} />
+            <Route
+              path="/app/course/:courseId/assignments"
+              component={Assignments}
+            />
             <Route
               path="/app/course/:courseId/lectures/:lectureId"
               component={Lectures}
@@ -133,25 +144,39 @@ const AuthnticatedApp = () => {
 
             <Route
               path="/app/course/:courseId/exam/:assessmentId"
-              component={AssessmentTaking}
+              render={(props) => (
+                <AssessmentTaking {...props} assessmentType={'Exam'} />
+              )}
+            />
+            <Route
+              path="/app/course/:courseId/assignment/:assessmentId"
+              render={(props) => (
+                <AssessmentTaking {...props} assessmentType={'Assignment'} />
+              )}
             />
 
             <Route
               path="/app/course/:courseId/discussions"
               render={(props) => (
-                <DiscussionFeed courseId={props.match.params.courseId} />
+                <DiscussionFeed
+                  {...props}
+                  courseId={props.match.params.courseId}
+                />
               )}
             />
             <Route
               path="/app/course/:courseId/gradebook"
               render={(props) => (
-                <GradeBook courseId={props.match.params.courseId} />
+                <GradeBook {...props} courseId={props.match.params.courseId} />
               )}
             />
             <Route
               path="/app/course/:courseId/announcments"
               render={(props) => (
-                <AnnouncementsFeed courseId={props.match.params.courseId} />
+                <AnnouncementsFeed
+                  {...props}
+                  courseId={props.match.params.courseId}
+                />
               )}
             />
             <Route

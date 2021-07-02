@@ -5,69 +5,56 @@ import styled from 'styled-components'
 import { Typography, Button, List, Space, Tag, Dropdown, Menu } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { PlusOutlined } from '@ant-design/icons'
+import { PlusOutlined, FileTextOutlined } from '@ant-design/icons'
 import { STUDENT } from '../../constants/userRoles'
-import { deleteExam, getAllExams } from '../../reducers/examReducer'
+import {
+  deleteAssignment,
+  getAllAssignments
+} from '../../reducers/assignmentReducer'
 import { useHistory, useParams } from 'react-router'
-
-import { AiOutlineSolution } from 'react-icons/ai'
 
 import useCoursePrivilege from '../../hooks/useCourseprivilege'
 import { Link } from 'react-router-dom'
+import { DateTime } from 'luxon'
 
 const { Title, Text } = Typography
 
-const Exams = () => {
+const Assignments = () => {
   const dispatch = useDispatch()
   const { courseId } = useParams()
   const history = useHistory()
   const { enrolled, privilege } = useCoursePrivilege()
 
-  const exams = useSelector((state) => state.exams.data)
+  const assignments = useSelector((state) => state.assignments.data)
 
   useEffect(() => {
-    dispatch(getAllExams(courseId))
+    dispatch(getAllAssignments(courseId))
   }, [courseId, dispatch])
 
   return (
     <>
       <FlexSectionHeader>
-        <Title level={3}>All Exams</Title>
+        <Title level={3}>All Assignments</Title>
         {enrolled && privilege !== STUDENT && (
           <Button
-            onClick={() => history.push(`/app/course/${courseId}/exams/create`)}
+            onClick={() =>
+              history.push(`/app/course/${courseId}/assignments/create`)
+            }
             type="dashed"
             shape="round"
             icon={<PlusOutlined />}
           >
-            Add Exam
+            Add Assignment
           </Button>
         )}
       </FlexSectionHeader>
 
       <div style={{ marginTop: '16px' }}>
-        <Text style={{ fontSize: '16px', fontWeight: '600', color: '#595959' }}>
-          Active
-        </Text>
-
         <List
-          dataSource={exams.filter((exam) => exam.status.code !== 'closed')}
-          renderItem={(exam) => <ExamItem exam={exam} />}
-        />
-      </div>
-
-      <div
-        style={{
-          marginTop: '46px'
-        }}
-      >
-        <Text style={{ fontSize: '16px', fontWeight: '600', color: '#595959' }}>
-          Done
-        </Text>
-
-        <List
-          dataSource={exams.filter((exam) => exam.status.code === 'closed')}
-          renderItem={(exam) => <ExamItem exam={exam} disabled={true} />}
+          dataSource={assignments}
+          renderItem={(assignment) => (
+            <AssignmentItem assignment={assignment} />
+          )}
         />
       </div>
     </>
@@ -85,24 +72,31 @@ const StyledListItem = styled(List.Item)`
     background-color: #d9d9d9;
   }
 `
-const ExamItem = ({ exam, disabled }) => {
+const AssignmentItem = ({ assignment, disabled }) => {
   const { courseId } = useParams()
   const { privilege } = useCoursePrivilege()
   const dispatch = useDispatch()
 
+  const history = useHistory()
+
   const optionMenu = (
     <Menu>
       <Menu.Item>
-        <Link to={`/app/course/${courseId}/assessment/${exam.id}/grade`}>
+        <Link to={`/app/course/${courseId}/assessment/${assignment.id}/grade`}>
           Grade All
         </Link>
       </Menu.Item>
       <Menu.Item>
-        <Link to={`/app/course/${courseId}/assessment/${exam.id}/submissions`}>
+        <Link
+          to={`/app/course/${courseId}/assessment/${assignment.id}/submissions`}
+        >
           All Submissions
         </Link>
       </Menu.Item>
-      <Menu.Item danger onClick={() => dispatch(deleteExam(courseId, exam.id))}>
+      <Menu.Item
+        danger
+        onClick={() => dispatch(deleteAssignment(courseId, assignment.id))}
+      >
         Delete
       </Menu.Item>
     </Menu>
@@ -130,11 +124,13 @@ const ExamItem = ({ exam, disabled }) => {
 
   return (
     <StyledListItem
-      onClick={() => window.open(`/app/course/${courseId}/exam/${exam.id}`)}
+      onClick={() =>
+        history.push(`/app/course/${courseId}/assignment/${assignment.id}`)
+      }
       extra={getActions(privilege)}
     >
       <Space>
-        <AiOutlineSolution
+        <FileTextOutlined
           style={{
             fontSize: '32px',
             color: disabled ? '#a7a7a7d9' : 'intial'
@@ -144,22 +140,15 @@ const ExamItem = ({ exam, disabled }) => {
           <Space>
             <span>
               <Text type="secondary">weight: </Text>
-              <Text strong>{`${exam.weight * 100}%`}</Text>
+              <Text strong>{`${assignment.weight * 100}%`}</Text>
             </span>
             <span>
               <Text type="secondary">maxScore: </Text>
-              <Text strong>{exam.maxScore}</Text>
-            </span>
-            <span>
-              <Text type="secondary">Duration: </Text>
-              <Text strong>
-                {Math.round(exam.timeLimit / 60)}
-                <Text type="secondary"> minutes</Text>
-              </Text>
+              <Text strong>{assignment.maxScore}</Text>
             </span>
             <span>
               <Text type="secondary">Submission: </Text>
-              <Text strong>{exam.submissionType}</Text>
+              <Text strong>{assignment.submissionType}</Text>
             </span>
           </Space>
 
@@ -167,20 +156,16 @@ const ExamItem = ({ exam, disabled }) => {
             style={{ margin: 0, color: disabled ? '#a7a7a7d9' : 'intial' }}
             level={5}
           >
-            {exam.title}
+            {assignment.title}
           </Title>
 
           <div>
-            {exam.status.code === 'willOpen' && (
-              <Tag color="geekblue">{exam.status.code}</Tag>
-            )}
-            {exam.status.code === 'open' && (
-              <Tag color="green">{exam.status.code}</Tag>
-            )}
-            {exam.status.code === 'closed' && (
-              <Tag color="red">{exam.status.code}</Tag>
-            )}
-            <Text type="secondary">{exam.status.message}</Text>
+            <Tag color="red">Due At</Tag>
+            <Text type="secondary">
+              {DateTime.fromISO(assignment.dueDate).toLocaleString(
+                DateTime.DATETIME_FULL
+              )}
+            </Text>
           </div>
         </Space>
       </Space>
@@ -188,7 +173,4 @@ const ExamItem = ({ exam, disabled }) => {
   )
 }
 
-export { default as AssessmentCreation } from './components/AssessmentCreation'
-export { default as Submissions } from './components/Submissions'
-
-export default Exams
+export default Assignments

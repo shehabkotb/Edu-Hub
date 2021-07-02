@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { FlexSectionHeader } from '../../style'
 
-import { Avatar, Button, Space, Table, Typography } from 'antd'
+import { Avatar, Button, Space, Table, Typography, Tag } from 'antd'
 import { useParams } from 'react-router'
 import useCoursePrivilege from '../../../hooks/useCourseprivilege'
 import { STUDENT } from '../../../constants/userRoles'
@@ -87,6 +87,20 @@ const Submissions = (props) => {
               )
           }}
         />
+        {assessment?.type === 'Assignment' && (
+          <Column
+            title="Status"
+            dataIndex="status"
+            render={(status) => (
+              <>
+                {status.code === 'late' && <Tag color="red">{status.code}</Tag>}
+                {status.code === 'onTime' && (
+                  <Tag color="green">{status.code}</Tag>
+                )}
+              </>
+            )}
+          />
+        )}
         {assessment?.submissionType === 'written' && (
           <Column
             title="Plagirism Degree"
@@ -106,7 +120,7 @@ const Submissions = (props) => {
           />
         )}
         <Column
-          title="Score"
+          title={`Score / ${assessment.maxScore}`}
           dataIndex="score"
           render={(score) => (score === undefined ? '-' : score)}
         />

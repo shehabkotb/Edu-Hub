@@ -12,12 +12,28 @@ const AssessmentTaking = (props) => {
   const dispatch = useDispatch()
   const { submission, loading } = useSelector((state) => state.assessmentTaking)
 
+  const { assessmentType } = props
   const { courseId, assessmentId } = useParams()
   const user = useSelector((state) => state.auth.user)
 
   useEffect(() => {
     dispatch(getOneSubmission(courseId, assessmentId, user._id))
   }, [dispatch])
+
+  return (
+    <>
+      {assessmentType === 'Exam' && (
+        <ExamTaker submission={submission} loading={loading} />
+      )}
+      {assessmentType === 'Assignment' && (
+        <AssignmentTaker submission={submission} loading={loading} />
+      )}
+    </>
+  )
+}
+
+const ExamTaker = (props) => {
+  const { submission, loading } = props
 
   if (loading || Object.keys(submission).length === 0)
     return <Spinner size="large" />
@@ -59,13 +75,28 @@ const AssessmentTaking = (props) => {
         </Col>
         <Col span={4}>
           <Affix offsetTop={10}>
-            {/* <SpyLogic
+            <SpyLogic
               timeRemaining={submission.assessment.remainingTime}
               examId={submission.assessment.id}
-            /> */}
+            />
           </Affix>
         </Col>
       </Row>
+    </>
+  )
+}
+
+const AssignmentTaker = (props) => {
+  const { submission, loading } = props
+
+  if (loading || Object.keys(submission).length === 0)
+    return <Spinner size="large" />
+
+  return (
+    <>
+      <div style={{ width: '85%', margin: '0 auto' }}>
+        <QuestionsSection submission={submission} />
+      </div>
     </>
   )
 }

@@ -1,20 +1,16 @@
 import assessmentsService from '../services/assessments'
-import {
-  LOAD_EXAMS,
-  GET_ALL_EXAMS,
-  CREATE_EXAM,
-  DELETE_EXAM
-} from '../actions/exams'
 
 import { notification } from 'antd'
+
+const LOAD_EXAMS = 'LOAD_EXAMS'
+const GET_ALL_EXAMS = 'GET_ALL_EXAMS'
+const DELETE_EXAM = 'DELETE_EXAM'
 
 const examReducer = (state = { data: [], loading: false }, action) => {
   switch (action.type) {
     case LOAD_EXAMS:
       return { data: [], loading: true }
     case GET_ALL_EXAMS:
-      return { data: action.data, loading: false }
-    case CREATE_EXAM:
       return { data: action.data, loading: false }
     case DELETE_EXAM:
       return {
