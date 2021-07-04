@@ -36,7 +36,8 @@ const Submissions = (props) => {
     dispatch(getAllSubmissions(courseId, assessmentId))
   }, [])
 
-  if (loading) return <Spinner size="large" />
+  if (loading || !assessment || submissions.length === 0)
+    return <Spinner size="large" />
 
   return (
     <>
