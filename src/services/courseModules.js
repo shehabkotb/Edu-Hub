@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { getAuthHeader, getMultiPartAuthHeader } from './config'
+import { getAuthHeader } from './config'
 
 import { baseURL as coursesURL } from './courses'
 

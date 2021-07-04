@@ -28,19 +28,10 @@ import {
 import Spinner from '../../components/Spinner'
 import CourseCard from '../../components/CourseCard'
 import { useHistory } from 'react-router'
+import { getAllDeadlines } from '../../reducers/deadlinesReducer'
+import { DateTime } from 'luxon'
 
 const { Title, Text } = Typography
-
-const UpcomingPlaceHolder = styled.div`
-  height: 350px;
-  width: 100%;
-  background-color: #061178;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 66px;
-`
 
 const Dashboard = () => {
   const dispatch = useDispatch()
@@ -48,11 +39,14 @@ const Dashboard = () => {
 
   useEffect(() => {
     dispatch(getAllCourses())
+    dispatch(getAllDeadlines())
   }, [dispatch])
 
   const user = useSelector((state) => state.auth.user)
   const courses = useSelector((state) => state.courses.data)
   const loading = useSelector((state) => state.courses.loading)
+  const deadlines = useSelector((state) => state.deadlines.data)
+  const deadlinesLoading = useSelector((state) => state.deadlines.loading)
 
   const [form] = Form.useForm()
   const [modalVisible, setModalVisible] = useState(false)
@@ -182,10 +176,43 @@ const Dashboard = () => {
         </Col>
 
         <Col xs={24} sm={24} md={24} lg={8} xl={5}>
-          <UpcomingPlaceHolder>deadlines place holder</UpcomingPlaceHolder>
+          <DeadlinesViewer loading={deadlinesLoading} deadlines={deadlines} />
         </Col>
       </Row>
     </>
+  )
+}
+
+const UpcomingPlaceHolder = styled.div`
+  height: auto;
+  width: 100%;
+  background-color: #061178;
+  color: white;
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
+  margin-top: 66px;
+`
+
+const DeadlinesViewer = (props) => {
+  const { loading, deadlines } = props
+
+  if (loading) return <Spinner size="large" />
+
+  return (
+    <UpcomingPlaceHolder>
+      {deadlines?.map((item) => {
+        const date = DateTime.fromISO(item.deadline)
+        if (date >= DateTime.now()) {
+          return (
+            <p>
+              {item.title}: {date.toLocaleString(DateTime.DATETIME_MED)}
+            </p>
+          )
+        }
+        return null
+      })}
+    </UpcomingPlaceHolder>
   )
 }
 

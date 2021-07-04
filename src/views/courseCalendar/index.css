@@ -7,7 +7,6 @@
     width: 100%;
     overflow: hidden;
     font-size: 12px;
-    white-space: nowrap;
     text-overflow: ellipsis;
   }
   .notes-month {
@@ -16,4 +15,8 @@
   }
   .notes-month section {
     font-size: 28px;
+  }
+
+  .ant-badge-status-text{
+    font-size: 8px;
   }

@@ -1,36 +1,32 @@
 import React from 'react'
-import { Calendar, Badge } from 'antd'
+import { Calendar, Badge, Typography } from 'antd'
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { getAllCalendarEvents } from '../../reducers/calendarReducer'
+import Spinner from '../../components/Spinner'
+import { DateTime } from 'luxon'
+
+import './index.css'
+
+const { Title } = Typography
 
 const CourseCalendar = () => {
+  const dispatch = useDispatch()
+
+  const calendarEvents = useSelector((state) => state.calendar.data)
+  const loading = useSelector((state) => state.calendar.loading)
+
+  useEffect(() => {
+    dispatch(getAllCalendarEvents())
+  }, [])
+
   function getListData(value) {
-    let listData
-    switch (value.date()) {
-      case 8:
-        listData = [
-          { type: 'warning', content: 'This is warning event.' },
-          { type: 'success', content: 'This is usual event.' }
-        ]
-        break
-      case 10:
-        listData = [
-          { type: 'warning', content: 'This is warning event.' },
-          { type: 'success', content: 'This is usual event.' },
-          { type: 'error', content: 'This is error event.' }
-        ]
-        break
-      case 15:
-        listData = [
-          { type: 'warning', content: 'This is warning event' },
-          { type: 'success', content: 'This is very long usual event。。....' },
-          { type: 'error', content: 'This is error event 1.' },
-          { type: 'error', content: 'This is error event 2.' },
-          { type: 'error', content: 'This is error event 3.' },
-          { type: 'error', content: 'This is error event 4.' }
-        ]
-        break
-      default:
-    }
-    return listData || []
+    const day = value.date()
+    const month = value.month()
+    const year = value.year()
+
+    const listData = calendarEvents?.[year]?.[month + 1]?.[day] || []
+    return listData
   }
 
   function dateCellRender(value) {
@@ -38,34 +34,30 @@ const CourseCalendar = () => {
     return (
       <ul className="events">
         {listData.map((item) => (
-          <li key={item.content}>
-            <Badge status={item.type} text={item.content} />
+          <li key={item.assessmentId}>
+            <Badge
+              style={{ fontSize: '6px' }}
+              status={item.type === 'Exam' ? 'error' : 'warning'}
+              text={`${item.title} at ${DateTime.fromISO(
+                item.deadline
+              ).toLocaleString(DateTime.TIME_SIMPLE)}`}
+            />
           </li>
         ))}
       </ul>
     )
   }
 
-  function getMonthData(value) {
-    if (value.month() === 8) {
-      return 1394
-    }
-  }
+  if (loading) return <Spinner size="large" />
 
-  function monthCellRender(value) {
-    const num = getMonthData(value)
-    return num ? (
-      <div className="notes-month">
-        <section>{num}</section>
-        <span>Backlog number</span>
-      </div>
-    ) : null
-  }
   return (
-    <Calendar
-      dateCellRender={dateCellRender}
-      monthCellRender={monthCellRender}
-    />
+    <>
+      <Title level={3}>Calendar</Title>
+      <Calendar
+        style={{ padding: '0 20px', marginTop: '16px' }}
+        dateCellRender={dateCellRender}
+      />
+    </>
   )
 }
 

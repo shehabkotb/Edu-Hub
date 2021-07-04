@@ -42,7 +42,11 @@ const QuestionsSection = (props) => {
   const { assessment } = submission
 
   useEffect(() => {
-    setFiles(submission.files)
+    setFiles(
+      submission.files.map((file) => {
+        return { ...file, uid: file._id }
+      })
+    )
   }, [])
 
   const handleAnswerSubmit = (questionId, newAnswer) => {
@@ -69,12 +73,13 @@ const QuestionsSection = (props) => {
     }
   }
 
-  const handleFileSubmit = ({ file, onSuccess, onError }) => {
+  const handleFileSubmit = ({ file, onSuccess, onError, onProgress }) => {
+    onProgress({ percent: 0 })
     s3Service
       .uploadFile(courseId, 'submissions', file.name, file, file.type)
       .then((url) => {
-        setFiles(files.concat([{ name: file.name, url: url, uid: file.uid }]))
-        onSuccess()
+        onProgress({ percent: 100 })
+        onSuccess({ url })
       })
       .catch((error) => {
         console.log(error)
@@ -188,11 +193,22 @@ const QuestionsSection = (props) => {
           <Title level={5}>Upload your answer</Title>
           <Dragger
             onChange={(info) => {
+              let fileList = [...info.fileList]
+
               const { status } = info.file
               if (status === 'done')
                 message.success(`${info.file.name} file uploaded successfully.`)
               else if (status === 'error')
                 message.error(`${info.file.name} file upload failed.`)
+
+              fileList = fileList.map((file) => {
+                if (file.response) {
+                  file.url = file.response.url
+                }
+                return file
+              })
+
+              setFiles(fileList)
             }}
             customRequest={handleFileSubmit}
             onRemove={handleFileRemove}
