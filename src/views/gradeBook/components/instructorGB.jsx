@@ -102,6 +102,18 @@ const InstructorGradeBook = ({ courseId, id }) => {
     }
   ]
 
+  const getUnique = (arr) =>{
+    var unique = []
+    var res=[]
+    for(let i=0;i<arr.length;i++){
+      if (!unique.includes(arr[i].assessment.id)) {
+        unique.push(arr[i].assessment.id)
+        res.push(arr[i])
+      }
+    }
+    return res;
+  }
+
   return (
     <div>
       {vis && (
@@ -109,7 +121,7 @@ const InstructorGradeBook = ({ courseId, id }) => {
           <PieChart
             width={350}
             height={250}
-            data={submitions
+            data={getUnique(submitions)
               .map((v) => {
                 let res = {
                   key: v.assessment.title,

@@ -92,7 +92,7 @@ const SpyLogic = (props) => {
     const imageSrc = webcamRef.current.getScreenshot()
     const blob = await fetch(imageSrc).then((res) => res.blob())
     blob.name = cnt.toString() + '.jpeg'
-    if (cnt === 5) {
+    if (cnt === 7) {
       setCnt(1)
       stopRecording()
     }
@@ -108,7 +108,7 @@ const SpyLogic = (props) => {
 
     intervalId = setInterval(() => {
       capture()
-    }, 2000)
+    }, 1500)
 
     return () => clearInterval(intervalId)
   }, [webcamRef, cnt])
