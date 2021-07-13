@@ -68,7 +68,7 @@ const AssessmentCreation = (props) => {
     }
 
     dispatch(submitAssessment(courseId, assessment)).then(() => {
-      const location = assessmentType === 'EXAM' ? 'exams' : 'assignments'
+      const location = assessmentType === 'Exam' ? 'exams' : 'assignments'
       history.push(`/app/course/${courseId}/${location}`)
     })
   }

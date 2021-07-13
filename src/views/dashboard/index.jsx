@@ -31,6 +31,9 @@ import { useHistory } from 'react-router'
 import { getAllDeadlines } from '../../reducers/deadlinesReducer'
 import { DateTime } from 'luxon'
 
+import { FileTextOutlined } from '@ant-design/icons'
+import { AiOutlineSolution } from 'react-icons/ai'
+
 const { Title, Text } = Typography
 
 const Dashboard = () => {
@@ -183,15 +186,20 @@ const Dashboard = () => {
   )
 }
 
-const UpcomingPlaceHolder = styled.div`
+const DeadLinesContainer = styled.div`
   height: auto;
   width: 100%;
-  background-color: #061178;
-  color: white;
+  /* background-color: #061178; */
+  /* color: white; */
   /* display: flex;
   justify-content: center;
   align-items: center; */
-  margin-top: 66px;
+  /* margin-top: 66px; */
+`
+
+const DeadlineItem = styled(List.Item)`
+  background-color: #fafafa;
+  padding: 20px;
 `
 
 const DeadlinesViewer = (props) => {
@@ -200,19 +208,57 @@ const DeadlinesViewer = (props) => {
   if (loading) return <Spinner size="large" />
 
   return (
-    <UpcomingPlaceHolder>
-      {deadlines?.map((item) => {
-        const date = DateTime.fromISO(item.deadline)
-        if (date >= DateTime.now()) {
-          return (
-            <p>
-              {item.title}: {date.toLocaleString(DateTime.DATETIME_MED)}
-            </p>
-          )
-        }
-        return null
-      })}
-    </UpcomingPlaceHolder>
+    <DeadLinesContainer>
+      <div
+        style={{
+          height: '70px',
+          backgroundImage:
+            'linear-gradient(rgba(0, 109, 117, 1), rgba(0, 109, 117, 0.3))',
+          color: 'white',
+          padding: '20px',
+          paddingRight: '0px'
+        }}
+      >
+        <Typography.Title style={{ color: 'white' }} level={4}>
+          Upcoming Deadlines
+        </Typography.Title>
+      </div>
+      <List
+        dataSource={deadlines}
+        renderItem={(item) => {
+          const date = DateTime.fromISO(item.deadline)
+          if (date >= DateTime.now()) {
+            return (
+              <DeadlineItem>
+                <List.Item.Meta
+                  avatar={
+                    item.type === 'Exam' ? (
+                      <AiOutlineSolution style={{ fontSize: '16px' }} />
+                    ) : (
+                      <FileTextOutlined />
+                    )
+                  }
+                  title={
+                    <a
+                      href={`/app/course/${
+                        item.course.id
+                      }/${item.type.toLowerCase()}/${item.assessmentId}`}
+                    >
+                      {item.title}
+                    </a>
+                  }
+                  description={item.course.name}
+                />
+                <Text style={{ width: '80px' }} type="secondary">
+                  {date.toLocaleString(DateTime.DATETIME_MED)}
+                </Text>
+              </DeadlineItem>
+            )
+          }
+          return null
+        }}
+      />
+    </DeadLinesContainer>
   )
 }
 
