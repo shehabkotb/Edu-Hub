@@ -47,6 +47,7 @@ const CourseParticipants = () => {
           render={(img) => <Avatar src={img} />}
         />
         <Column title="Name" dataIndex={['user', 'name']} />
+        <Column title="Email" dataIndex={['user', 'email']} />
         <Column
           title="Enrollment Date"
           dataIndex="createdAt"
