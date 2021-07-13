@@ -7,6 +7,7 @@
   max-height: fit-content;
   overflow-y: auto;
   overflow-x: auto;
+  margin: 10px;
 }
 
 .postButton{
@@ -14,7 +15,7 @@
 }
 
 .innerCommentcard{
-  max-height: 100px;
+  max-height: 300px;
   overflow-y: auto;
   overflow-x: auto;
 }
@@ -27,7 +28,7 @@
 }
 
 .dis{
-  max-height: 200px;
+  max-height: 300px;
   overflow-y: auto;
   overflow-x: auto;
   white-space: pre;
