@@ -1,26 +1,25 @@
 import lectureService from '../services/lectures'
 import checkModerationService from '../services/checkModeration'
-import {
-  LOAD_COMMENTS,
-  GET_ALL_COMMENTS,
-  CREATE_COMMENT,
-  DELETE_COMMENT
-} from '../actions/lecture'
 
 import { notification } from 'antd'
 
+const LOAD_LECTURE_COMMENTS = 'LOAD_LECTURE_COMMENTS'
+const GET_ALL_LECTURE_COMMENTS = 'GET_ALL_LECTURE_COMMENTS'
+const CREATE_LECTURE_COMMENT = 'CREATE_LECTURE_COMMENT'
+const DELETE_LECTURE_COMMENT = 'DELETE_LECTURE_COMMENT'
+
 const lectureCommentsReducer = (
-  state = { data: [], loading: false },
+  state = { data: {}, loading: false },
   action
 ) => {
   switch (action.type) {
-    case LOAD_COMMENTS:
-      return { data: [], loading: true }
-    case GET_ALL_COMMENTS:
+    case LOAD_LECTURE_COMMENTS:
+      return { data: {}, loading: true }
+    case GET_ALL_LECTURE_COMMENTS:
       return { data: action.data, loading: false }
-    case CREATE_COMMENT:
+    case CREATE_LECTURE_COMMENT:
       return { data: action.data, loading: false }
-    case DELETE_COMMENT:
+    case DELETE_LECTURE_COMMENT:
       return { data: action.data, loading: false }
     default:
       return state
@@ -30,12 +29,13 @@ const lectureCommentsReducer = (
 export const getAllComments = (courseId, moduleItemId) => {
   return async (dispatch) => {
     try {
-      dispatch({ type: LOAD_COMMENTS })
+      dispatch({ type: LOAD_LECTURE_COMMENTS })
       const response = await lectureService.getLectureComments(
         courseId,
         moduleItemId
       )
-      dispatch({ type: GET_ALL_COMMENTS, data: response })
+      debugger
+      dispatch({ type: GET_ALL_LECTURE_COMMENTS, data: response })
     } catch (error) {
       console.log(error)
       notification.error({
@@ -55,7 +55,7 @@ export const createComment = (courseId, moduleItemId, comment) => {
           moduleItemId,
           comment
         )
-        dispatch({ type: CREATE_COMMENT, data: response })
+        dispatch({ type: CREATE_LECTURE_COMMENT, data: response })
         notification.success({
           message: 'Added comment successfully'
         })
@@ -81,7 +81,7 @@ export const deleteComment = (courseId, moduleItemId, commentId) => {
         moduleItemId,
         commentId
       )
-      dispatch({ type: DELETE_COMMENT, data: response })
+      dispatch({ type: DELETE_LECTURE_COMMENT, data: response })
       notification.success({
         message: 'deleted comment successfully'
       })

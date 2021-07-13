@@ -33,9 +33,9 @@ const CommentForm = (props) => {
       avatar={avatar}
       content={
         <>
-          <Form validateTrigger="onSumbit" onFinish={handleSubmit}>
+          <Form onFinish={handleSubmit}>
             <Form.Item name="comment" rules={[{ required: true }]}>
-              <Input.TextArea allowClear={true} defaultValue="" rows={4} />
+              <Input.TextArea allowClear={true} rows={4} />
             </Form.Item>
             <Form.Item>
               <Button htmlType="submit" type="primary">
