@@ -43,6 +43,8 @@ import S from './style'
 import AppHeader from '../components/AppHeader'
 import CourseParticipants from '../views/courseParticipants'
 import Assignments from '../views/assignments'
+import CourseSettings from '../views/courseSettings'
+import Achievements from '../views/achievements'
 
 // public routes redirects to /app if authenticated
 // private routes redirects to login if not authenticated
@@ -184,11 +186,17 @@ const AuthnticatedApp = () => {
               component={CourseParticipants}
             />
 
+            <Route
+              path="/app/course/:courseId/settings"
+              component={CourseSettings}
+            />
+
             <Route path="/app/articles/:id" component={ArticlePage} />
             <Route path="/app/articles" component={Articles} />
             <Route path="/app/myarticle" component={MyArticle} />
             <Route path="/app/myBookMarks" component={MyBookMarks} />
             <Route path="/app/profile" component={Profile} />
+            <Route path="/app/acheivements" component={Achievements} />
             <Route path="/app/*" component={NotFoundView} />
           </Switch>
         </Content>

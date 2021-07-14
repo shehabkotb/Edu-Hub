@@ -34,7 +34,7 @@ export const getAllComments = (courseId, moduleItemId) => {
         courseId,
         moduleItemId
       )
-      debugger
+
       dispatch({ type: GET_ALL_LECTURE_COMMENTS, data: response })
     } catch (error) {
       console.log(error)

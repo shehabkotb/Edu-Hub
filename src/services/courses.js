@@ -4,7 +4,32 @@ import { getAuthHeader } from './config'
 export const baseURL = '/courses'
 
 const getAllCourses = async () => {
-  const response = await axios.get(`${baseURL}`, getAuthHeader())
+  const response = await axios.get(`${baseURL}`, getAuthHeader(), {
+    params: { filter: 'published' }
+  })
+  return response.data
+}
+
+const getOneCourse = async (courseId) => {
+  const response = await axios.get(`${baseURL}/${courseId}`, getAuthHeader())
+  return response.data
+}
+
+const updateCourse = async (courseId, course) => {
+  const response = await axios.put(
+    `${baseURL}/${courseId}`,
+    course,
+    getAuthHeader()
+  )
+  return response.data
+}
+
+const endCourse = async (courseId) => {
+  const response = await axios.post(
+    `${baseURL}/${courseId}/end-course`,
+    null,
+    getAuthHeader()
+  )
   return response.data
 }
 
@@ -38,9 +63,12 @@ const UnenrollCourse = async (courseId, userId) => {
 
 const courseService = {
   getAllCourses,
+  getOneCourse,
   createCourse,
+  updateCourse,
   deleteCourse,
   enrollCourse,
-  UnenrollCourse
+  UnenrollCourse,
+  endCourse
 }
 export default courseService

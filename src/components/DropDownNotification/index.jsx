@@ -7,6 +7,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { delAll, del } from '../../reducers/notificationsReducer'
 import { DateTime } from 'luxon'
 
+import { AlertTwoTone } from '@ant-design/icons'
+
 function getNoticeData(data) {
   return data.map((item) => {
     let avater
@@ -24,8 +26,7 @@ function getNoticeData(data) {
       avater =
         'https://gw.alipayobjects.com/zos/rmsportal/kISTdvpyTAhtGxpovNWd.png'
     } else if (item.type === 'alert') {
-      avater =
-        'https://gw.alipayobjects.com/zos/rmsportal/fcHMVNCjPOsbUGdEduuv.jpeg'
+      avater = <AlertTwoTone />
     }
 
     let res = {
@@ -50,7 +51,7 @@ const DropDownNotification = () => {
   }
 
   const onItemClick = (item, tabProps) => {
-    dispatch(del(item.id ))
+    dispatch(del(item.id))
     console.log(tabProps)
   }
 

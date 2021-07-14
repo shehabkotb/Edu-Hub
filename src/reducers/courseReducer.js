@@ -6,7 +6,8 @@ import {
   DELETE_COURSE,
   LOAD_ENROLLMENT,
   ENROLL_COURSE,
-  UN_ENROLL_COURSE
+  UN_ENROLL_COURSE,
+  UPDATE_COURSE
 } from '../actions/course'
 
 import { notification } from 'antd'
@@ -17,6 +18,19 @@ const courseReducer = (state = { data: [], loading: false }, action) => {
       return { data: [], loading: true }
     case GET_ALL_COURSES:
       return { data: action.data, loading: false }
+    case UPDATE_COURSE:
+      return {
+        data: state.data.map((course) => {
+          if (course.id === action.courseId)
+            return {
+              ...action.data,
+              enrolled: course.enrolled,
+              privilege: course.privilege
+            }
+          else return course
+        }),
+        loading: false
+      }
     case CREATE_COURSE:
       return { data: action.data, loading: false }
     case DELETE_COURSE:

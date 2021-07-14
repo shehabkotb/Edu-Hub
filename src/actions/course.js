@@ -1,5 +1,6 @@
 export const LOAD_COURSES = 'LOAD_COURSES'
 export const CREATE_COURSE = 'CREATE_COURSE'
+export const UPDATE_COURSE = 'UPDATE_COURSE'
 export const GET_ALL_COURSES = 'GET_ALL_COURSES'
 export const DELETE_COURSE = 'DELETE_COURSE'
 
