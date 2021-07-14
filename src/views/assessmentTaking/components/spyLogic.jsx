@@ -14,6 +14,7 @@ const SpyLogic = (props) => {
   const user = useSelector((state) => state.auth.user)
   const [cnt, setCnt] = useState(1)
   const [record, setRecord] = useState(false)
+  const [frst, setFrst] = useState(true)
 
   const { examId, timeRemaining } = props
   // {
@@ -85,21 +86,25 @@ const SpyLogic = (props) => {
   }
 
   const capture = useCallback(async () => {
-    if (cnt === 1) {
-      startRecording()
+    if(frst){
+      setFrst(false)
+    }else{
+      if (cnt === 1) {
+        startRecording()
+      }
+      setCnt(cnt + 1)
+      const imageSrc = webcamRef.current.getScreenshot()
+      const blob = await fetch(imageSrc).then((res) => res.blob())
+      blob.name = cnt.toString() + '.jpeg'
+      if (cnt === 7) {
+        setCnt(1)
+        stopRecording()
+      }
+      console.log(blob)
+      handleUpload(blob)
+      cheatingService.batchInc(examId)
     }
-    setCnt(cnt + 1)
-    const imageSrc = webcamRef.current.getScreenshot()
-    const blob = await fetch(imageSrc).then((res) => res.blob())
-    blob.name = cnt.toString() + '.jpeg'
-    if (cnt === 7) {
-      setCnt(1)
-      stopRecording()
-    }
-    console.log(blob)
-    handleUpload(blob)
-    cheatingService.batchInc(examId)
-  }, [webcamRef, cnt])
+  }, [webcamRef, cnt, frst])
 
   //useEffect(setInterval(() => {capture()}, 2000), [webcamRef, cnt])
 
@@ -111,7 +116,7 @@ const SpyLogic = (props) => {
     }, 1500)
 
     return () => clearInterval(intervalId)
-  }, [webcamRef, cnt])
+  }, [webcamRef, cnt, frst])
 
   return (
     <div className="container">
