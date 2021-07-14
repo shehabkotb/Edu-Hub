@@ -269,7 +269,11 @@ const GradingPage = (props) => {
                   Grade
                 </Button>
                 <Button
-                  onClick={() => history.push(`/app/course/${courseId}/exams`)}
+                  onClick={() =>
+                    history.push(
+                      `/app/course/${courseId}/${assessment.type.toLowerCase()}s`
+                    )
+                  }
                 >
                   Cancel
                 </Button>
