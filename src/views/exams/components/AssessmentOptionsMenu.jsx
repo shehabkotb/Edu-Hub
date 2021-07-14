@@ -135,7 +135,11 @@ const AssessmentOptionsMenu = (props) => {
               Create
             </Button>
             <Button
-              onClick={() => history.push(`/app/course/${courseId}/exams`)}
+              onClick={() =>
+                history.push(
+                  `/app/course/${courseId}/${assessmentType.toLowerCase()}s`
+                )
+              }
             >
               Cancel
             </Button>
