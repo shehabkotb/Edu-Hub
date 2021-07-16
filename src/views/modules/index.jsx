@@ -45,7 +45,7 @@ const Modules = (props) => {
   }
 
   const addModuleItem = (moduleId, moduleItem) => {
-    dispatch(createModuleItem(courseId, moduleId, moduleItem))
+    return dispatch(createModuleItem(courseId, moduleId, moduleItem))
   }
 
   const removeModuleItem = (moduleId, moduleItem) => {

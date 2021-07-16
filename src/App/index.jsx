@@ -45,6 +45,7 @@ import CourseParticipants from '../views/courseParticipants'
 import Assignments from '../views/assignments'
 import CourseSettings from '../views/courseSettings'
 import Achievements from '../views/achievements'
+import CourseRoute from '../components/CourseRoute'
 
 // public routes redirects to /app if authenticated
 // private routes redirects to login if not authenticated
@@ -111,53 +112,59 @@ const AuthnticatedApp = () => {
             <Route path="/app/calendar" component={CourseCalendar} />
 
             <Route path="/app/courses" component={Courses} />
-            <Route path="/app/course/:courseId/modules" component={Modules} />
+            <CourseRoute
+              path="/app/course/:courseId/modules"
+              component={Modules}
+            />
 
-            <Route
+            <CourseRoute
               path="/app/course/:courseId/assessment/:assessmentId/submissions"
               component={Submissions}
             />
-            <Route
+            <CourseRoute
               path="/app/course/:courseId/assessment/:assessmentId/grade"
               component={Grader}
             />
-            <Route
+            <CourseRoute
               path="/app/course/:courseId/exams/create"
               render={(props) => (
                 <AssessmentCreation {...props} assessmentType="Exam" />
               )}
             />
-            <Route
+            <CourseRoute
               path="/app/course/:courseId/assignments/create"
               render={(props) => (
                 <AssessmentCreation {...props} assessmentType="Assignment" />
               )}
             />
-            <Route path="/app/course/:courseId/exams" component={Exams} />
-            <Route
+            <CourseRoute path="/app/course/:courseId/exams" component={Exams} />
+            <CourseRoute
               path="/app/course/:courseId/assignments"
               component={Assignments}
             />
-            <Route
+            <CourseRoute
               path="/app/course/:courseId/lectures/:lectureId"
               component={Lectures}
             />
-            <Route path="/app/course/:courseId/lectures" component={Lectures} />
+            <CourseRoute
+              path="/app/course/:courseId/lectures"
+              component={Lectures}
+            />
 
-            <Route
+            <CourseRoute
               path="/app/course/:courseId/exam/:assessmentId"
               render={(props) => (
                 <AssessmentTaking {...props} assessmentType={'Exam'} />
               )}
             />
-            <Route
+            <CourseRoute
               path="/app/course/:courseId/assignment/:assessmentId"
               render={(props) => (
                 <AssessmentTaking {...props} assessmentType={'Assignment'} />
               )}
             />
 
-            <Route
+            <CourseRoute
               path="/app/course/:courseId/discussions"
               render={(props) => (
                 <DiscussionFeed
@@ -166,13 +173,13 @@ const AuthnticatedApp = () => {
                 />
               )}
             />
-            <Route
+            <CourseRoute
               path="/app/course/:courseId/gradebook"
               render={(props) => (
                 <GradeBook {...props} courseId={props.match.params.courseId} />
               )}
             />
-            <Route
+            <CourseRoute
               path="/app/course/:courseId/announcments"
               render={(props) => (
                 <AnnouncementsFeed
@@ -181,12 +188,12 @@ const AuthnticatedApp = () => {
                 />
               )}
             />
-            <Route
+            <CourseRoute
               path="/app/course/:courseId/particpants"
               component={CourseParticipants}
             />
 
-            <Route
+            <CourseRoute
               path="/app/course/:courseId/settings"
               component={CourseSettings}
             />

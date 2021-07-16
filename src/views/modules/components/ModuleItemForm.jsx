@@ -5,7 +5,12 @@ import { PlusOutlined, InboxOutlined } from '@ant-design/icons'
 
 const { Dragger } = Upload
 
-const FileForm = ({ handleCancel, addModuleItem, loadingUpload }) => {
+const FileForm = ({
+  handleCancel,
+  addModuleItem,
+  loadingUpload,
+  setFormActive
+}) => {
   const [form] = Form.useForm()
 
   const handleSubmit = (values) => {
@@ -13,7 +18,7 @@ const FileForm = ({ handleCancel, addModuleItem, loadingUpload }) => {
     body.append('file', values.file[0].originFileObj)
     body.append('type', 'file')
     body.append('title', values.title)
-    addModuleItem(body)
+    addModuleItem(body).then(() => setFormActive(false))
   }
 
   const getFileList = (files) => {
@@ -83,12 +88,12 @@ const FileForm = ({ handleCancel, addModuleItem, loadingUpload }) => {
   )
 }
 
-const VideoForm = ({ handleCancel, addModuleItem }) => {
+const VideoForm = ({ handleCancel, addModuleItem, setFormActive }) => {
   const [form] = Form.useForm()
 
   const handleSubmit = (moduleItem) => {
     moduleItem.type = 'video'
-    addModuleItem(moduleItem)
+    addModuleItem(moduleItem).then(() => setFormActive(false))
   }
 
   return (
@@ -171,6 +176,7 @@ const ModuleItemForm = ({ instructorAccess, addModuleItem, loadingUpload }) => {
             <VideoForm
               addModuleItem={addModuleItem}
               handleCancel={handleCancel}
+              setFormActive={setFormActive}
             />
           )}
           {moduleItemType === 'file' && (
@@ -178,6 +184,7 @@ const ModuleItemForm = ({ instructorAccess, addModuleItem, loadingUpload }) => {
               addModuleItem={addModuleItem}
               handleCancel={handleCancel}
               loadingUpload={loadingUpload}
+              setFormActive={setFormActive}
             />
           )}
         </>
