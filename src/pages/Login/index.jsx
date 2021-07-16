@@ -19,8 +19,22 @@ const Login = () => {
   const dispatch = useDispatch()
 
   const onFinish = (values) => {
-    console.log('Received values of form: ', values)
+    if (values.remember) {
+      window.localStorage.setItem(
+        'eduhub-remember-cred',
+        JSON.stringify({ remember: values.remember, email: values.email })
+      )
+    } else {
+      window.localStorage.setItem(
+        'eduhub-remember-cred',
+        JSON.stringify({ remember: false })
+      )
+    }
     dispatch(login(values))
+  }
+
+  const getInitialValues = () => {
+    return JSON.parse(window.localStorage.getItem('eduhub-remember-cred'))
   }
 
   return (
@@ -30,7 +44,7 @@ const Login = () => {
           <Form
             name="login"
             onFinish={onFinish}
-            initialValues={{ remember: false }}
+            initialValues={getInitialValues()}
             scrollToFirstError
           >
             <FormTitle>Sign in</FormTitle>
@@ -75,7 +89,7 @@ const Login = () => {
               <Form.Item name="remember" valuePropName="checked" noStyle>
                 <Checkbox>Remember me</Checkbox>
               </Form.Item>
-              <Link to="/ForgetPassword">Forget Password</Link>
+              {/* <Link to="/ForgetPassword">Forget Password</Link> */}
             </FormItemFlex>
 
             <Form.Item>
@@ -84,13 +98,13 @@ const Login = () => {
               </Button>
             </Form.Item>
 
-            <Divider plain>Or</Divider>
+            {/* <Divider plain>Or</Divider>
 
             <Form.Item>
               <Button block icon={<GoogleOutlined />}>
                 Sign in with Google
               </Button>
-            </Form.Item>
+            </Form.Item> */}
           </Form>
         </FormWrapper>
       </FormContainer>
