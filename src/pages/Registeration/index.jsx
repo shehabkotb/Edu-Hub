@@ -176,25 +176,25 @@ const Registeration = () => {
             </Form.Item>
 
             <FormItemFlex>
-              {/* <Form.Item
-                                name="agreement"
-                                valuePropName="checked"
-                                rules={[
-                                    {
-                                        validator: (_, value) =>
-                                            value ? Promise.resolve() : Promise.reject('Should accept agreement'),
-                                    },
-                                ]}
-                            > */}
-              {/* </Form.Item> */}
-              <Form.Item>
+              <Form.Item
+                name="agreement"
+                valuePropName="checked"
+                rules={[
+                  {
+                    validator: (_, value) =>
+                      value
+                        ? Promise.resolve()
+                        : Promise.reject('Should accept agreement')
+                  }
+                ]}
+              >
                 <Checkbox>
                   I have read the <Link to="#">agreement</Link>
                 </Checkbox>
               </Form.Item>
-              <Form.Item>
+              {/* <Form.Item>
                 <Link to="/ForgetPassword">Forget Password?</Link>
-              </Form.Item>
+              </Form.Item> */}
             </FormItemFlex>
 
             <Form.Item>
@@ -203,13 +203,13 @@ const Registeration = () => {
               </Button>
             </Form.Item>
 
-            <Divider plain>Or</Divider>
+            {/* <Divider plain>Or</Divider>
 
             <Form.Item>
               <Button block icon={<GoogleOutlined />}>
                 Sign up with Google
               </Button>
-            </Form.Item>
+            </Form.Item> */}
           </Form>
         </FormWrapper>
       </FormContainer>
