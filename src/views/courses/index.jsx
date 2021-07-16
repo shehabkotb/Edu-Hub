@@ -127,10 +127,6 @@ const Courses = () => {
               )}
             />
           </Collapse.Panel>
-          <Collapse.Panel
-            header={<Text strong>Recomendations</Text>}
-            key="2"
-          ></Collapse.Panel>
         </Collapse>
       </div>
     </React.Fragment>
