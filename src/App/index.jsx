@@ -46,6 +46,7 @@ import Assignments from '../views/assignments'
 import CourseSettings from '../views/courseSettings'
 import Achievements from '../views/achievements'
 import CourseRoute from '../components/CourseRoute'
+import Archives from '../views/archives'
 
 // public routes redirects to /app if authenticated
 // private routes redirects to login if not authenticated
@@ -203,6 +204,7 @@ const AuthnticatedApp = () => {
             <Route path="/app/myarticle" component={MyArticle} />
             <Route path="/app/myBookMarks" component={MyBookMarks} />
             <Route path="/app/profile" component={Profile} />
+            <Route path="/app/archives" component={Archives} />
             <Route path="/app/acheivements" component={Achievements} />
             <Route path="/app/*" component={NotFoundView} />
           </Switch>

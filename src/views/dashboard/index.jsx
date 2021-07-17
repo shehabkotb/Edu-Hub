@@ -46,7 +46,9 @@ const Dashboard = () => {
   }, [dispatch])
 
   const user = useSelector((state) => state.auth.user)
-  const courses = useSelector((state) => state.courses.data)
+  const courses = useSelector((state) =>
+    state.courses.data.filter((course) => course.status !== 'archived')
+  )
   const loading = useSelector((state) => state.courses.loading)
   const deadlines = useSelector((state) => state.deadlines.data)
   const deadlinesLoading = useSelector((state) => state.deadlines.loading)

@@ -5,7 +5,8 @@ import {
   GET_ALL_MODULES,
   CREATE_MODULE,
   UPDATE_MODULE,
-  DELETE_MODULE
+  DELETE_MODULE,
+  CLEAR_MODULES
 } from '../actions/courseModules'
 
 import {
@@ -39,6 +40,8 @@ const moduleReducer = (state = [], action) => {
           return { ...courseModule, loadingUpload: true }
         else return courseModule
       })
+    case CLEAR_MODULES:
+      return []
     default:
       return state
   }
@@ -173,6 +176,19 @@ export const deleteModuleItem = (courseId, moduleId, moduleItem) => {
       console.log(error)
       notification.error({
         message: "Couldn't delete module Item"
+      })
+    }
+  }
+}
+
+export const clearModules = () => {
+  return async (dispatch) => {
+    try {
+      dispatch({ type: CLEAR_MODULES })
+    } catch (error) {
+      console.log(error)
+      notification.error({
+        message: "Couldn't clear modules"
       })
     }
   }

@@ -4,8 +4,9 @@ import { getAuthHeader } from './config'
 export const baseURL = '/courses'
 
 const getAllCourses = async () => {
-  const response = await axios.get(`${baseURL}`, getAuthHeader(), {
-    params: { filter: 'published' }
+  const response = await axios.get(`${baseURL}`, {
+    ...getAuthHeader()
+    // params: { filter: 'published' }
   })
   return response.data
 }

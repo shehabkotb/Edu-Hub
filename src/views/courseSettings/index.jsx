@@ -7,7 +7,7 @@ import {
   getOneCourse,
   updateCourse
 } from '../../reducers/courseSettingsReducer'
-import { useParams } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import Spinner from '../../components/Spinner'
 
 import { CompactPicker } from 'react-color'
@@ -18,6 +18,8 @@ const { Title, Text } = Typography
 const CourseSettings = (props) => {
   const dispatch = useDispatch()
   const { courseId } = useParams()
+  const history = useHistory()
+
   const [courseImage, setCourseImage] = useState(null)
 
   const [form] = Form.useForm()
@@ -44,7 +46,7 @@ const CourseSettings = (props) => {
   }
 
   const handleCourseEnd = () => {
-    dispatch(endCourse(courseId))
+    dispatch(endCourse(courseId)).then(() => history.push('/app/courses'))
   }
 
   if (loading) return <Spinner size="large" />

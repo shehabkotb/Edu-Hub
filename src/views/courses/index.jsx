@@ -30,7 +30,9 @@ const Courses = () => {
   }, [dispatch])
 
   const user = useSelector((state) => state.auth.user)
-  const courses = useSelector((state) => state.courses.data)
+  const courses = useSelector((state) =>
+    state.courses.data.filter((course) => course.status !== 'archived')
+  )
   const loading = useSelector((state) => state.courses.loading)
   const history = useHistory()
 

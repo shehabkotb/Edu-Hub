@@ -14,7 +14,8 @@ import {
   updateModule,
   deleteModule,
   createModuleItem,
-  deleteModuleItem
+  deleteModuleItem,
+  clearModules
 } from '../../reducers/moduleReducer'
 import useCoursePrivilege from '../../hooks/useCourseprivilege'
 
@@ -30,6 +31,8 @@ const Modules = (props) => {
 
   useEffect(() => {
     dispatch(getAllModules(courseId))
+
+    return () => dispatch(clearModules())
   }, [courseId, dispatch])
 
   const addModule = (module) => {

@@ -22,7 +22,14 @@ const CourseImage = ({ image, backgroundColor }) => {
 }
 
 const CardContent = (props) => {
-  const { description, enrolled, onEnroll, onUnenroll, loadingEnroll } = props
+  const {
+    description,
+    enrolled,
+    onEnroll,
+    onUnenroll,
+    loadingEnroll,
+    disableEnroll
+  } = props
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -36,16 +43,20 @@ const CardContent = (props) => {
           alignSelf: 'flex-end'
         }}
       >
-        {!enrolled && (
-          <Button loading={loadingEnroll} onClick={() => onEnroll()}>
-            Enroll
-          </Button>
-        )}
+        {!disableEnroll && (
+          <>
+            {!enrolled && (
+              <Button loading={loadingEnroll} onClick={() => onEnroll()}>
+                Enroll
+              </Button>
+            )}
 
-        {enrolled && (
-          <Button loading={loadingEnroll} onClick={() => onUnenroll()}>
-            Unenroll
-          </Button>
+            {enrolled && (
+              <Button loading={loadingEnroll} onClick={() => onUnenroll()}>
+                Unenroll
+              </Button>
+            )}
+          </>
         )}
       </div>
     </div>
@@ -53,7 +64,14 @@ const CardContent = (props) => {
 }
 
 const CourseCard = (props) => {
-  const { course, onClick, handleEnroll, handleUnenroll, removeCourse } = props
+  const {
+    course,
+    onClick,
+    handleEnroll,
+    handleUnenroll,
+    removeCourse,
+    disableEnroll
+  } = props
   const { enrolled, privilege } = course
 
   const loadingEnroll = course.loadingEnroll
@@ -90,7 +108,7 @@ const CourseCard = (props) => {
                 event.stopPropagation()
               }}
             >
-              {enrolled && (
+              {enrolled && !disableEnroll && (
                 <Dropdown.Button
                   placement="bottomCenter"
                   type="text"
@@ -107,6 +125,7 @@ const CourseCard = (props) => {
             enrolled={enrolled}
             onEnroll={handleEnroll}
             onUnenroll={handleUnenroll}
+            disableEnroll={disableEnroll}
           />
         }
       />

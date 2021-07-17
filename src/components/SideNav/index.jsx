@@ -6,7 +6,8 @@ import {
   UserOutlined,
   CalendarOutlined,
   DashboardOutlined,
-  CrownOutlined
+  CrownOutlined,
+  HddOutlined
 } from '@ant-design/icons'
 
 import { RiArticleLine } from 'react-icons/ri'
@@ -61,6 +62,9 @@ const SideNav = (props) => {
         </SubMenu> */}
         <Menu.Item key="/app/acheivements" icon={<CrownOutlined />}>
           <NavLink to="/app/acheivements">Acheivements</NavLink>
+        </Menu.Item>
+        <Menu.Item key="/app/archives" icon={<HddOutlined />}>
+          <NavLink to="/app/archives">Archives</NavLink>
         </Menu.Item>
         <Menu.Item key="/app/profile" icon={<UserOutlined />}>
           <NavLink to="/app/profile">Profile</NavLink>
