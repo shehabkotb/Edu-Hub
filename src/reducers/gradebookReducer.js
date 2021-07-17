@@ -20,7 +20,7 @@ export const getSubsOfCourse = (courseId) => {
       dispatch({ type: GET_SUBS_OF_COURSE, data: response })
     } catch (error) {
       notification.error({
-        message: "Couldn't fitch gradebook check your connection: "
+        message: "Couldn't fetch gradebook check your connection: "
       })
     }
   }
