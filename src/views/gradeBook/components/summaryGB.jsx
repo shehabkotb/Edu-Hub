@@ -17,7 +17,6 @@ const SummaryTable = ({ courseId }) => {
   const [showSt, setShowst] = useState(false)
   const [vis, setVis] = useState(true)
 
-
   const studentGrades = useSelector((state) => state.summaryGradebook)
 
   const fCol = [
@@ -150,6 +149,7 @@ const SummaryTable = ({ courseId }) => {
             />
           </div>
           <Table
+            rowKey={(record) => record.id}
             columns={fCol}
             dataSource={studentGrades}
             bordered

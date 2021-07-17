@@ -102,16 +102,16 @@ const InstructorGradeBook = ({ courseId, id }) => {
     }
   ]
 
-  const getUnique = (arr) =>{
+  const getUnique = (arr) => {
     var unique = []
-    var res=[]
-    for(let i=0;i<arr.length;i++){
+    var res = []
+    for (let i = 0; i < arr.length; i++) {
       if (!unique.includes(arr[i].assessment.id)) {
         unique.push(arr[i].assessment.id)
         res.push(arr[i])
       }
     }
-    return res;
+    return res
   }
 
   return (
@@ -144,6 +144,7 @@ const InstructorGradeBook = ({ courseId, id }) => {
             Open Summary Gradebook
           </Button>
           <Table
+            rowKey={(record) => record.id}
             columns={columns}
             dataSource={submitions}
             bordered
