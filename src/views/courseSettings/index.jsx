@@ -11,7 +11,6 @@ import { useHistory, useParams } from 'react-router-dom'
 import Spinner from '../../components/Spinner'
 
 import { CompactPicker } from 'react-color'
-import axios from 'axios'
 
 const { Title, Text } = Typography
 

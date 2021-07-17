@@ -20,7 +20,7 @@ export const getSummaryOfCourse = (courseId) => {
     } catch (error) {
       console.log(error)
       notification.error({
-        message: "Couldn't fitch gradebook check your connection"
+        message: "Couldn't fetch gradebook check your connection"
       })
     }
   }

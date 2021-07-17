@@ -39,8 +39,8 @@ const persistConfig = {
     'assessmentTaking',
     'submissions',
     'courseParticipants',
-    'summaryGradebookReducer',
-    'gradebookReducer',
+    'summaryGradebook',
+    'courseGradebook',
     'modules'
   ]
 }

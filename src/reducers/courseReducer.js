@@ -15,7 +15,7 @@ import { notification } from 'antd'
 const courseReducer = (state = { data: [], loading: false }, action) => {
   switch (action.type) {
     case LOAD_COURSES:
-      return { data: [], loading: true }
+      return { data: state.data, loading: true }
     case GET_ALL_COURSES:
       return { data: action.data, loading: false }
     case UPDATE_COURSE:
