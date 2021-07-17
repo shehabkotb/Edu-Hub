@@ -168,7 +168,7 @@ const ArticleCard = ({ article }) => {
 
   return (
     <div className={Styles['article-card-container']}>
-      <Card hoverable className="article-card">
+      <Card hoverable className="article-card" onClick={viewArticle}>
         <Meta
           avatar={<Avatar src={article?.authorPersonId?.photo} />}
           title={article?.authorPersonId?.name || user.name}
@@ -186,14 +186,14 @@ const ArticleCard = ({ article }) => {
             <DeleteFilled />
           </Button>
         )}
-        <Button
+        {/* <Button
           type="text"
           onClick={viewArticle}
           className={Styles['viewButton']}
         >
           {' '}
           view{' '}
-        </Button>
+        </Button> */}
       </Card>
     </div>
   )
