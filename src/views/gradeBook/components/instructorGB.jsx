@@ -144,7 +144,7 @@ const InstructorGradeBook = ({ courseId, id }) => {
             Open Summary Gradebook
           </Button>
           <Table
-            rowKey={(record) => record.id}
+            rowKey={(record) => record?.id}
             columns={columns}
             dataSource={submitions}
             bordered

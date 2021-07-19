@@ -105,7 +105,7 @@ const StudentGradeBook = ({ courseId, id }) => {
         gridlines={<GridlineSeries line={<Gridline direction="y" />} />}
       />
       <Table
-        rowKey={(record) => record.id}
+        rowKey={(record) => record?.id}
         columns={columns}
         dataSource={data?.grades}
         bordered
@@ -115,7 +115,7 @@ const StudentGradeBook = ({ courseId, id }) => {
         footer={() => {
           return (
             <Table
-              rowKey={(record) => record.id}
+              rowKey={(record) => record?.id}
               columns={fCol}
               dataSource={[data]}
               bordered
