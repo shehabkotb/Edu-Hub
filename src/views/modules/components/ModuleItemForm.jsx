@@ -166,6 +166,7 @@ const ModuleItemForm = ({ instructorAccess, addModuleItem, loadingUpload }) => {
             <Radio.Group
               defaultValue="video"
               buttonStyle="solid"
+              value={moduleItemType}
               onChange={(e) => setModuleItemType(e.target.value)}
             >
               <Radio.Button value="video">Video</Radio.Button>
