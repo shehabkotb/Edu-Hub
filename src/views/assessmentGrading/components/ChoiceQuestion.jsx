@@ -1,4 +1,14 @@
-import { Form, InputNumber, Radio, Row, Space, Tag, Typography } from 'antd'
+import {
+  Checkbox,
+  Divider,
+  Form,
+  InputNumber,
+  Radio,
+  Row,
+  Space,
+  Tag,
+  Typography
+} from 'antd'
 import React from 'react'
 
 const { Title, Text } = Typography
@@ -78,6 +88,11 @@ const ChoiceQuestion = (props) => {
             )}
           </Row>
         ))}
+
+        <Divider />
+        <Checkbox checked={question?.auto_graded} disabled={true}>
+          Auto-Graded
+        </Checkbox>
       </div>
     </>
   )

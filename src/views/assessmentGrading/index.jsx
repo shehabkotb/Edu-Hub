@@ -119,7 +119,7 @@ const GradingPage = (props) => {
 
   const handleScoreCalculation = (changedValues, allValues) => {
     const answers = allValues?.answers
-    if (answers && assessment.submissionType === 'online') {
+    if (answers && assessment.questionsType === 'online') {
       let totalScore = calculateTotalScore(answers)
       form.setFieldsValue({ score: totalScore })
     }

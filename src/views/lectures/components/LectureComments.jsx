@@ -23,6 +23,13 @@ export const Container = styled.div`
 
 const CommentForm = (props) => {
   const { addComment, avatar } = props
+  const { courseId } = useParams()
+
+  const course = useSelector((state) =>
+    state.courses?.data?.find((course) => course.id === courseId)
+  )
+
+  const { status } = course || { status: 'published' }
 
   const handleSubmit = (values) => {
     addComment({ comment: values.comment })
@@ -38,9 +45,11 @@ const CommentForm = (props) => {
               <Input.TextArea allowClear={true} rows={4} />
             </Form.Item>
             <Form.Item>
-              <Button htmlType="submit" type="primary">
-                Add Comment
-              </Button>
+              {status !== 'archived' && (
+                <Button htmlType="submit" type="primary">
+                  Add Comment
+                </Button>
+              )}
             </Form.Item>
           </Form>
         </>

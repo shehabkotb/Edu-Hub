@@ -1,4 +1,12 @@
-import { Form, InputNumber, Space, Typography, Divider, Tag } from 'antd'
+import {
+  Form,
+  InputNumber,
+  Space,
+  Typography,
+  Divider,
+  Tag,
+  Checkbox
+} from 'antd'
 import React from 'react'
 
 const { Title, Text, Paragraph } = Typography
@@ -70,19 +78,30 @@ const WrittenQuestion = (props) => {
 
         <Paragraph style={{ marginTop: '10px' }}>{question.ans}</Paragraph>
 
-        {question.keywords?.length !== 0 && (
-          <>
-            <Divider />
-            <Text strong>Key Words: </Text>
-            {question.keywords?.map((element, index) => {
-              return (
-                <Tag key={index} color="red">
-                  {element.key_word} : {element.weight}
-                </Tag>
-              )
-            })}
-          </>
-        )}
+        <Divider />
+
+        <Space>
+          <Checkbox checked={question?.auto_graded} disabled={true}>
+            Auto-Graded
+          </Checkbox>
+
+          <Checkbox checked={question?.text_match} disabled={true}>
+            TextMatch
+          </Checkbox>
+
+          {question.keywords?.length !== 0 && (
+            <>
+              <Text strong>Key Words: </Text>
+              {question.keywords?.map((element, index) => {
+                return (
+                  <Tag key={index} color="red">
+                    {element.key_word} : {element.weight}
+                  </Tag>
+                )
+              })}
+            </>
+          )}
+        </Space>
       </div>
     </>
   )
