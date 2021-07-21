@@ -37,7 +37,12 @@ const SideNav = (props) => {
         left: 0
       }}
     >
-      <Logo collapsed={collapsed} />
+      <div
+        style={{ cursor: 'pointer' }}
+        onClick={() => (window.location = 'https://gp-eduhub.github.io/')}
+      >
+        <Logo collapsed={collapsed} />
+      </div>
       <Menu
         theme="dark"
         mode="inline"
