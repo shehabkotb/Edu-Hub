@@ -8,6 +8,7 @@ import {
   Button,
   Col,
   Collapse,
+  Empty,
   Form,
   Input,
   List,
@@ -226,38 +227,45 @@ const DeadlinesViewer = (props) => {
         </Typography.Title>
       </div>
       <List
-        dataSource={deadlines}
+        dataSource={deadlines.filter(
+          (item) => DateTime.fromISO(item.deadline) >= DateTime.now()
+        )}
+        locale={{
+          emptyText: (
+            <Empty
+              image={Empty.PRESENTED_IMAGE_SIMPLE}
+              description={'No Deadlines'}
+            />
+          )
+        }}
         renderItem={(item) => {
           const date = DateTime.fromISO(item.deadline)
-          if (date >= DateTime.now()) {
-            return (
-              <DeadlineItem>
-                <List.Item.Meta
-                  avatar={
-                    item.type === 'Exam' ? (
-                      <AiOutlineSolution style={{ fontSize: '16px' }} />
-                    ) : (
-                      <FileTextOutlined />
-                    )
-                  }
-                  title={
-                    <a
-                      href={`/app/course/${
-                        item.course.id
-                      }/${item.type.toLowerCase()}/${item.assessmentId}`}
-                    >
-                      {item.title}
-                    </a>
-                  }
-                  description={item.course.name}
-                />
-                <Text style={{ width: '80px' }} type="secondary">
-                  {date.toLocaleString(DateTime.DATETIME_MED)}
-                </Text>
-              </DeadlineItem>
-            )
-          }
-          return null
+          return (
+            <DeadlineItem>
+              <List.Item.Meta
+                avatar={
+                  item.type === 'Exam' ? (
+                    <AiOutlineSolution style={{ fontSize: '16px' }} />
+                  ) : (
+                    <FileTextOutlined />
+                  )
+                }
+                title={
+                  <a
+                    href={`/app/course/${
+                      item.course.id
+                    }/${item.type.toLowerCase()}/${item.assessmentId}`}
+                  >
+                    {item.title}
+                  </a>
+                }
+                description={item.course.name}
+              />
+              <Text style={{ width: '80px' }} type="secondary">
+                {date.toLocaleString(DateTime.DATETIME_MED)}
+              </Text>
+            </DeadlineItem>
+          )
         }}
       />
     </DeadLinesContainer>
