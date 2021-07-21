@@ -64,6 +64,7 @@ const ChoiceQuestionForm = (props) => {
 
   const addChoice = (choice) => {
     setChoices(choices.concat(choice))
+    setControlledChoice('')
   }
 
   const removeChoice = (removedChoice) => {
