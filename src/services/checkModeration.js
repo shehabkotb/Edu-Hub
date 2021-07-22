@@ -4,7 +4,7 @@ const check = async (text) => {
   console.log(text)
   try {
     const response = await axios.post(
-      "https://***REMOVED***.***REMOVED***.amazonaws.com/1",
+      '***REMOVED***',
       { body: text }
     )
     const res = response.data
