@@ -17,7 +17,7 @@ function urlBase64ToUint8Array(base64String) {
   return outputArray
 }
 
-const publicVapidKey=urlBase64ToUint8Array("***REMOVED***");
+const publicVapidKey=urlBase64ToUint8Array("");
 
 function sendSubscription(subscription) {
     console.log(subscription);
