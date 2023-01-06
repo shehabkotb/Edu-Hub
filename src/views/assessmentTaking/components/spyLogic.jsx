@@ -23,15 +23,15 @@ const SpyLogic = (props) => {
   // }
 
   /*
-  const S3_BUCKET = '***REMOVED***'
-  const REGION = '***REMOVED***'
-  const ACCESS_KEY = '***REMOVED***'
-  const SECRET_ACCESS_KEY = '***REMOVED***'
+  const S3_BUCKET = ''
+  const REGION = ''
+  const ACCESS_KEY = ''
+  const SECRET_ACCESS_KEY = ''
   */
-  const S3_BUCKET = '***REMOVED***'
-  const REGION = '***REMOVED***'
-  const ACCESS_KEY = '***REMOVED***'
-  const SECRET_ACCESS_KEY = '***REMOVED***'
+  const S3_BUCKET = ''
+  const REGION = ''
+  const ACCESS_KEY = ''
+  const SECRET_ACCESS_KEY = ''
 
   const config = {
     bucketName: S3_BUCKET,
