@@ -1,0 +1,30 @@
+### create
+
+POST  http://localhost:4000/courses/6071bc6237d90440749b0d0c/modules/6077fc167df6b743f8bf69ad/module-item HTTP/1.1
+Content-Type: application/json
+Authorization: {{$dotenv %LOGIN_RESTCLIENT_TOKEN}}
+
+{
+    "title": "lecture 2",
+    "type": "video",
+    "url": "https://youtu.be/Ce6so35INYU?list=PLFlc1Q-uYmikIaqRSZ3kHCqez-MkYuxk2"
+}
+
+### update
+
+PUT http://localhost:4000/courses/6071bc6237d90440749b0d0c/modules/6077fc167df6b743f8bf69ad/module-item/6077fef77df6b743f8bf69b7 HTTP/1.1
+Content-Type: application/json
+Authorization: {{$dotenv %LOGIN_RESTCLIENT_TOKEN}}
+
+{
+    "title": "file 1",
+    "type": "file",  
+    "url": "/course-file/6071bc6237d90440749b0d0c/1618202476526_20.pdf"
+}
+
+### delete
+
+DELETE http://localhost:4000/courses/6071bc6237d90440749b0d0c/modules/607290a4835a88203427158d/module-item/6072910a835a88203427158e HTTP/1.1
+Content-Type: application/json
+Authorization: {{$dotenv %LOGIN_RESTCLIENT_TOKEN}}
+

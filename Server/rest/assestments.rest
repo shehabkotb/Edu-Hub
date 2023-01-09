@@ -1,0 +1,113 @@
+### get all
+GET  http://localhost:4000/60a65778348b1936c4257ba5/assessments HTTP/1.1
+Content-Type: application/json
+# Authorization: {{$dotenv %LOGIN_RESTCLIENT_TOKEN}}
+
+### get assignments
+GET  http://localhost:4000/60a65778348b1936c4257ba5/assessments?filter=Assignment HTTP/1.1
+Content-Type: application/json
+Authorization: {{$dotenv %LOGIN_RESTCLIENT_TOKEN}}
+
+
+### get exams
+GET  http://localhost:4000/60a65778348b1936c4257ba5/assessments?filter=Exam HTTP/1.1
+Content-Type: application/json
+Authorization: {{$dotenv %LOGIN_RESTCLIENT_TOKEN}}
+
+### get oneAssessment
+GET  http://localhost:4000/60a65778348b1936c4257ba5/assessments/60b3f72216e3030db02ad593 HTTP/1.1
+Content-Type: application/json
+Authorization: {{$dotenv %LOGIN_RESTCLIENT_TOKEN}}
+
+
+### create exam
+
+POST http://localhost:4000/60a65778348b1936c4257ba5/assessments HTTP/1.1
+Content-Type: application/json
+# Authorization: {{$dotenv %LOGIN_RESTCLIENT_TOKEN}}
+
+{     
+      "type": "Exam",
+      "title": "test assessment",
+      "maxScore": 10,
+      "questionsType": "online",
+      "submissionType": "online",
+      "course": "60a65778348b1936c4257ba5",
+      "visiblity": "published",
+      "openAt": "2021-05-21T19:02:25.000Z",
+      "closeAt": "2021-05-21T20:01:25.000Z",
+      "weight": 0.2
+}
+
+### create assignment
+
+POST http://localhost:4000/60a65778348b1936c4257ba5/assessments HTTP/1.1
+Content-Type: application/json
+# Authorization: {{$dotenv %LOGIN_RESTCLIENT_TOKEN}}
+
+{     
+      "type": "Assignment",
+      "title": "test assessment",
+      "maxScore": 10,
+      "questionsType": "online",
+      "submissionType": "online",
+      "course": "60a65778348b1936c4257ba5",
+      "visiblity": "published",
+      "dueDate": "2021-05-20T12:46:51.964+00:00",
+      "weight": 0.2,
+      "questions": [
+            {
+            "type": "MCQ", 
+            "question_number": 0,
+            "points": 5, 
+            "question_text": "a question", 
+            "auto_graded": true, 
+            "choices": ["choice a", "choice b"], 
+            "ans": "choice a"
+            },
+            {
+            "type": "Esay", 
+            "question_number": 0,
+            "points": 5, 
+            "question_text": "a question", 
+            "auto_graded": true, 
+            "text_match": true,
+            "keywords": [{"key_word": "first keyword", "weight": 0.2}],
+            "ans": "choice a"
+            }  
+      ]
+}
+
+### delete
+
+DELETE http://localhost:4000/60a65778348b1936c4257ba5/assessments/60c390675edd2535b8b8de03 HTTP/1.1
+Content-Type: application/json
+Authorization: {{$dotenv %LOGIN_RESTCLIENT_TOKEN}}
+
+
+### delete all assessments
+
+DELETE http://localhost:4000/60a65778348b1936c4257ba5/assessments HTTP/1.1
+Content-Type: application/json
+Authorization: {{$dotenv %LOGIN_RESTCLIENT_TOKEN}}
+
+### delete all questions
+
+DELETE http://localhost:4000/60a65778348b1936c4257ba5/assessments/questions HTTP/1.1
+Content-Type: application/json
+Authorization: {{$dotenv %LOGIN_RESTCLIENT_TOKEN}}
+
+### check plagarism
+
+GET http://localhost:4000/60a65778348b1936c4257ba5/assessments/60cb8707f5ab2c14f8356a7d/check-plagiarism HTTP/1.1
+Content-Type: application/json
+Authorization: {{$dotenv %LOGIN_RESTCLIENT_TOKEN}}
+
+### auto grade
+GET  http://localhost:4000/60a65778348b1936c4257ba5/assessments/60b98b6a38130f39c046dc51/auto-grade HTTP/1.1
+Content-Type: application/json
+Authorization: {{$dotenv %LOGIN_RESTCLIENT_TOKEN}}
+
+
+
+

@@ -1,0 +1,22 @@
+### get all lectures
+GET  http://localhost:4000/courses/6071bc6237d90440749b0d0c/lectures HTTP/1.1
+Content-Type: application/json
+
+### get all comments
+GET  http://localhost:4000/courses/6071bc6237d90440749b0d0c/lectures/607c2205b035702c5cbc7ebe/comments HTTP/1.1
+Content-Type: application/json
+
+
+### create comment
+POST  http://localhost:4000/courses/6071bc6237d90440749b0d0c/lectures/607c2205b035702c5cbc7ebe/comments HTTP/1.1
+Content-Type: application/json
+Authorization: {{$dotenv %LOGIN_RESTCLIENT_TOKEN}}
+
+{
+      "comment": "test comment 8"
+}
+
+### delete comment
+DELETE http://localhost:4000/courses/6071bc6237d90440749b0d0c/lectures/607c2205b035702c5cbc7ebe/comments/6084031c1b9fb72330e0757f HTTP/1.1
+Content-Type: application/json
+Authorization: {{$dotenv %LOGIN_RESTCLIENT_TOKEN}}
