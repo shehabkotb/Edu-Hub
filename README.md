@@ -56,20 +56,23 @@ This repository contains the web portion (front-end | backend), but doesn't incl
 * [![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
 
 ## Screen Shots
-| login screen                            | Courses Screen                          |
-| ----------------------------            | ----------------------------------------|
-| ![login screen][ref-login]              | ![courses screen][ref-courses-screen]   |
-| Lectures Screen                         | Modules Screen                          |
-| ![lectures screen][ref-lectures-screen] | ![modules screen][ref-modules-screen]   |
-| Assessment Creation Screen                         | Assessment View Screen                          |
-|  ![Assessment Creation][ref-assessment-creation] | ![Assessment View][ref-assessment-view] |
-| Exam taking Screen                         | Grading Screen                          |
-|  ![Exam taking Screen][ref-exam-taking-screen] | ![Grading Screen][ref-grading-screen] |
-| Grade Book Screen                         | Course Settings Screen                          |
-| ![Grade Book Screen][ref-grade-book-screen] | ![Course Settings Screen][ref-course-settings-screen] |
+| login screen                                        | Courses Screen                          |
+| ----------------------------                        | ----------------------------------------|
+| ![login screen][ref-login]                          | ![courses screen][ref-courses-screen]   |
+| Lectures Screen                                     | Modules Screen                          |
+| ![lectures screen][ref-lectures-screen]             | ![modules screen][ref-modules-screen]   |
+| Assessment Creation Screen                          | Assessment View Screen                  |
+| ![Assessment Creation][ref-assessment-creation]     | ![Assessment View][ref-assessment-view] |
+| Exam taking Screen                                  | Grading Screen                          |
+| ![Exam taking Screen][ref-exam-taking-screen]       | ![Grading Screen][ref-grading-screen]   |
+| Grade Book Screen                                   | Course Settings Screen                  | 
+| ![Grade Book Screen][ref-grade-book-screen]         | ![Course Settings Screen][ref-course-settings-screen] |
 
 ## Full Demo
 
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=uvtkwOpwAYU" target="_blank">
+  <img width=640px height=360px src="https://user-images.githubusercontent.com/30159212/211315771-ebdf99ba-fbf1-42d2-a2f8-c6fabf788040.png" alt="IMAGE ALT TEXT HERE" border="10"/>
+</a>
 
 ## Acknowledgements
 
