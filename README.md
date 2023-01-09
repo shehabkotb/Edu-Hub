@@ -1,12 +1,8 @@
 <p align="center">
   <br>
   
- <img width=230px height=116px  src="https://user-images.githubusercontent.com/30159212/211231055-318ea94d-a7f5-4100-b548-06444fd25681.png" alt="Project logo">
- 
   <img width=230px height=116px  src="https://user-images.githubusercontent.com/30159212/211231276-55c965a3-642e-4ab4-a984-69a970d654fe.png" alt="Project logo">
  
-
-
 </p>
 
 ---
