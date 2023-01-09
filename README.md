@@ -22,10 +22,10 @@
 
 ## About The Project
 
-<!-- ![image](https://user-images.githubusercontent.com/30159212/211226784-73f2e4f3-8410-4101-8638-1e5b65c28c3c.png) -->
 <p align="center">
   <br>
-  <img width=848px height=480px  src="/graduation project smallest 3.gif" alt="Project logo">
+  <img width=848px height=480px  src="https://user-images.githubusercontent.com/30159212/211318750-b7c464df-ce4a-49e6-987d-67fa9450b2c8.gif" alt="Project showcase">
+
 </p>
 
 This is full stack web-app created as a final graduation project that aimed to design and build a fully functional learning mangment system (LMS) and integrate it with a varity of machine leraning models to offer common and invoative AI features.
