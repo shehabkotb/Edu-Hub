@@ -7,7 +7,7 @@ const Comment = require('../../models/comment') ;
 const Follow = require('../../models/follow');
 const axios = require('axios');
 
-const recommendationEngineUrl = 'http://127.0.0.1:5000/recommend/'
+const recommendationEngineUrl = 'http://127.0.0.1:4000/recommend/'
 
 const createArticle = async (req, res) => {
     try {

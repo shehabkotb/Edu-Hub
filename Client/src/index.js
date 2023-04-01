@@ -9,6 +9,10 @@ import App from './App'
 import { store, persistor } from './store.js'
 import { PersistGate } from 'redux-persist/integration/react'
 
+import axios from 'axios';
+
+axios.defaults.baseURL = 'http://localhost:4000';
+
 serviceWorker.register()
 
 ReactDOM.render(

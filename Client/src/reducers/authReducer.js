@@ -61,7 +61,7 @@ export const register = (credentials) => {
         throw new Error('invalid error with response')
       }
     } catch (error) {
-      message.error('invalid credentials')
+      message.error('invalid credentials Jani')
       console.log(error)
     }
   }

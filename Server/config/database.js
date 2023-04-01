@@ -1,5 +1,5 @@
 const dbconfig = {
-    url : "mongodb://localhost:4000/EduHub" , 
+    url : "mongodb://localhost:27017" , 
     dbname : 'EduHub'
 }
 
