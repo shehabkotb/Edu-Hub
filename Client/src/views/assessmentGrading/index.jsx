@@ -23,7 +23,7 @@ import SubmissionTimeTag from '../../components/SubmissionTimeTag'
 import Styled from 'styled-components'
 import FileDisplay from './components/FileDispaly'
 import { useDispatch, useSelector } from 'react-redux'
-import { useLocation, useParams } from 'react-router'
+import { useLocation, useParams } from 'react-router-dom'
 import {
   getAllSubmissions,
   gradeQuestions

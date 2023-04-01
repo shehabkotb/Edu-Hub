@@ -11,7 +11,7 @@ const createUser = async (req, res) => {
     await user.save()
     const token = await user.generateAuthToken()
 
-    axios.post(awsEmailResisterUrl, {
+      axios.post(awsEmailResisterUrl, {
       InstructorEmail: user.email
     })
     .then(res => {

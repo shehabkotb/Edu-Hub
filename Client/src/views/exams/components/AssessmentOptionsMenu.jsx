@@ -11,7 +11,7 @@ import {
   Typography
 } from 'antd'
 import React, { useEffect } from 'react'
-import { useHistory, useParams } from 'react-router'
+import { useHistory, useParams } from 'react-router-dom'
 
 const { Title, Text } = Typography
 const { RangePicker } = DatePicker

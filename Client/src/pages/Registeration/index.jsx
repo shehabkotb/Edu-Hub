@@ -203,13 +203,13 @@ const Registeration = () => {
               </Button>
             </Form.Item>
 
-            {/* <Divider plain>Or</Divider>
+            <Divider plain>Or</Divider>
 
             <Form.Item>
               <Button block icon={<GoogleOutlined />}>
                 Sign up with Google
               </Button>
-            </Form.Item> */}
+            </Form.Item> 
           </Form>
         </FormWrapper>
       </FormContainer>

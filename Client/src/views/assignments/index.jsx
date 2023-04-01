@@ -11,7 +11,7 @@ import {
   deleteAssignment,
   getAllAssignments
 } from '../../reducers/assignmentReducer'
-import { useHistory, useParams } from 'react-router'
+import { useHistory, useParams } from 'react-router-dom'
 
 import useCoursePrivilege from '../../hooks/useCourseprivilege'
 import { Link } from 'react-router-dom'

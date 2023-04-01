@@ -28,7 +28,7 @@ import {
 } from '../../reducers/courseReducer'
 import Spinner from '../../components/Spinner'
 import CourseCard from '../../components/CourseCard'
-import { useHistory } from 'react-router'
+import { useHistory } from 'react-router-dom'
 import { getAllDeadlines } from '../../reducers/deadlinesReducer'
 import { DateTime } from 'luxon'
 

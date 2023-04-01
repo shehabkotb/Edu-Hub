@@ -4,10 +4,10 @@ const webpush = require("web-push");
 const mongoose = require('mongoose')
 
 
-const publicVapidKey="";
-const privateVapidKey="";
+const publicVapidKey="BHGvbfRivMa2wSmGr2zNC43B02HtC1bpwkMh9ef7X6TSo4wxP_cD42Dh---fE8HXMmGQGuUALzOEN8Kk4B5DyH4";
+const privateVapidKey="haI4PnzjZKfjyxhYwgJnNyx4U3LkQvNnNTascrLRwl8";
 
-webpush.setVapidDetails("",publicVapidKey,privateVapidKey);
+webpush.setVapidDetails("mailto:tshanajk@gmail.com",publicVapidKey,privateVapidKey);
 
 
 const createNotification = async (req, res) => {

@@ -1,5 +1,5 @@
 import SpyLogic from './components/spyLogic'
-import { Prompt, useParams } from 'react-router'
+import { Prompt, useParams } from 'react-router-dom'
 import './styles.css'
 import { Affix, Col, Modal, Row } from 'antd'
 import QuestionsSection from './components/QuestionsSection'
