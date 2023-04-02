@@ -21,7 +21,3 @@ export const getS3Credintials = () => ({
   accessKeyId: '',
   secretAccessKey: ''
 })
-
-export const getAPIUrl = () => ({
-  api_url: process.env.API_URL
-})

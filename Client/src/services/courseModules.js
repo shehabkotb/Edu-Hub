@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { getAuthHeader } from './config'
+import { getAuthHeader,getMultiPartAuthHeader } from './config'
 
 import { baseURL as coursesURL } from './courses'
 
@@ -56,14 +56,14 @@ const createModuleItem = async (courseId, moduleId, moduleItem) => {
   return response.data.modules
 }
 
-// const uploadModuleItem = async (courseId, moduleId, moduleItem) => {
-//   const response = await axios.post(
-//     getModuleItemsURL(courseId, moduleId),
-//     moduleItem,
-//     getMultiPartAuthHeader()
-//   )
-//   return response.data.modules
-// }
+const uploadModuleItem = async (courseId, moduleId, moduleItem) => {
+  const response = await axios.post(
+    getModuleItemsURL(courseId, moduleId),
+    moduleItem,
+    getMultiPartAuthHeader()
+  )
+  return response.data.modules
+}
 
 const deleteModuleItem = async (courseId, moduleId, moduleItemId) => {
   const response = await axios.delete(

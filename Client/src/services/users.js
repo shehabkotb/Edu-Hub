@@ -4,7 +4,7 @@ import { getAuthHeader } from './config'
 const baseURL = '/users'
 
 const register = async (credentials) =>{
-  const response = await axios.post('/register' ,credentials ) ;
+  const response = await axios.post(`${baseURL}/register` ,credentials ) ;
   return response.data 
 }
 

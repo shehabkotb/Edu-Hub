@@ -1,4 +1,4 @@
-const { update } = require('../../models/Assignments');
+
 const Assigment = require('../../models/Assignments');
 
 const createAssignment = async (req, res) => {
