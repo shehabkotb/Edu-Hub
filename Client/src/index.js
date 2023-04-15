@@ -11,7 +11,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 
 import axios from 'axios';
 
-axios.defaults.baseURL = 'http://localhost:4000';
+axios.defaults.baseURL = 'https://learnlife.up.railway.app';
 
 serviceWorker.register()
 

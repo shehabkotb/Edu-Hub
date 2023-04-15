@@ -1,3 +1,4 @@
+
 const express = require('express')
 const db = require('./config/database')
 const path = require('path')
@@ -50,7 +51,7 @@ mongoose
     console.log('error connection to MongoDB:', error.message)
   })
 
-const publicDirectoryPath = path.join(__dirname, './view')
+const publicDirectoryPath = path.join(__dirname, 'client-build')
 
 app.use(express.static(publicDirectoryPath))
 
@@ -76,9 +77,12 @@ app.use('/courses/:courseId/modules/:moduleId/module-item', courseModuleItem)
 app.use('/courses/:courseId/lectures', lectureRouter)
 app.use('/achievements', achievementsRouter)
 
-
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname+'/client-build/index.html'));
+});
 
 const port = process.env.PORT || 4000
 app.listen(port, () => {
   console.log('app is on Port ' + port)
 })
+
