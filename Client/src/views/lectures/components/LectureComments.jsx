@@ -1,7 +1,7 @@
 import { Comment, Form, List, Typography, Input, Button, Avatar } from 'antd'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router'
+import { useParams } from 'react-router-dom'
 
 import styled from 'styled-components'
 

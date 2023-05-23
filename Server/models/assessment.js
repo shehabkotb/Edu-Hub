@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const { DateTime } = require('luxon')
 
 const options = {
-  discriminatorKey: 'type'
+  discriminatorKey: 'kind'
 }
 
 const assessmentSchema = new mongoose.Schema(

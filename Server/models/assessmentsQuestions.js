@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const options = {
-  discriminatorKey: 'type'
+  discriminatorKey: 'kind'
 }
 
 const assessmentsQuestionsSchema = new mongoose.Schema(

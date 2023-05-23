@@ -1,0 +1,32 @@
+{     
+      "type": "Assignment",
+      "title": "test assessment",
+      "maxScore": 10,
+      "questionsType": "online",
+      "submissionType": "online",
+      "course": "60a65778348b1936c4257ba5",
+      "visiblity": "published",
+      "dueDate": "2021-05-20T12:46:51.964+00:00",
+      "weight": 0.2,
+      "questions": [
+            {
+            "type": "MCQ", 
+            "question_number": 0,
+            "points": 5, 
+            "question_text": "a question", 
+            "auto_graded": true, 
+            "choices": ["choice a", "choice b"], 
+            "ans": "choice a"
+            },
+            {
+            "type": "Esay", 
+            "question_number": 0,
+            "points": 5, 
+            "question_text": "a question", 
+            "auto_graded": true, 
+            "text_match": true,
+            "keywords": [{"key_word": "first keyword", "weight": 0.2}],
+            "ans": "choice a"
+            }  
+      ]
+}

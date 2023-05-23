@@ -8,7 +8,7 @@ import {
   YoutubeOutlined,
   DeleteOutlined
 } from '@ant-design/icons'
-import { useHistory, useParams } from 'react-router'
+import { useHistory, useParams } from 'react-router-dom'
 
 const HoverableListItem = styled(List.Item)`
   cursor: pointer;

@@ -1,6 +1,6 @@
 const dbconfig = {
-    url : "mongodb://localhost:27017/EduHub" , 
-    dbname : 'EduHub'
+    url : "mongodb://localhost:27017" , 
+    dbname : 'test'
 }
 
 module.exports = dbconfig ; 

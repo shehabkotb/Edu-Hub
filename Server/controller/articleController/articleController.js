@@ -7,7 +7,7 @@ const Comment = require('../../models/comment') ;
 const Follow = require('../../models/follow');
 const axios = require('axios');
 
-const recommendationEngineUrl = 'http://127.0.0.1:5000/recommend/'
+const recommendationEngineUrl = 'http://127.0.0.1:4000/recommend/'
 
 const createArticle = async (req, res) => {
     try {
@@ -16,9 +16,9 @@ const createArticle = async (req, res) => {
         article.contentId = Date.now() ;
         await article.save()
         res.status(201).send(article)
-        await axios.get(
-          recommendationEngineUrl+'reset'
-        )
+        // await axios.get(
+        //   recommendationEngineUrl+'reset'
+        // )
     } catch (e) {
         res.status(400).send('error in creating Article');
     }
@@ -26,7 +26,7 @@ const createArticle = async (req, res) => {
 
 const timeline = async (req, res) => {
     try {
-      /*const { page = 1, limit } = req.query
+      const { page = 1, limit } = req.query
       const articles = await Article.find({})
         .populate({
           path: 'authorPersonId',
@@ -34,31 +34,31 @@ const timeline = async (req, res) => {
         })
       .limit(limit * 1)
       .skip((page - 1) * limit)
-      .exec();*/
-      const { page = 1, limit } = req.query
+      .exec();
+    //   const { page = 1, limit } = req.query
       const userCode = req.user.code;
       const contentIds=[];
-      const response = await axios.get(
-        recommendationEngineUrl +
-          userCode +
-          '/' +
-          limit +
-          '/' +
-          (page - 1) * limit
-      )
+    //   const response = await axios.get(
+    //     recommendationEngineUrl +
+    //       userCode +
+    //       '/' +
+    //       limit +
+    //       '/' +
+    //       (page - 1) * limit
+    //   )
             
-        const data = response.data;
+    //     const data = response.data;
 
-      for (var i = 0, len = data.length; i < len; i++) {
-        contentIds.push(data[i])
-      }
+    //   for (var i = 0, len = data.length; i < len; i++) {
+    //     contentIds.push(data[i])
+    //   }
 
 
-      const articles = await Article.find({ contentId: contentIds })
-        .populate({
-          path: 'authorPersonId',
-          select: 'username name photo'
-        }).exec()
+    //   const articles = await Article.find({ contentId: contentIds })
+    //     .populate({
+    //       path: 'authorPersonId',
+    //       select: 'username name photo'
+    //     }).exec()
 
       const count = await Article.countDocuments()
       res.status(200).send({

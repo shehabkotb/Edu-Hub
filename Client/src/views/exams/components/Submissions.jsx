@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { FlexSectionHeader } from '../../style'
 
 import { Avatar, Button, Space, Table, Typography, Tag } from 'antd'
-import { useParams } from 'react-router'
+import { useParams } from 'react-router-dom'
 import useCoursePrivilege from '../../../hooks/useCourseprivilege'
 import { STUDENT } from '../../../constants/userRoles'
 import { Link } from 'react-router-dom'

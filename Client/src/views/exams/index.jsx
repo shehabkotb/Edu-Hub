@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { PlusOutlined } from '@ant-design/icons'
 import { STUDENT } from '../../constants/userRoles'
 import { deleteExam, getAllExams } from '../../reducers/examReducer'
-import { useHistory, useParams } from 'react-router'
+import { useHistory, useParams } from 'react-router-dom'
 
 import { AiOutlineSolution } from 'react-icons/ai'
 

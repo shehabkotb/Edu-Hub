@@ -5,7 +5,6 @@ const Submission = require('../../models/submission')
 const schedule = require('node-schedule')
 
 const { autoGrade } = require('../../helper/autoGradingJob')
-const { default: axios } = require('axios')
 
 const { checkplagiarismJob } = require('../../helper/plagarismJob')
 const { DateTime } = require('luxon')
@@ -80,7 +79,7 @@ const createAssessment = async (request, response) => {
       const notification = new Notification({
         to: enrollment.user,
         type: 'alert',
-        data: `new ${assessment.type} added "${assessment.title}"`
+        data: `new ${assessment.kind} added "${assessment.title}"`
       })
       notification.save().catch((err) => console.log(err))
     }
